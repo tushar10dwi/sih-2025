@@ -3,13 +3,9 @@ import { PrismaClient } from "../models/generated/prisma/client.js";
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
 import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
-import generateToken from "../utilities/generateToken.js";
-
 import authMiddleware from "../middlewares/authMiddleware.js";
+import authController from "../controllers/authController.js";
 
 const app = express();
 const prisma = new PrismaClient();
@@ -25,78 +21,10 @@ app.use(bodyParser.json());
 
 const authRouter = Router();
 
-authRouter.post("/signup", async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
-
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) return res.status(400).json({ message: "User already exists" });
-
-  if(!(firstName && lastName && email && password))
-  {
-    res.status(403).json({message: "All feilds are mandatory."});
-  }
-
-  const hashed = await bcrypt.hash(password, 10);
-  const newUser = await prisma.user.create({
-    data: { firstName, lastName, email, password: hashed },
-  });
-
-  res.json({ message: "User registered", userId: newUser.id });
-
-});
-
-authRouter.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) return res.status(400).json({ message: "User not found" });
-
-  const valid = await bcrypt.compare(password, user.password);
-  if (!valid) return res.status(401).json({ message: "Invalid credentials" });
-
-  const token = generateToken(user);
-
-  user.token = token;
-  user.password = undefined;
-
-  //Cookies Section
-  const options = {
-    expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-    httpOnly: true,
-  }
-  res.status(200).cookie("token", token, options).json({
-    success: true,
-    token,
-    user
-  })
-
-//   res.json({ token });
-});
-
-authRouter.post("/logout", (req, res) => {
-  res.clearCookie("accessToken", { httpOnly: true, sameSite: "strict" }).json({ message: "Logged out Successfully"});
-});
-
-authRouter.post("/reset-password", async (req, res) => {
-  const { email, newPassword } = req.body;
-
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) return res.status(400).json({ message: "User not found" });
-
-  const hashed = await bcrypt.hash(newPassword, 10);
-  await prisma.user.update({
-    where: { email },
-    data: { password: hashed },
-  });
-
-  res.json({ message: "Password reset successful" });
-});
-
-authRouter.get("/me", authMiddleware, async (req, res) => {
-  const user = await prisma.user.findUnique({ where: { id: req.user.id } });
-  if (!user) return res.status(404).json({ message: "User not found" });
-
-  res.json({ id: user.id, email: user.email, createdAt: user.createdAt });
-});
+authRouter.post("/signup", authController.signup);
+authRouter.post("/login", authController.login);
+authRouter.post("/logout", authController.logout);
+authRouter.post("/reset-password", authController.resetPassword);
+authRouter.get("/me", authMiddleware, authController.me);
 
 export default authRouter;
