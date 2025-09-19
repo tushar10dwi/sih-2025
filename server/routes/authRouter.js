@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import bodyParser from "body-parser";
-import authMiddleware from "../middlewares/authMiddleware.js";
+import verifyToken from "../middlewares/authMiddleware.js";
 import authController from "../controllers/authController.js";
 
 const app = express();
@@ -25,6 +25,6 @@ authRouter.post("/signup", authController.signup);
 authRouter.post("/login", authController.login);
 authRouter.post("/logout", authController.logout);
 authRouter.post("/reset-password", authController.resetPassword);
-authRouter.get("/me", authMiddleware, authController.me);
+authRouter.get("/me", verifyToken, authController.me);
 
 export default authRouter;

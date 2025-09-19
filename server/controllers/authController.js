@@ -7,6 +7,13 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import generateToken from "../utilities/generateToken.js"
+
+const app = express();
+const prisma = new PrismaClient();
+
+app.use(bodyParser.json());
+
 
 async function signup(req, res) {
   const { firstName, lastName, email, password } = req.body;

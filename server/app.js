@@ -4,11 +4,13 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import bodyParser from "body-parser";
-import authRouter from "./routes/authRouter.js";
+import authRoutes from "./routes/authRouter.js";
 import cookieParser from "cookie-parser";
-// import userRoutes from "./routes/user.js";
-// import careerRoutes from "./routes/career.js";
+import userRoutes from "./routes/userRoutes.js";
+import verifyToken from "./middlewares/authMiddleware.js";
+import quizRoutes from "./routes/quizRoutes.js";
 // import progressRoutes from "./routes/progress.js";
+verifyToken
 
 const app = express();
 
@@ -20,9 +22,9 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // API Routes
-app.use("/api/auth", authRouter);
-// app.use("/api/user", userRoutes);
-// app.use("/api/career", careerRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/user", verifyToken, userRoutes);
+app.use("/api/quiz", verifyToken, quizRoutes);
 // app.use("/api/progress", progressRoutes);
 
 // Error handler
