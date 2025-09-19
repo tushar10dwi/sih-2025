@@ -138,33 +138,6 @@
             gap: 20px;
         }
 
-        .search-container {
-            position: relative;
-        }
-
-        .search-input {
-            padding: 10px 15px 10px 40px;
-            border: 2px solid #E5E7EB;
-            border-radius: 20px;
-            font-size: 14px;
-            width: 250px;
-            transition: var(--transition);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-        }
-
         .notification-icon {
             position: relative;
             cursor: pointer;
@@ -916,10 +889,6 @@
                 margin: 15px 0;
             }
             
-            .search-container {
-                display: none;
-            }
-            
             .hamburger {
                 display: flex;
             }
@@ -1049,11 +1018,6 @@
             </ul>
             
             <div class="header-right">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search settings...">
-                </div>
-                
                 <a href="notification_center.html" class="notification-icon">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge">3</span>
@@ -1089,15 +1053,13 @@
             <i class="fas fa-times"></i>
         </button>
         <div class="sidebar-header">
-            <h3 class="sidebar-title">Settings</h3>
+            <h3 class="sidebar-title">Student Dashboard</h3>
         </div>
         <ul class="sidebar-menu">
-            <li class="sidebar-item"><a href="dashboard.html" class="sidebar-link"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li class="sidebar-item"><a href="roadmaps.html" class="sidebar-link"><i class="fas fa-road"></i> Roadmaps</a></li>
+            <li class="sidebar-item"><a href="dashboard.html" class="sidebar-link"><i class="fas fa-home"></i> Overview</a></li>
+            <li class="sidebar-item"><a href="academic_profile.html" class="sidebar-link"><i class="fas fa-graduation-cap"></i> Academic Profile</a></li>
+            <li class="sidebar-item"><a href="upcoming_deadline.html" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Upcoming Deadlines</a></li>
             <li class="sidebar-item"><a href="recommendation.html" class="sidebar-link"><i class="fas fa-lightbulb"></i> Recommendations</a></li>
-            <li class="sidebar-item"><a href="notification_center.html" class="sidebar-link"><i class="fas fa-bell"></i> Notifications</a></li>
-            <li class="sidebar-item"><a href="#" class="sidebar-link active"><i class="fas fa-cog"></i> Preferences & Settings</a></li>
-            <li class="sidebar-item"><a href="progress.html" class="sidebar-link"><i class="fas fa-chart-line"></i> Progress Tracking</a></li>
             <li class="sidebar-item"><a href="saved_items.html" class="sidebar-link"><i class="fas fa-bookmark"></i> Saved Items</a></li>
         </ul>
     </aside>
@@ -1105,15 +1067,13 @@
     <div class="main-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h3 class="sidebar-title">Settings</h3>
+                <h3 class="sidebar-title">Student Dashboard</h3>
             </div>
             <ul class="sidebar-menu">
-                <li class="sidebar-item"><a href="dashboard.html" class="sidebar-link"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li class="sidebar-item"><a href="roadmaps.html" class="sidebar-link"><i class="fas fa-road"></i> Roadmaps</a></li>
+                <li class="sidebar-item"><a href="dashboard.html" class="sidebar-link"><i class="fas fa-home"></i> Overview</a></li>
+                <li class="sidebar-item"><a href="academic_profile.html" class="sidebar-link"><i class="fas fa-graduation-cap"></i> Academic Profile</a></li>
+                <li class="sidebar-item"><a href="upcoming_deadline.html" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Upcoming Deadlines</a></li>
                 <li class="sidebar-item"><a href="recommendation.html" class="sidebar-link"><i class="fas fa-lightbulb"></i> Recommendations</a></li>
-                <li class="sidebar-item"><a href="notification_center.html" class="sidebar-link"><i class="fas fa-bell"></i> Notifications</a></li>
-                <li class="sidebar-item"><a href="#" class="sidebar-link active"><i class="fas fa-cog"></i> Preferences & Settings</a></li>
-                <li class="sidebar-item"><a href="progress.html" class="sidebar-link"><i class="fas fa-chart-line"></i> Progress Tracking</a></li>
                 <li class="sidebar-item"><a href="saved_items.html" class="sidebar-link"><i class="fas fa-bookmark"></i> Saved Items</a></li>
             </ul>
         </aside>
@@ -1289,7 +1249,7 @@
                     <div class="toggle-container">
                         <div class="toggle-label">
                             <span class="toggle-title">Data Sharing for Research</span>
-                            <span class="toggle-description">Help us improve our services (anonymous data only)</span>
+                            <span class="toggle-description">Help us improve our services by sharing anonymized data</span>
                         </div>
                         <label class="toggle-switch">
                             <input type="checkbox" id="data-sharing" checked>
@@ -1299,121 +1259,81 @@
                     
                     <div class="toggle-container">
                         <div class="toggle-label">
-                            <span class="toggle-title">Personalized Recommendations</span>
-                            <span class="toggle-description">Allow us to use your data to personalize content</span>
+                            <span class="toggle-title">Activity Status</span>
+                            <span class="toggle-description">Show when you're active on the platform</span>
                         </div>
                         <label class="toggle-switch">
-                            <input type="checkbox" id="personalized-recommendations" checked>
+                            <input type="checkbox" id="activity-status" checked>
                             <span class="slider"></span>
                         </label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Download Your Data</label>
-                        <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 10px;">
-                            You can request a copy of all the data we have about you.
-                        </p>
-                        <button type="button" class="btn btn-secondary btn-sm">Request Data Export</button>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Delete Account</label>
-                        <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 10px;">
-                            Permanently delete your account and all associated data.
-                        </p>
-                        <button type="button" class="btn btn-danger btn-sm" id="delete-account-btn">Delete Account</button>
                     </div>
                 </div>
 
                 <div class="settings-card fade-in">
                     <div class="card-header">
                         <div class="card-icon">
-                            <i class="fas fa-sliders-h"></i>
+                            <i class="fas fa-paint-brush"></i>
                         </div>
-                        <h2 class="card-title">Preferences</h2>
+                        <h2 class="card-title">Appearance & Preferences</h2>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Language Preference</label>
-                        <div class="select-wrapper">
-                            <select class="form-select" id="language-preference">
-                                <option value="english">English</option>
-                                <option value="spanish">Spanish</option>
-                                <option value="french">French</option>
-                                <option value="german">German</option>
-                                <option value="chinese">Chinese</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Theme Preference</label>
+                        <label class="form-label">Theme</label>
                         <div class="radio-group">
                             <div class="radio-option">
-                                <input type="radio" id="light-theme" name="theme" value="light" checked>
-                                <label for="light-theme">Light</label>
+                                <input type="radio" id="theme-light" name="theme" value="light" checked>
+                                <label for="theme-light">Light</label>
                             </div>
                             <div class="radio-option">
-                                <input type="radio" id="dark-theme" name="theme" value="dark">
-                                <label for="dark-theme">Dark</label>
+                                <input type="radio" id="theme-dark" name="theme" value="dark">
+                                <label for="theme-dark">Dark</label>
                             </div>
                             <div class="radio-option">
-                                <input type="radio" id="auto-theme" name="theme" value="auto">
-                                <label for="auto-theme">Auto (System)</label>
+                                <input type="radio" id="theme-auto" name="theme" value="auto">
+                                <label for="theme-auto">Auto (System)</label>
                             </div>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Preferred Job Categories</label>
-                        <div class="chips-container">
-                            <div class="chip">
-                                Software Development
-                                <span class="chip-remove">&times;</span>
-                            </div>
-                            <div class="chip">
-                                Data Science
-                                <span class="chip-remove">&times;</span>
-                            </div>
-                            <div class="chip">
-                                UX/UI Design
-                                <span class="chip-remove">&times;</span>
-                            </div>
-                            <input type="text" class="chip-input" placeholder="Add category...">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Content Density</label>
+                        <label class="form-label">Language</label>
                         <div class="select-wrapper">
-                            <select class="form-select" id="content-density">
-                                <option value="comfortable">Comfortable</option>
-                                <option value="compact">Compact</option>
-                                <option value="spacious">Spacious</option>
+                            <select class="form-select" id="language">
+                                <option value="en">English</option>
+                                <option value="es">Español</option>
+                                <option value="fr">Français</option>
+                                <option value="hi">हिंदी</option>
                             </select>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Default Dashboard View</label>
+                        <label class="form-label">Default View</label>
                         <div class="select-wrapper">
-                            <select class="form-select" id="default-dashboard-view">
-                                <option value="overview">Overview</option>
-                                <option value="progress">Progress</option>
+                            <select class="form-select" id="default-view">
+                                <option value="dashboard">Dashboard</option>
+                                <option value="roadmaps">Roadmaps</option>
                                 <option value="recommendations">Recommendations</option>
-                                <option value="roadmap">Roadmap</option>
                             </select>
                         </div>
                     </div>
                     
-                    <button type="button" class="btn btn-primary">Save Preferences</button>
+                    <div class="form-group">
+                        <label class="form-label">Content Interests</label>
+                        <div class="chips-container" id="interests-container">
+                            <div class="chip">Computer Science <span class="chip-remove">&times;</span></div>
+                            <div class="chip">Engineering <span class="chip-remove">&times;</span></div>
+                            <div class="chip">Business <span class="chip-remove">&times;</span></div>
+                            <input type="text" class="chip-input" placeholder="Add interest..." id="interest-input">
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="action-buttons">
-                <button type="button" class="btn btn-primary" id="save-all-btn" disabled>Save All Changes</button>
-                <button type="button" class="btn btn-secondary" id="reset-btn">Reset to Default</button>
-                <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                <button class="btn btn-primary" id="save-changes-btn">Save Changes</button>
+                <button class="btn btn-secondary" id="discard-changes-btn">Discard Changes</button>
+                <button class="btn btn-danger" id="delete-account-btn">Delete Account</button>
             </div>
         </main>
     </div>
@@ -1432,339 +1352,212 @@
                 <p>Are you sure you want to delete your account? This action cannot be undone. All your data will be permanently removed from our systems.</p>
                 <div class="form-group" style="margin-top: 20px;">
                     <label class="form-label">Enter your password to confirm</label>
-                    <input type="password" class="form-input" placeholder="Your password">
+                    <input type="password" class="form-input" id="delete-confirm-password">
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="cancel-delete">Cancel</button>
-                <button type="button" class="btn btn-danger">Delete Account</button>
+                <button class="btn btn-secondary" id="cancel-delete-btn">Cancel</button>
+                <button class="btn btn-danger" id="confirm-delete-btn">Delete Account</button>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Header scroll effect
-            const header = document.getElementById('header');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 10) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
+        // DOM Elements
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const userProfile = document.getElementById('user-profile');
+        const userDropdown = document.getElementById('user-dropdown');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const saveStatus = document.getElementById('save-status');
+        const saveChangesBtn = document.getElementById('save-changes-btn');
+        const discardChangesBtn = document.getElementById('discard-changes-btn');
+        const deleteAccountBtn = document.getElementById('delete-account-btn');
+        const deleteAccountModal = document.getElementById('delete-account-modal');
+        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+        const toast = document.getElementById('toast');
+        const togglePasswordBtns = document.querySelectorAll('.toggle-password');
+        const changePasswordBtn = document.getElementById('change-password-btn');
+        const newPassword = document.getElementById('new-password');
+        const confirmPassword = document.getElementById('confirm-password');
+        const passwordError = document.getElementById('password-error');
+        const interestInput = document.getElementById('interest-input');
+        const interestsContainer = document.getElementById('interests-container');
 
-            // User dropdown toggle
-            const userProfile = document.getElementById('user-profile');
-            const userDropdown = document.getElementById('user-dropdown');
-            
-            userProfile.addEventListener('click', function(e) {
-                e.stopPropagation();
-                userDropdown.classList.toggle('active');
-            });
-            
-            document.addEventListener('click', function() {
+        // Mobile menu toggle
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // User dropdown toggle
+        userProfile.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking elsewhere
+        document.addEventListener('click', (e) => {
+            if (!userProfile.contains(e.target)) {
                 userDropdown.classList.remove('active');
-            });
+            }
+        });
 
-            // Password visibility toggle
-            const togglePassword = (toggleId, inputId) => {
-                const toggleBtn = document.getElementById(toggleId);
-                const passwordInput = document.getElementById(inputId);
+        // Mobile sidebar toggle
+        sidebarToggle.addEventListener('click', () => {
+            mobileSidebar.classList.add('active');
+            sidebarOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Close mobile sidebar
+        function closeMobileSidebar() {
+            mobileSidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        closeSidebar.addEventListener('click', closeMobileSidebar);
+        sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+        // Toggle password visibility
+        togglePasswordBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = btn.previousElementSibling;
+                const icon = btn.querySelector('i');
                 
-                toggleBtn.addEventListener('click', function() {
-                    if (passwordInput.type === 'password') {
-                        passwordInput.type = 'text';
-                        toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
-                    } else {
-                        passwordInput.type = 'password';
-                        toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
-                    }
-                });
-            };
-            
-            togglePassword('toggle-current-password', 'current-password');
-            togglePassword('toggle-new-password', 'new-password');
-            togglePassword('toggle-confirm-password', 'confirm-password');
-
-            // Password confirmation validation
-            const newPassword = document.getElementById('new-password');
-            const confirmPassword = document.getElementById('confirm-password');
-            const passwordError = document.getElementById('password-error');
-            
-            confirmPassword.addEventListener('input', function() {
-                if (newPassword.value !== confirmPassword.value) {
-                    passwordError.style.display = 'block';
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
                 } else {
-                    passwordError.style.display = 'none';
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
                 }
             });
+        });
 
-            // Change password button
-            const changePasswordBtn = document.getElementById('change-password-btn');
-            changePasswordBtn.addEventListener('click', function() {
-                if (newPassword.value !== confirmPassword.value) {
-                    passwordError.style.display = 'block';
-                    showToast('Please make sure your passwords match', true);
-                    return;
-                }
-                
-                if (newPassword.value.length < 8) {
-                    showToast('Password must be at least 8 characters long', true);
-                    return;
-                }
-                
-                showToast('Password changed successfully!');
-                
-                // Clear password fields after successful change
-                document.getElementById('current-password').value = '';
-                newPassword.value = '';
-                confirmPassword.value = '';
+        // Validate password match
+        changePasswordBtn.addEventListener('click', () => {
+            if (newPassword.value && confirmPassword.value && newPassword.value !== confirmPassword.value) {
+                passwordError.style.display = 'block';
+                newPassword.style.borderColor = 'var(--error)';
+                confirmPassword.style.borderColor = 'var(--error)';
+            } else {
                 passwordError.style.display = 'none';
-            });
+                newPassword.style.borderColor = '#E5E7EB';
+                confirmPassword.style.borderColor = '#E5E7EB';
+                showToast('Password changed successfully!');
+            }
+        });
 
-            // Delete account modal
-            const deleteAccountBtn = document.getElementById('delete-account-btn');
-            const deleteAccountModal = document.getElementById('delete-account-modal');
-            const cancelDelete = document.getElementById('cancel-delete');
-            
-            deleteAccountBtn.addEventListener('click', function() {
-                deleteAccountModal.classList.add('show');
-            });
-            
-            cancelDelete.addEventListener('click', function() {
-                deleteAccountModal.classList.remove('show');
-            });
-
-            // Toast notification
-            const toast = document.getElementById('toast');
-            
-            function showToast(message, isError = false) {
-                const toastMessage = document.getElementById('toast-message');
-                toastMessage.textContent = message;
+        // Add interest chips
+        interestInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && interestInput.value.trim() !== '') {
+                e.preventDefault();
                 
+                const chip = document.createElement('div');
+                chip.className = 'chip';
+                chip.innerHTML = `${interestInput.value.trim()} <span class="chip-remove">&times;</span>`;
+                
+                interestsContainer.insertBefore(chip, interestInput);
+                
+                // Add event listener to remove button
+                chip.querySelector('.chip-remove').addEventListener('click', () => {
+                    chip.remove();
+                });
+                
+                interestInput.value = '';
+            }
+        });
+
+        // Remove interest chips
+        document.querySelectorAll('.chip-remove').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.parentElement.remove();
+            });
+        });
+
+        // Save changes
+        saveChangesBtn.addEventListener('click', () => {
+            saveStatus.classList.add('saved');
+            saveStatus.innerHTML = '<i class="fas fa-check-circle"></i> Changes saved';
+            showToast('Your changes have been saved successfully!');
+            
+            // Reset save status after 3 seconds
+            setTimeout(() => {
+                saveStatus.classList.remove('saved');
+                saveStatus.innerHTML = '<i class="fas fa-save"></i> All changes saved';
+            }, 3000);
+        });
+
+        // Discard changes
+        discardChangesBtn.addEventListener('click', () => {
+            showToast('Changes discarded', 'error');
+        });
+
+        // Delete account modal
+        deleteAccountBtn.addEventListener('click', () => {
+            deleteAccountModal.classList.add('show');
+        });
+
+        cancelDeleteBtn.addEventListener('click', () => {
+            deleteAccountModal.classList.remove('show');
+        });
+
+        confirmDeleteBtn.addEventListener('click', () => {
+            deleteAccountModal.classList.remove('show');
+            showToast('Account deletion request received', 'error');
+        });
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = message;
+            
+            if (type === 'error') {
+                toast.classList.add('error');
+            } else {
                 toast.classList.remove('error');
-                if (isError) {
-                    toast.classList.add('error');
-                    toast.querySelector('i').className = 'fas fa-exclamation-circle';
-                } else {
-                    toast.querySelector('i').className = 'fas fa-check-circle';
-                }
-                
-                toast.classList.add('show');
-                
-                setTimeout(function() {
-                    toast.classList.remove('show');
-                }, 3000);
-            }
-
-            // Mobile navigation toggle
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            hamburger.addEventListener('click', function() {
-                hamburger.classList.toggle('active');
-                navMenu.classList.toggle('active');
-            });
-
-            // Mobile sidebar toggle
-            const sidebarToggle = document.getElementById('sidebar-toggle');
-            const mobileSidebar = document.getElementById('mobile-sidebar');
-            const sidebarOverlay = document.getElementById('sidebar-overlay');
-            const closeSidebar = document.getElementById('close-sidebar');
-            
-            sidebarToggle.addEventListener('click', function() {
-                mobileSidebar.classList.add('active');
-                sidebarOverlay.classList.add('active');
-            });
-            
-            closeSidebar.addEventListener('click', function() {
-                mobileSidebar.classList.remove('active');
-                sidebarOverlay.classList.remove('active');
-            });
-            
-            sidebarOverlay.addEventListener('click', function() {
-                mobileSidebar.classList.remove('active');
-                sidebarOverlay.classList.remove('active');
-            });
-
-            // Toggle switch functionality to enable save button
-            const allInputs = document.querySelectorAll('.form-input, .toggle-switch input, .form-select, input[name="theme"]');
-            allInputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    document.getElementById('save-all-btn').disabled = false;
-                });
-            });
-
-
-            // Animate elements on scroll
-            const animatedElements = document.querySelectorAll('.fade-in');
-            
-            function checkScroll() {
-                animatedElements.forEach(element => {
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const screenPosition = window.innerHeight / 1.3;
-                    
-                    if (elementPosition < screenPosition) {
-                        element.style.opacity = 1;
-                        element.style.transform = 'translateY(0)';
-                    }
-                });
             }
             
-            // Set initial state for animation
-            animatedElements.forEach(element => {
-                element.style.opacity = 0;
-                element.style.transform = 'translateY(20px)';
-                element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            });
+            toast.classList.add('show');
             
-            window.addEventListener('scroll', checkScroll);
-            window.addEventListener('load', checkScroll);
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
 
-            // --- NEW FUNCTIONALITY ---
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
 
-            // Save account details functionality 
-            document.getElementById('account-form').addEventListener('input', function() { 
-                document.getElementById('save-all-btn').disabled = false;
-            });
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast('You have been logged out successfully');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        });
 
-            // Save all changes button 
-            document.getElementById('save-all-btn').addEventListener('click', function() { 
-                const fullName = document.getElementById('full-name').value; 
-                
-                // Update user name in header if full name changed 
-                if (fullName) { 
-                    const names = fullName.split(' '); 
-                    const firstName = names[0]; 
-                    const lastName = names.length > 1 ? names[names.length-1] : '';
-                    const lastNameInitial = lastName ? lastName.charAt(0) + '.' : ''; 
-                    
-                    // Update dropdown name
-                    document.querySelector('.user-name').textContent = `${firstName} ${lastNameInitial}`.trim(); 
-                    
-                    // Update avatar initials
-                    const firstInitial = firstName.charAt(0);
-                    const lastInitial = lastName ? lastName.charAt(0) : '';
-                    document.querySelector('.user-avatar').textContent = `${firstInitial}${lastInitial}`.toUpperCase();
-                } 
-                
-                showToast('All changes saved successfully!'); 
-                
-                const saveStatus = document.getElementById('save-status'); 
-                saveStatus.classList.add('saved'); 
-                saveStatus.innerHTML = '<i class="fas fa-check-circle"></i><span>All changes saved</span>'; 
-                
-                this.disabled = true; 
-                
-                setTimeout(() => { 
-                    saveStatus.classList.remove('saved'); 
-                    saveStatus.innerHTML = '<i class="fas fa-save"></i><span>All changes saved</span>'; 
-                }, 3000);
-            });
-
-            // Reset to default button 
-            document.getElementById('reset-btn').addEventListener('click', function() { 
-                if (confirm('Are you sure you want to reset all settings to default?')) { 
-                    document.getElementById('full-name').value = "Anjali Sharma"; 
-                    document.getElementById('email-address').value = "anjali.sharma@example.com"; 
-                    document.getElementById('phone-number').value = "+1 (555) 123-4567"; 
-                    
-                    document.querySelectorAll('.toggle-switch input').forEach(toggle => { 
-                        toggle.checked = toggle.id === 'email-alerts' ||  
-                                        toggle.id === 'push-notifications' ||  
-                                        toggle.id === 'weekly-digest' ||  
-                                        toggle.id === 'career-alerts' ||  
-                                        toggle.id === 'data-sharing' ||  
-                                        toggle.id === 'personalized-recommendations'; 
-                    }); 
-                    
-                    document.getElementById('profile-visibility').value = "everyone"; 
-                    document.getElementById('language-preference').value = "english"; 
-                    document.getElementById('content-density').value = "comfortable"; 
-                    document.getElementById('default-dashboard-view').value = "overview"; 
-                    
-                    document.getElementById('light-theme').checked = true; 
-                    
-                    showToast('All settings reset to default'); 
-                    
-                    document.getElementById('save-all-btn').disabled = false; 
-                }
-            });
-
-            // Cancel button 
-            document.getElementById('cancel-btn').addEventListener('click', function() { 
-                if (confirm('Discard all unsaved changes?')) { 
-                    location.reload(); 
-                }
-            });
-
-            // Logout functionality 
-            document.getElementById('logout-btn').addEventListener('click', function(e) { 
-                e.preventDefault(); 
-                if (confirm('Are you sure you want to logout?')) { 
-                    // In a real app, this would redirect to a logout script.
-                    // For this demo, it can go to a placeholder.
-                    window.location.href = "#loggedout"; 
-                    showToast('You have been logged out.');
-                }
-            });
-
-            // Save preferences button 
-            document.querySelector('.settings-card:last-child .btn-primary').addEventListener('click', function() { 
-                const theme = document.querySelector('input[name="theme"]:checked').value; 
-                const language = document.getElementById('language-preference').value; 
-                
-                showToast(`Preferences saved (Theme: ${theme}, Language: ${language})`); 
-                
-                document.getElementById('save-all-btn').disabled = false;
-            });
-
-            // Request data export button 
-            document.querySelector('.btn-secondary.btn-sm').addEventListener('click', function() { 
-                showToast('Data export request submitted. You will receive an email shortly.');
-            });
-
-            // Delete account modal functionality 
-            document.querySelector('#delete-account-modal .btn-danger').addEventListener('click', function() { 
-                const password = document.querySelector('#delete-account-modal input[type="password"]').value; 
-                
-                if (!password) { 
-                    showToast('Please enter your password to confirm', true); 
-                    return; 
-                } 
-                
-                showToast('Account deletion request submitted. You will receive a confirmation email.'); 
-                document.getElementById('delete-account-modal').classList.remove('show');
-            });
-
-            // Chip removal functionality 
-            document.querySelectorAll('.chip-remove').forEach(removeBtn => { 
-                removeBtn.addEventListener('click', function() { 
-                    this.parentElement.remove(); 
-                    document.getElementById('save-all-btn').disabled = false; 
-                });
-            });
-
-            // Chip input functionality 
-            document.querySelector('.chip-input').addEventListener('keydown', function(e) { 
-                if (e.key === 'Enter' && this.value.trim() !== '') { 
-                    e.preventDefault(); 
-                    
-                    const chip = document.createElement('div'); 
-                    chip.className = 'chip'; 
-                    chip.innerHTML = `${this.value.trim()} <span class="chip-remove">&times;</span>`; 
-                    
-                    this.parentElement.insertBefore(chip, this); 
-                    
-                    chip.querySelector('.chip-remove').addEventListener('click', function() { 
-                        this.parentElement.remove(); 
-                        document.getElementById('save-all-btn').disabled = false; 
-                    }); 
-                    
-                    this.value = ''; 
-                    document.getElementById('save-all-btn').disabled = false; 
-                }
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add fade-in animation to cards on page load
+            const cards = document.querySelectorAll('.fade-in');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
             });
         });
     </script>
