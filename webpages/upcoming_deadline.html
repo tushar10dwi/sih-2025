@@ -1,0 +1,4162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaviDisha - Upcoming Deadlines</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --primary-light: #3b5998;
+            --secondary: #059669;
+            --accent: #F59E0B;
+            --background: #F9FAFB;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --white: #FFFFFF;
+            --error: #EF4444;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            
+            /* Category colors */
+            --exam-color: #1E3A8A;
+            --application-color: #059669;
+            --scholarship-color: #F59E0B;
+            --other-color: #6B7280;
+            --state-exam-color: #8B5CF6; /* New color for state exams */
+            --government_scheme-color: #be123c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        /* Header Styles */
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-left: 10px;
+        }
+
+        .logo-accent {
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-container {
+            position: relative;
+            margin-right: 15px;
+        }
+
+        .search-input {
+            padding: 10px 15px 10px 40px;
+            border-radius: 20px;
+            border: 1px solid #E5E7EB;
+            font-size: 14px;
+            width: 250px;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .notification-icon:hover {
+            color: var(--primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--error);
+            color: var(--white);
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow-hover);
+            width: 200px;
+            z-index: 100;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .user-dropdown.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-item {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--background);
+        }
+
+        .dropdown-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 3px auto;
+            background-color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        /* Mobile Sidebar Toggle */
+        .mobile-sidebar-toggle {
+            display: none;
+            position: fixed;
+            left: 10px;
+            top: 80px;
+            z-index: 999;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--card-shadow-hover);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* Show the toggle only when the screen is squeezed */
+        @media (max-width: 1100px) {
+            .mobile-sidebar-toggle {
+                display: flex;
+            }
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow-hover);
+            z-index: 1002;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            padding: 70px 20px 30px;
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(300px);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Main Layout */
+        .deadlines-container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            height: fit-content;
+            transition: var(--transition);
+            position: sticky;
+            top: 100px;
+            align-self: flex-start;
+        }
+
+        /* Hide desktop sidebar when screen is squeezed */
+        @media (max-width: 1100px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
+        .sidebar-header {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: var(--background);
+            color: var(--primary);
+        }
+
+        .sidebar-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Legend */
+        .legend-container {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .legend-label {
+            font-size: 0.9rem;
+        }
+
+        .exam-color {
+            background-color: var(--exam-color);
+        }
+
+        .application-color {
+            background-color: var(--application-color);
+        }
+
+        .scholarship-color {
+            background-color: var(--scholarship-color);
+        }
+
+        .other-color {
+            background-color: var(--other-color);
+        }
+
+        .state-exam-color {
+            background-color: var(--state-exam-color);
+        }
+        
+        .government_scheme-color {
+            background-color: var(--government_scheme-color);
+        }
+
+        /* Quick Filters */
+        .quick-filters {
+            margin-top: 20px;
+        }
+
+        .filter-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background-color: var(--background);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover {
+            background-color: #E5E7EB;
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .view-toggle {
+            display: flex;
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: var(--card-shadow);
+            margin-left: auto;
+        }
+
+        .toggle-btn {
+            padding: 8px 15px;
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .toggle-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .filters-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            position: relative;
+        }
+
+        .filter-btn-main {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background-color: var(--white);
+            border: 1px solid #E5E7EB;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .filter-btn-main:hover {
+            border-color: var(--primary);
+        }
+
+        .filter-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow-hover);
+            width: 220px;
+            z-index: 100;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .filter-dropdown.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .filter-option {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-option:hover {
+            background-color: var(--background);
+        }
+
+        .filter-option input {
+            margin-right: 10px;
+        }
+
+        /* Calendar View */
+        .calendar-view {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background);
+            color: var(--text-dark);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .current-month {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .month-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .month-dropdown, .year-dropdown {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #E5E7EB;
+            background-color: var(--white);
+            cursor: pointer;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .weekday-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-light);
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        .calendar-day {
+            position: relative;
+            height: 100px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: var(--background);
+            cursor: pointer;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .calendar-day:hover {
+            background-color: #E5E7EB;
+        }
+
+        .day-number {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .today .day-number {
+            width: 24px;
+            height: 24px;
+            background-color: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .deadline-markers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            right: 5px;
+        }
+
+        .deadline-marker {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .deadline-marker.exam {
+            background-color: var(--exam-color);
+        }
+        
+        .deadline-marker.state_exam {
+            background-color: var(--state-exam-color);
+        }
+
+        .deadline-marker.application {
+            background-color: var(--application-color);
+        }
+
+        .deadline-marker.scholarship {
+            background-color: var(--scholarship-color);
+        }
+        
+        .deadline-marker.government_scheme {
+            background-color: var(--government_scheme-color);
+        }
+
+        .deadline-marker.other {
+            background-color: var(--other-color);
+        }
+
+        .deadline-count {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .past-day {
+            opacity: 0.5;
+            background-color: #f3f4f6;
+        }
+
+        .past-day .day-number {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+        
+        .calendar-day.has-missed-deadlines {
+            border: 2px solid var(--error);
+        }
+
+        .deadline-marker.missed {
+            background-color: var(--error);
+        }
+
+        /* Add these styles to improve tooltip appearance */
+        .deadline-tooltip {
+            display: block;
+            position: absolute;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow-hover);
+            padding: 15px;
+            width: 250px;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+            border: 1px solid #E5E7EB;
+        }
+
+        .deadline-tooltip::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--white);
+        }
+
+        .tooltip-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .tooltip-type {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: var(--background);
+            border-radius: 20px;
+        }
+
+        .tooltip-time {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tooltip-time i {
+            margin-right: 5px;
+            color: var(--text-light);
+        }
+
+        .tooltip-btn {
+            padding: 6px 12px;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .tooltip-btn:hover {
+            background-color: var(--primary-light);
+        }
+
+        /* List View */
+        .list-view {
+            display: none;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .bulk-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Mobile-specific bulk actions */
+        .bulk-actions-mobile {
+            display: none;
+            width: 100%;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .bulk-actions-mobile .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .deadline-list-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #E5E7EB;
+            transition: var(--transition);
+        }
+
+        .deadline-list-item:hover {
+            background-color: var(--background);
+        }
+
+        .deadline-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .deadline-checkbox {
+            margin-right: 15px;
+        }
+
+        .deadline-date {
+            width: 70px;
+            text-align: center;
+            margin-right: 20px;
+        }
+
+        .deadline-day {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .deadline-month {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .deadline-content {
+            flex: 1;
+            min-width: 0; /* Prevent overflow */
+        }
+
+        .deadline-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .deadline-type {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: var(--background);
+            border-radius: 20px;
+            margin-bottom: 5px;
+        }
+
+        .deadline-time {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+        }
+
+        .deadline-time i {
+            margin-right: 5px;
+            color: var(--text-light);
+        }
+
+        .deadline-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-left: 15px;
+            white-space: nowrap;
+        }
+
+        .status-upcoming {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .status-completed {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .status-missed {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        .deadline-actions {
+            display: flex;
+            gap: 10px;
+            margin-left: 15px;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background);
+            color: var(--text-dark);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal {
+            background-color: var(--white);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--card-shadow-hover);
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #E5E7EB;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background);
+            color: var(--text-dark);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background-color: var(--error);
+            color: var(--white);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-detail {
+            margin-bottom: 20px;
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-weight: 500;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #E5E7EB;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(30, 58, 138, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-dark);
+            border: 1px solid #E5E7EB;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--background);
+        }
+		
+		.btn:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+		.btn:disabled:hover {
+			transform: none;
+			box-shadow: none;
+		}
+		/* For outline buttons specifically */
+		.btn-outline:disabled {
+			border-color: #E5E7EB;
+			color: #9CA3AF;
+		}
+
+        /* Import/Export & Resources Section */
+        .import-export, .regional-resources {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .import-export-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #E5E7EB;
+            padding-bottom: 15px;
+        }
+
+        .import-export-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .import-export-header p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .import-export-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            display: none;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .empty-text {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        /* Loading State */
+        .loading-state {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--background);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loading-text {
+            color: var(--text-light);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .deadlines-container {
+                flex-direction: column;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background-color: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--card-shadow);
+                padding: 20px 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                margin: 15px 0;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .calendar-day {
+                height: 80px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 15px;
+            }
+            
+            .search-container {
+                display: none;
+            }
+            
+            .user-name {
+                display: none;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 4px;
+            }
+            
+            .calendar-day {
+                height: 60px;
+                padding: 5px;
+                font-size: 0.8rem;
+            }
+            
+            .day-number {
+                font-size: 0.8rem;
+            }
+            
+            .deadline-marker {
+                width: 4px;
+                height: 4px;
+            }
+            
+            .deadline-list-item {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px 10px;
+            }
+            
+            .deadline-checkbox {
+                margin-right: 10px;
+            }
+            
+            .deadline-date {
+                display: flex;
+                align-items: center;
+                width: auto;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .deadline-day {
+                margin-right: 10px;
+                font-size: 1.2rem;
+            }
+            
+            .deadline-status {
+                margin-left: 0;
+                margin-top: 10px;
+                align-self: flex-start;
+            }
+            
+            .deadline-actions {
+                margin-left: 0;
+                margin-top: 10px;
+                align-self: stretch;
+                justify-content: space-between;
+            }
+            
+            .view-toggle {
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filters-container {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .filter-btn-main {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .filter-dropdown {
+                width: 100%;
+            }
+
+            .import-export-actions {
+                flex-direction: column;
+            }
+            
+            .mobile-sidebar-toggle {
+                top: 70px;
+            }
+            
+            /* Fixed mobile sidebar */
+            .mobile-sidebar {
+                width: 100%;
+                left: -100%;
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .mobile-sidebar.active {
+                transform: translateX(100%);
+            }
+            
+            /* List header adjustments for mobile */
+            .list-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .bulk-actions {
+                display: none;
+            }
+            
+            .bulk-actions-mobile {
+                display: flex;
+            }
+            
+            /* Action buttons for mobile */
+            .action-btn {
+                width: 44px;
+                height: 44px;
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calendar-day {
+                height: 50px;
+            }
+            
+            .weekday-header {
+                padding: 5px;
+                font-size: 0.7rem;
+            }
+            
+            .deadline-list-item {
+                padding: 12px 8px;
+            }
+            
+            .deadline-date {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-right: 10px;
+            }
+            
+            .deadline-day {
+                margin-right: 0;
+            }
+            
+            .deadline-content {
+                margin-bottom: 10px;
+            }
+            
+            .bulk-actions-mobile {
+                flex-direction: column;
+            }
+            
+            .bulk-actions-mobile .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+           100% { transform: rotate(360deg); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease forwards;
+        }
+        
+        /* Today highlight style */
+        .calendar-day.today {
+            background-color: rgba(30, 58, 138, 0.1);
+            border: 2px solid var(--primary);
+        }
+        
+        /* Filter tags */
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .filter-tag {
+            display: flex;
+            align-items: center;
+            background-color: var(--primary-light);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .filter-tag .close {
+            margin-left: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .clear-filters {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.9rem;
+        }
+
+        /* Add Deadline Button */
+        .add-deadline-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-left: auto;
+        }
+        
+        .add-deadline-btn:hover {
+            background-color: var(--primary-light);
+        }
+        
+        /* Form Styles for Add Deadline Modal */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #E5E7EB;
+            border-radius: 6px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-hint {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+        
+        .form-error {
+            font-size: 0.8rem;
+            color: var(--error);
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .time-input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .time-input {
+            flex: 1;
+        }
+        
+        /* Improved Mobile Filter Bar Styles */
+        .filters-container-mobile {
+            display: none;
+            width: 100%;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .filters-container {
+                display: none;
+            }
+            
+            .filters-container-mobile {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-filter-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 15px;
+                background-color: var(--primary);
+                color: var(--white);
+                border-radius: 8px;
+                cursor: pointer;
+            }
+            
+            .mobile-filter-title {
+                font-weight: 500;
+                font-size: 1rem;
+            }
+            
+            .mobile-filter-toggle {
+                transition: var(--transition);
+            }
+            
+            .mobile-filter-toggle.active {
+                transform: rotate(180deg);
+            }
+            
+            .mobile-filter-content {
+                display: none;
+                background-color: var(--white);
+                border-radius: 8px;
+                padding: 15px;
+                box-shadow: var(--card-shadow);
+                margin-top: 5px;
+            }
+            
+            .mobile-filter-content.active {
+                display: block;
+                animation: fadeIn 0.3s ease;
+            }
+            
+            .mobile-filter-group {
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+                border-bottom: 1px solid #E5E7EB;
+            }
+            
+            .mobile-filter-group:last-child {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+            
+            .mobile-filter-label {
+                display: block;
+                font-weight: 500;
+                margin-bottom: 10px;
+                color: var(--text-dark);
+            }
+            
+            .mobile-filter-options {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .mobile-filter-option {
+                padding: 8px 12px;
+                background-color: var(--background);
+                border-radius: 20px;
+                font-size: 0.85rem;
+                cursor: pointer;
+                transition: var(--transition);
+                border: 1px solid transparent;
+            }
+            
+            .mobile-filter-option.active {
+                background-color: var(--primary);
+                color: var(--white);
+                border-color: var(--primary);
+            }
+            
+            .mobile-sort-options {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-sort-option {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                background-color: var(--background);
+                border-radius: 6px;
+                cursor: pointer;
+                transition: var(--transition);
+            }
+            
+            .mobile-sort-option.active {
+                background-color: var(--primary);
+                color: var(--white);
+            }
+            
+            .mobile-sort-option input {
+                margin-right: 10px;
+            }
+        }
+
+        /* Enhanced active filters for mobile */
+        @media (max-width: 768px) {
+            .active-filters {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .filter-tag {
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
+            
+            .clear-filters {
+                align-self: flex-start;
+                margin-top: 5px;
+            }
+        }
+        
+        /* Added CSS for Search */
+        .search-container {
+            position: relative;
+        }
+
+        .search-results-count {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--white);
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            border-radius: 0 0 8px 8px;
+            box-shadow: var(--card-shadow);
+            display: none;
+            z-index: 100;
+        }
+
+        .search-results-count.active {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="header-container">
+            <a href="dashboard.html" class="logo">
+                <div class="logo-text">Navi<span class="logo-accent">Disha</span></div>
+            </a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="roadmaps.html" class="nav-link">Roadmaps</a></li>
+                <li class="nav-item"><a href="recommendation.html" class="nav-link">Recommendations</a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link">Support</a></li>
+            </ul>
+            
+            <div class="header-right">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search deadlines...">
+                    <div class="search-results-count" id="search-results-count"></div>
+                </div>
+                
+               <a href ="notification_center.html" class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+                
+                <div class="user-profile">
+                    <div class="user-avatar">A</div>
+                    <span class="user-name">Anjali</span>
+                    <div class="user-dropdown">
+                        <a href="academic_profile.html" class="dropdown-item"><i class="fas fa-user"></i> Profile</a>
+                        <a href="prefrences_settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-sidebar-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <div class="mobile-sidebar">
+        <button class="close-sidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">Deadline Filters</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link active" data-category="all">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>All Deadlines</span>
+                </a>
+            </li>
+             <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-category="exam">
+                    <i class="fas fa-file-alt"></i>
+                    <span>National Exams</span>
+                </a>
+            </li>
+             <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-category="state_exam">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>State Exams</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-category="application">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>University Apps</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-category="scholarship">
+                    <i class="fas fa-trophy"></i>
+                    <span>Scholarships</span>
+                </a>
+            </li>
+             <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-category="government_scheme">
+                    <i class="fas fa-landmark"></i>
+                    <span>Govt. Schemes</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-category="other">
+                    <i class="fas fa-ellipsis-h"></i>
+                    <span>Other</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="legend-container">
+            <h4 class="sidebar-title">Legend</h4>
+            <div class="legend-item">
+                <div class="legend-color exam-color"></div>
+                <span class="legend-label">National Exam</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color state-exam-color"></div>
+                <span class="legend-label">State Exam</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color application-color"></div>
+                <span class="legend-label">University App</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color scholarship-color"></div>
+                <span class="legend-label">Scholarship</span>
+            </div>
+             <div class="legend-item">
+                <div class="legend-color government_scheme-color"></div>
+                <span class="legend-label">Govt. Scheme</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color other-color"></div>
+                <span class="legend-label">Other</span>
+            </div>
+        </div>
+        
+        <div class="quick-filters">
+            <h4 class="sidebar-title">Quick Filters</h4>
+            <button class="filter-btn active" data-timeframe="all">All Deadlines</button>
+            <button class="filter-btn" data-timeframe="week">This Week</button>
+            <button class="filter-btn" data-timeframe="month">Next 30 Days</button>
+            <button class="filter-btn" data-timeframe="completed">Completed</button>
+            <button class="filter-btn" data-timeframe="priority">Priority</button>
+        </div>
+    </div>
+
+    <div class="sidebar-overlay"></div>
+
+    <div class="deadlines-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title">Deadline Filters</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link active" data-category="all">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>All Deadlines</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-category="exam">
+                        <i class="fas fa-file-alt"></i>
+                        <span>National Exams</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-category="state_exam">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>State Exams</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-category="application">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>University Apps</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-category="scholarship">
+                        <i class="fas fa-trophy"></i>
+                        <span>Scholarships</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-category="government_scheme">
+                        <i class="fas fa-landmark"></i>
+                        <span>Govt. Schemes</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-category="other">
+                        <i class="fas fa-ellipsis-h"></i>
+                        <span>Other</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="legend-container">
+                <h4 class="sidebar-title">Legend</h4>
+                <div class="legend-item">
+                    <div class="legend-color exam-color"></div>
+                    <span class="legend-label">National Exam</span>
+                </div>
+                 <div class="legend-item">
+                    <div class="legend-color state-exam-color"></div>
+                    <span class="legend-label">State Exam</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color application-color"></div>
+                    <span class="legend-label">University App</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color scholarship-color"></div>
+                    <span class="legend-label">Scholarship</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color government_scheme-color"></div>
+                    <span class="legend-label">Govt. Scheme</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color other-color"></div>
+                    <span class="legend-label">Other</span>
+                </div>
+            </div>
+            
+            <div class="quick-filters">
+                <h4 class="sidebar-title">Quick Filters</h4>
+                <button class="filter-btn active" data-timeframe="all">All Deadlines</button>
+                <button class="filter-btn" data-timeframe="week">This Week</button>
+                <button class="filter-btn" data-timeframe="month">Next 30 Days</button>
+                <button class="filter-btn" data-timeframe="completed">Completed</button>
+                <button class="filter-btn" data-timeframe="priority">Priority</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h2 class="page-title">Upcoming Deadlines</h2>
+                <button class="add-deadline-btn" id="add-deadline-btn">
+                    <i class="fas fa-plus"></i>
+                    <span>Add Deadline</span>
+                </button>
+                <div class="view-toggle">
+                    <button class="toggle-btn active" id="calendar-view-btn">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Calendar</span>
+                    </button>
+                    <button class="toggle-btn" id="list-view-btn">
+                        <i class="fas fa-list"></i>
+                        <span>List</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="active-filters" id="active-filters">
+                </div>
+
+            <div class="filters-container">
+                <div class="filter-group">
+                    <button class="filter-btn-main">
+                        <span>Category</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="filter-dropdown">
+                        <label class="filter-option">
+                            <input type="checkbox" name="category" value="all" checked> All Categories
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="category" value="exam" checked> National Exams
+                        </label>
+                         <label class="filter-option">
+                            <input type="checkbox" name="category" value="state_exam" checked> State Exams
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="category" value="application" checked> University Apps
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="category" value="scholarship" checked> Scholarships
+                        </label>
+                         <label class="filter-option">
+                            <input type="checkbox" name="category" value="government_scheme" checked> Govt. Schemes
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="category" value="other" checked> Other
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <button class="filter-btn-main">
+                        <span>Status</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="filter-dropdown">
+                        <label class="filter-option">
+                            <input type="checkbox" name="status" value="all" checked> All Status
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="status" value="upcoming" checked> Upcoming
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="status" value="completed"> Completed
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="status" value="missed" checked> Missed
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <button class="filter-btn-main">
+                        <span>Sort By</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="filter-dropdown">
+                        <label class="filter-option">
+                            <input type="radio" name="sort" value="date-asc" checked> Date (Earliest First)
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="sort" value="date-desc"> Date (Latest First)
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="sort" value="priority"> Priority
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="sort" value="alphabetical"> Alphabetical
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters-container-mobile" id="mobile-filters">
+                <div class="mobile-filter-header" id="mobile-filter-toggle">
+                    <span class="mobile-filter-title">Filters & Sort</span>
+                    <i class="fas fa-chevron-down mobile-filter-toggle"></i>
+                </div>
+                <div class="mobile-filter-content" id="mobile-filter-content">
+                    <div class="mobile-filter-group">
+                        <span class="mobile-filter-label">Category</span>
+                        <div class="mobile-filter-options">
+                            <div class="mobile-filter-option active" data-filter-type="category" data-value="all">All</div>
+                            <div class="mobile-filter-option" data-filter-type="category" data-value="exam">National Exams</div>
+                            <div class="mobile-filter-option" data-filter-type="category" data-value="state_exam">State Exams</div>
+                            <div class="mobile-filter-option" data-filter-type="category" data-value="application">University Apps</div>
+                            <div class="mobile-filter-option" data-filter-type="category" data-value="scholarship">Scholarships</div>
+                            <div class="mobile-filter-option" data-filter-type="category" data-value="government_scheme">Govt. Schemes</div>
+                            <div class="mobile-filter-option" data-filter-type="category" data-value="other">Other</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mobile-filter-group">
+                        <span class="mobile-filter-label">Status</span>
+                        <div class="mobile-filter-options">
+                            <div class="mobile-filter-option active" data-filter-type="status" data-value="all">All</div>
+                            <div class="mobile-filter-option" data-filter-type="status" data-value="upcoming">Upcoming</div>
+                            <div class="mobile-filter-option" data-filter-type="status" data-value="completed">Completed</div>
+                             <div class="mobile-filter-option" data-filter-type="status" data-value="missed">Missed</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mobile-filter-group">
+                        <span class="mobile-filter-label">Timeframe</span>
+                        <div class="mobile-filter-options">
+                            <div class="mobile-filter-option active" data-filter-type="timeframe" data-value="all">All</div>
+                            <div class="mobile-filter-option" data-filter-type="timeframe" data-value="week">This Week</div>
+                            <div class="mobile-filter-option" data-filter-type="timeframe" data-value="month">Next 30 Days</div>
+                            <div class="mobile-filter-option" data-filter-type="timeframe" data-value="priority">Priority</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mobile-filter-group">
+                        <span class="mobile-filter-label">Sort By</span>
+                        <div class="mobile-sort-options">
+                            <label class="mobile-sort-option active">
+                                <input type="radio" name="mobile-sort" value="date-asc" checked>
+                                <span>Date (Earliest First)</span>
+                            </label>
+                            <label class="mobile-sort-option">
+                                <input type="radio" name="mobile-sort" value="date-desc">
+                                <span>Date (Latest First)</span>
+                            </label>
+                            <label class="mobile-sort-option">
+                                <input type="radio" name="mobile-sort" value="priority">
+                                <span>Priority</span>
+                            </label>
+                            <label class="mobile-sort-option">
+                                <input type="radio" name="mobile-sort" value="alphabetical">
+                                <span>Alphabetical</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="apply-mobile-filters" style="width: 100%; margin-top: 10px;">
+                        Apply Filters
+                    </button>
+                </div>
+            </div>
+
+            <div class="calendar-view" id="calendar-view">
+                <div class="calendar-header">
+                    <div class="calendar-nav">
+                        <button class="nav-btn" id="prev-month">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 class="current-month" id="current-month">September 2023</h3>
+                        <button class="nav-btn" id="next-month">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="month-selector">
+                        <select class="month-dropdown" id="month-dropdown">
+                            <option value="0">January</option>
+                            <option value="1">February</option>
+                            <option value="2">March</option>
+                            <option value="3">April</option>
+                            <option value="4">May</option>
+                            <option value="5">June</option>
+                            <option value="6">July</option>
+                            <option value="7">August</option>
+                            <option value="8" selected>September</option>
+                            <option value="9">October</option>
+                            <option value="10">November</option>
+                            <option value="11">December</option>
+                        </select>
+                        <select class="year-dropdown" id="year-dropdown">
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025" selected>2025</option>
+                            <option value="2026">2026</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="calendar-grid" id="calendar-grid">
+                    <div class="weekday-header">Sun</div>
+                    <div class="weekday-header">Mon</div>
+                    <div class="weekday-header">Tue</div>
+                    <div class="weekday-header">Wed</div>
+                    <div class="weekday-header">Thu</div>
+                    <div class="weekday-header">Fri</div>
+                    <div class="weekday-header">Sat</div>
+                    
+                    </div>
+            </div>
+
+            <div class="list-view" id="list-view">
+                <div class="list-header">
+                    <h3 class="page-title">Deadline List</h3>
+                    <div class="bulk-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Mark Selected as Completed</span>
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-bell"></i>
+                            <span>Set Reminder</span>
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-trash-alt"></i>
+                            <span>Delete Selected</span>
+                        </button>
+                    </div>
+                    <div class="bulk-actions-mobile">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Complete</span>
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-bell"></i>
+                            <span>Remind</span>
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-trash-alt"></i>
+                            <span>Delete</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="deadline-list" id="deadline-list">
+                    </div>
+            </div>
+
+            <div class="empty-state" id="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-calendar-times"></i>
+                </div>
+                <h3 class="empty-title">No deadlines found</h3>
+                <p class="empty-text">Try adjusting your filters to see more results.</p>
+                <button class="btn btn-primary" id="reset-filters">Reset All Filters</button>
+            </div>
+
+            <div class="import-export">
+                <div class="import-export-header">
+                    <h3 class="import-export-title">Manage Your Deadlines</h3>
+                    <p>Import or export your deadlines for backup or sharing</p>
+                </div>
+                <div class="import-export-actions">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-file-export"></i>
+                        <span>Export Deadlines</span>
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-file-import"></i>
+                        <span>Import Deadlines</span>
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Sync with Calendar</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="regional-resources">
+                <div class="import-export-header">
+                    <h3 class="import-export-title">Student Resources</h3>
+                    <p>Helpful links and portals for your academic journey</p>
+                </div>
+                <div class="import-export-actions">
+                    <a href="https://scholarships.gov.in/" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-rupee-sign"></i>
+                        <span>National Scholarship Portal</span>
+                    </a>
+                    <a href="https://www.ugc.gov.in/" target="_blank" class="btn btn-secondary">
+                        <i class="fas fa-university"></i>
+                        <span>University Grants Commission</span>
+                    </a>
+                    <a href="https://nta.ac.in/" target="_blank" class="btn btn-outline">
+                        <i class="fas fa-book-open"></i>
+                        <span>NTA Exam Portal</span>
+                    </a>
+                     <a href="https://upsc.gov.in/" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-landmark"></i>
+                        <span>Govt. Exam Portal (UPSC)</span>
+                    </a>
+                    <a href="https://jkbose.nic.in/" target="_blank" class="btn btn-secondary">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>J&K BOSE Portal</span>
+                    </a>
+                    <a href="https://www.iimidr.ac.in/academic-programmes/five-year-integrated-programme-in-management-ipm/" target="_blank" class="btn btn-outline">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Management Exams (IPMAT)</span>
+                    </a>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="deadline-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Deadline Details</h3>
+                <button class="modal-close" id="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-detail">
+                    <div class="detail-label">Title</div>
+                    <div class="detail-value" id="modal-title">SAT Registration Deadline</div>
+                </div>
+                <div class="modal-detail">
+                    <div class="detail-label">Type</div>
+                    <div class="detail-value" id="modal-type">Exam</div>
+                </div>
+                <div class="modal-detail">
+                    <div class="detail-label">Date & Time</div>
+                    <div class="detail-value" id="modal-date">September 5, 2023 at 11:59 PM EST</div>
+                </div>
+                <div class="modal-detail">
+                    <div class="detail-label">Description</div>
+                    <div class="detail-value" id="modal-description">Last date to register for the SAT examination for the Fall session. Late registration may be available with an additional fee.</div>
+                </div>
+                <div class="modal-detail">
+                    <div class="detail-label">Priority</div>
+                    <div class="detail-value" id="modal-priority">High</div>
+                </div>
+                <div class="modal-detail">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value" id="modal-status">Upcoming</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="edit-deadline">
+                    <i class="fas fa-edit"></i>
+                    <span>Edit</span>
+                </button>
+                <button class="btn btn-primary" id="mark-completed">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Mark as Completed</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="add-deadline-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Deadline</h3>
+                <button class="modal-close" id="close-add-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label" for="new-deadline-title">Title</label>
+                    <input type="text" class="form-input" id="new-deadline-title" placeholder="Enter deadline title">
+                    <div class="form-error" id="title-error">Please enter a title</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="new-deadline-type">Type</label>
+                    <select class="form-select" id="new-deadline-type">
+                        <option value="exam">National Exam (JEE, NEET, CUET)</option>
+                        <option value="state_exam">State Level Exam</option>
+                        <option value="application">University Application</option>
+                        <option value="scholarship">Scholarship</option>
+                        <option value="government_scheme">Government Scheme</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="new-deadline-date">Date</label>
+                    <input type="date" class="form-input" id="new-deadline-date">
+                    <div class="form-error" id="date-error">Please select a present or future date</div>
+                    <div class="form-hint">Only present or future dates are allowed</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Time</label>
+                    <div class="time-input-container">
+                        <input type="time" class="form-input time-input" id="new-deadline-time" value="23:59">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="new-deadline-priority">Priority</label>
+                    <select class="form-select" id="new-deadline-priority">
+                        <option value="high">High</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="new-deadline-description">Description (Optional)</label>
+                    <textarea class="form-textarea" id="new-deadline-description" placeholder="Add any details about this deadline"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancel-add-deadline">
+                    <i class="fas fa-times"></i>
+                    <span>Cancel</span>
+                </button>
+                <button class="btn btn-primary" id="save-deadline">
+                    <i class="fas fa-save"></i>
+                    <span>Save Deadline</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="edit-deadline-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Deadline</h3>
+                <button class="modal-close" id="close-edit-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label" for="edit-deadline-title">Title</label>
+                    <input type="text" class="form-input" id="edit-deadline-title" placeholder="Enter deadline title">
+                    <div class="form-error" id="edit-title-error">Please enter a title</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="edit-deadline-type">Type</label>
+                    <select class="form-select" id="edit-deadline-type">
+                        <option value="exam">National Exam (JEE, NEET, CUET)</option>
+                        <option value="state_exam">State Level Exam</option>
+                        <option value="application">University Application</option>
+                        <option value="scholarship">Scholarship</option>
+                        <option value="government_scheme">Government Scheme</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="edit-deadline-date">Date</label>
+                    <input type="date" class="form-input" id="edit-deadline-date">
+                    <div class="form-error" id="edit-date-error">Please select a valid date</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Time</label>
+                    <div class="time-input-container">
+                        <input type="time" class="form-input time-input" id="edit-deadline-time">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="edit-deadline-priority">Priority</label>
+                    <select class="form-select" id="edit-deadline-priority">
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="edit-deadline-description">Description (Optional)</label>
+                    <textarea class="form-textarea" id="edit-deadline-description" placeholder="Add any details about this deadline"></textarea>
+                </div>
+                
+                <input type="hidden" id="edit-deadline-id">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancel-edit-deadline">
+                    <i class="fas fa-times"></i>
+                    <span>Cancel</span>
+                </button>
+                <button class="btn btn-primary" id="update-deadline">
+                    <i class="fas fa-save"></i>
+                    <span>Update Deadline</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample deadline data generation
+        function formatDate(date) {
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+        }
+        
+        function generateSampleDeadlines() {
+            const today = new Date();
+            const nextWeek = new Date();
+            nextWeek.setDate(today.getDate() + 7);
+            
+            const twoWeeks = new Date();
+            twoWeeks.setDate(today.getDate() + 14);
+            
+            const nextMonth = new Date();
+            nextMonth.setDate(today.getDate() + 30);
+
+            const tenDays = new Date();
+            tenDays.setDate(today.getDate() + 10);
+            
+            return [
+                { 
+                    id: 1, 
+                    title: "JEE Main Registration", 
+                    type: "exam", 
+                    date: formatDate(nextWeek), 
+                    time: "23:59", 
+                    status: "upcoming", 
+                    priority: "high", 
+                    description: "Joint Entrance Examination Main registration for April session." 
+                },
+                { 
+                    id: 2, 
+                    title: "DUET Application", 
+                    type: "application", 
+                    date: formatDate(twoWeeks), 
+                    time: "17:00", 
+                    status: "upcoming", 
+                    priority: "high", 
+                    description: "Delhi University Entrance Test application deadline." 
+                },
+                { 
+                    id: 3, 
+                    title: "National Scholarship Portal", 
+                    type: "scholarship", 
+                    date: formatDate(nextMonth), 
+                    time: "23:59", 
+                    status: "upcoming", 
+                    priority: "medium", 
+                    description: "National Scholarship Scheme application deadline." 
+                },
+                { 
+                    id: 4, 
+                    title: "NEET UG Application", 
+                    type: "exam", 
+                    date: formatDate(new Date(today.getTime() - (2 * 86400000))),
+                    time: "17:00", 
+                    status: "upcoming",
+                    priority: "high", 
+                    description: "National Eligibility cum Entrance Test for undergraduate medical courses." 
+                },
+                { 
+                    id: 5, 
+                    title: "CLAT Application", 
+                    type: "exam", 
+                    date: formatDate(tenDays), 
+                    time: "23:59", 
+                    status: "upcoming", 
+                    priority: "high", 
+                    description: "Common Law Admission Test for law programs." 
+                },
+                { 
+                    id: 6, 
+                    title: "UPSC Prelims Registration", 
+                    type: "exam", 
+                    date: formatDate(tenDays), 
+                    time: "23:59", 
+                    status: "upcoming", 
+                    priority: "high", 
+                    description: "Union Public Service Commission Preliminary Examination registration." 
+                }
+            ];
+        }
+
+        const deadlinesData = generateSampleDeadlines();
+
+        // Function to check and update deadline statuses
+        function updateDeadlineStatuses() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Reset time for accurate date comparison
+            
+            deadlinesData.forEach(deadline => {
+                const deadlineDate = new Date(deadline.date);
+                deadlineDate.setHours(0, 0, 0, 0);
+                
+                // If deadline date has passed and it's not completed, mark as missed
+                if (deadlineDate < today && deadline.status === 'upcoming') {
+                    deadline.status = 'missed';
+                }
+            });
+        }
+
+        // DOM Elements
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const userProfile = document.querySelector('.user-profile');
+        const userDropdown = document.querySelector('.user-dropdown');
+        const mobileSidebarToggle = document.querySelector('.mobile-sidebar-toggle');
+        const mobileSidebar = document.querySelector('.mobile-sidebar');
+        const sidebarOverlay = document.querySelector('.sidebar-overlay');
+        const closeSidebar = document.querySelector('.close-sidebar');
+        const calendarViewBtn = document.getElementById('calendar-view-btn');
+        const listViewBtn = document.getElementById('list-view-btn');
+        const calendarView = document.getElementById('calendar-view');
+        const listView = document.getElementById('list-view');
+        const deadlineModal = document.getElementById('deadline-modal');
+        const closeModal = document.getElementById('close-modal');
+        const markCompletedBtn = document.getElementById('mark-completed');
+        const editDeadlineBtn = document.getElementById('edit-deadline');
+        const header = document.getElementById('header');
+        const deadlineList = document.getElementById('deadline-list');
+        const emptyState = document.getElementById('empty-state');
+        const resetFiltersBtn = document.getElementById('reset-filters');
+        const activeFiltersContainer = document.getElementById('active-filters');
+
+        // Calendar functionality with current date
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+        const currentMonthEl = document.getElementById('current-month');
+        const monthDropdown = document.getElementById('month-dropdown');
+        const yearDropdown = document.getElementById('year-dropdown');
+        const calendarGrid = document.getElementById('calendar-grid');
+
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+		
+        const typeNames = {
+            'exam': 'National Exam',
+            'state_exam': 'State Level Exam',
+            'application': 'University Application',
+            'scholarship': 'Scholarship',
+            'government_scheme': 'Government Scheme',
+            'other': 'Other'
+        };
+
+		let selectedDeadlines = new Set();
+
+        // Filter state
+        let activeFilters = {
+            category: ['all', 'exam', 'state_exam', 'application', 'scholarship', 'government_scheme', 'other'],
+            status: ['all', 'upcoming', 'missed'],
+            timeframe: 'all',
+            sort: 'date-asc'
+        };
+		
+		// Function to handle checkbox selection changes
+		function handleCheckboxChange(checkbox, deadlineId) {
+			if (checkbox.checked) {
+				selectedDeadlines.add(deadlineId);
+			} else {
+				selectedDeadlines.delete(deadlineId);
+			}
+			
+			// Update UI based on selection (optional)
+			updateBulkActionsState();
+		}
+
+		// Function to enable/disable bulk action buttons
+		function updateBulkActionsState() {
+			const hasSelection = selectedDeadlines.size > 0;
+			
+			// Enable/disable desktop bulk action buttons
+			document.querySelectorAll('.bulk-actions .btn, .bulk-actions-mobile .btn').forEach(btn => {
+				if (hasSelection) {
+					btn.removeAttribute('disabled');
+				} else {
+					btn.setAttribute('disabled', 'disabled');
+				}
+			});
+		}
+
+		// Function to handle "Mark Selected as Completed"
+		function markSelectedAsCompleted() {
+			if (selectedDeadlines.size === 0) {
+				alert('Please select at least one deadline to mark as completed.');
+				return;
+			}
+			
+			if (confirm(`Mark ${selectedDeadlines.size} deadline(s) as completed?`)) {
+				deadlinesData.forEach(deadline => {
+					if (selectedDeadlines.has(deadline.id.toString())) {
+						deadline.status = 'completed';
+					}
+				});
+				
+				updateDeadlines();
+				selectedDeadlines.clear();
+				updateBulkActionsState();
+				alert('Selected deadlines marked as completed!');
+			}
+		}
+
+		// Function to handle "Set Reminder"
+		function setReminderForSelected() {
+			if (selectedDeadlines.size === 0) {
+				alert('Please select at least one deadline to set a reminder for.');
+				return;
+			}
+			
+			alert(`Reminder set for ${selectedDeadlines.size} selected deadline(s)!`);
+		}
+
+		// Function to handle "Delete Selected"
+		function deleteSelectedDeadlines() {
+			if (selectedDeadlines.size === 0) {
+				alert('Please select at least one deadline to delete.');
+				return;
+			}
+			
+			if (confirm(`Are you sure you want to delete ${selectedDeadlines.size} deadline(s)? This action cannot be undone.`)) {
+				// Filter out the selected deadlines
+				for (let i = deadlinesData.length - 1; i >= 0; i--) {
+					if (selectedDeadlines.has(deadlinesData[i].id.toString())) {
+						deadlinesData.splice(i, 1);
+					}
+				}
+				
+				updateDeadlines();
+				selectedDeadlines.clear();
+				updateBulkActionsState();
+				alert('Selected deadlines have been deleted.');
+			}
+		}
+
+		// Function to select all/none checkboxes
+		function toggleSelectAll(selectAll) {
+			const checkboxes = document.querySelectorAll('.deadline-checkbox');
+			checkboxes.forEach(checkbox => {
+				checkbox.checked = selectAll;
+				const deadlineId = checkbox.getAttribute('data-id');
+				if (selectAll) {
+					selectedDeadlines.add(deadlineId);
+				} else {
+					selectedDeadlines.delete(deadlineId);
+				}
+			});
+			
+			updateBulkActionsState();
+		}
+
+
+        // Function to show deadline tooltip on hover
+        function showDeadlineTooltip(dayElement, deadlines) {
+            // Remove any existing tooltip first
+            const existingTooltip = document.querySelector('.deadline-tooltip');
+            if (existingTooltip) {
+                existingTooltip.remove();
+            }
+            
+            if (deadlines.length === 0) return;
+            
+            // Create tooltip
+            const tooltip = document.createElement('div');
+            tooltip.className = 'deadline-tooltip';
+            
+            // Position tooltip above the day element
+            const rect = dayElement.getBoundingClientRect();
+            tooltip.style.position = 'fixed';
+            tooltip.style.top = `${rect.top - 180}px`;
+            tooltip.style.left = `${rect.left - 100}px`;
+            tooltip.style.zIndex = '2000';
+            
+            // Add content to tooltip
+            let tooltipContent = '';
+            
+            if (deadlines.length === 1) {
+                const deadline = deadlines[0];
+                const deadlineDate = new Date(deadline.date);
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+                
+                tooltipContent = `
+                    <div class="tooltip-title">${deadline.title}</div>
+                    <span class="tooltip-type">${typeNames[deadline.type]}</span>
+                    <div class="tooltip-time">
+                        <i class="fas fa-clock"></i>
+                        <span>${monthNames[deadlineDate.getUTCMonth()]} ${deadlineDate.getUTCDate()}, ${deadlineDate.getUTCFullYear()} at ${formatTime(deadline.time)}</span>
+                    </div>
+                    <button class="tooltip-btn" data-id="${deadline.id}">View Details</button>
+                `;
+            } else {
+                tooltipContent = `
+                    <div class="tooltip-title">${deadlines.length} Deadlines</div>
+                    <div style="max-height: 150px; overflow-y: auto;">
+                `;
+                
+                deadlines.forEach(deadline => {
+                    tooltipContent += `
+                        <div style="padding: 8px 0; border-bottom: 1px solid #f0f0f0;">
+                            <div style="font-weight: 500;">${deadline.title}</div>
+                            <div style="font-size: 0.8rem; color: #6b7280;">${typeNames[deadline.type]} • ${formatTime(deadline.time)}</div>
+                        </div>
+                    `;
+                });
+                
+                tooltipContent += `</div>`;
+            }
+            
+            tooltip.innerHTML = tooltipContent;
+            
+            // Add event listener to the button if it exists
+            const viewBtn = tooltip.querySelector('.tooltip-btn');
+            if (viewBtn) {
+                viewBtn.addEventListener('click', () => {
+                    const deadlineId = viewBtn.getAttribute('data-id');
+                    const deadline = deadlinesData.find(d => d.id == deadlineId);
+                    
+                    if (deadline) {
+                        showDeadlineDetails(deadline);
+                    }
+                    
+                    // Remove the tooltip
+                    tooltip.remove();
+                });
+            }
+            
+            document.body.appendChild(tooltip);
+            
+            // Remove tooltip when mouse leaves the day element
+            const removeTooltipHandler = () => {
+                if (tooltip) {
+                    tooltip.remove();
+                    dayElement.removeEventListener('mouseleave', removeTooltipHandler);
+                }
+            };
+            
+            dayElement.addEventListener('mouseleave', removeTooltipHandler);
+        }
+
+        // Function to handle date clicks
+        function handleDateClick(dayElement, deadlines) {
+            if (deadlines.length === 0) return;
+            
+            if (deadlines.length === 1) {
+                // Show details for single deadline
+                showDeadlineDetails(deadlines[0]);
+            } else {
+                // Show a modal with all deadlines for this date
+                showDateDeadlinesModal(deadlines);
+            }
+        }
+
+        // Function to show all deadlines for a date in a modal
+        function showDateDeadlinesModal(deadlines) {
+            const dateForTitle = new Date(deadlines[0].date);
+            const modalDateString = dateForTitle.toLocaleDateString(undefined, { timeZone: 'UTC' });
+
+            // Create modal HTML
+            const modalHTML = `
+                <div class="modal-overlay active" id="date-deadlines-modal">
+                    <div class="modal">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Deadlines for ${modalDateString}</h3>
+                            <button class="modal-close" id="close-date-modal">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="deadline-list">
+                                ${deadlines.map(deadline => `
+                                    <div class="deadline-list-item">
+                                        <div class="deadline-content">
+                                            <h4 class="deadline-title">${deadline.title}</h4>
+                                            <span class="deadline-type">${typeNames[deadline.type]}</span>
+                                            <div class="deadline-time">
+                                                <i class="fas fa-clock"></i>
+                                                <span>${formatTime(deadline.time)}</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary view-deadline-details" data-id="${deadline.id}">
+                                            View Details
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add modal to DOM
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            // Add event listeners
+            document.getElementById('close-date-modal').addEventListener('click', () => {
+                document.getElementById('date-deadlines-modal').remove();
+            });
+            
+            document.querySelectorAll('.view-deadline-details').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const deadlineId = btn.getAttribute('data-id');
+                    const deadline = deadlinesData.find(d => d.id == deadlineId);
+                    
+                    if (deadline) {
+                        showDeadlineDetails(deadline);
+                        document.getElementById('date-deadlines-modal').remove();
+                    }
+                });
+            });
+        }
+        
+        // Function to generate calendar
+        function generateCalendar(month, year) {
+            // Clear existing calendar days (keep the weekday headers)
+            const allCalendarElements = document.querySelectorAll('.calendar-grid > *');
+            
+            allCalendarElements.forEach(el => {
+                if (!el.classList.contains('weekday-header')) {
+                    el.remove();
+                }
+            });
+
+            // Set the current month and year in the header
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            
+            currentMonthEl.textContent = `${monthNames[month]} ${year}`;
+            
+            // Set the dropdown values
+            monthDropdown.value = month;
+            yearDropdown.value = year;
+
+            // Get first day of month and number of days in month
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // Get number of days in previous month
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+            
+            // Create empty cells for days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day past-day';
+                const dayNumber = daysInPrevMonth - firstDay + i + 1;
+                day.innerHTML = `<div class="day-number">${dayNumber}</div>`;
+                calendarGrid.appendChild(day);
+            }
+            
+            // Create cells for each day of the month
+            const today = new Date();
+            const filteredDeadlines = filterDeadlines(deadlinesData);
+            
+            for (let i = 1; i <= daysInMonth; i++) {
+                const day = document.createElement('div');
+                const cellDate = new Date(year, month, i);
+                
+                // Check if this is today
+                if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                    day.className = 'calendar-day today';
+                } else {
+                    // Check if this is a past day
+                    if (cellDate < today && !(cellDate.getDate() === today.getDate() && 
+                                             cellDate.getMonth() === today.getMonth() && 
+                                             cellDate.getFullYear() === today.getFullYear())) {
+                        day.className = 'calendar-day past-day';
+                    } else {
+                        day.className = 'calendar-day';
+                    }
+                }
+                
+                day.innerHTML = `<div class="day-number">${i}</div>`;
+                
+                // Add deadline markers for this day
+                const dayDeadlines = filteredDeadlines.filter(d => {
+                    const deadlineDate = new Date(d.date);
+                    return deadlineDate.getUTCDate() === i && 
+                           deadlineDate.getUTCMonth() === month && 
+                           deadlineDate.getUTCFullYear() === year;
+                });
+                
+                if (dayDeadlines.length > 0) {
+                     // Add a class for days with missed deadlines
+                    const hasMissedDeadlines = dayDeadlines.some(d => d.status === 'missed');
+                    if (hasMissedDeadlines) {
+                        day.classList.add('has-missed-deadlines');
+                    }
+
+                    const markers = document.createElement('div');
+                    markers.className = 'deadline-markers';
+                    
+                    dayDeadlines.forEach(deadline => {
+                        const marker = document.createElement('div');
+                        marker.className = `deadline-marker ${deadline.type}`;
+                        if (deadline.status === 'missed') {
+                             marker.classList.add('missed');
+                        }
+                        markers.appendChild(marker);
+                    });
+                    
+                    const count = document.createElement('div');
+                    count.className = 'deadline-count';
+                    count.textContent = dayDeadlines.length;
+                    
+                    day.appendChild(markers);
+                    day.appendChild(count);
+                    
+                    // Hover event for tooltip
+                    day.addEventListener('mouseenter', () => {
+                        showDeadlineTooltip(day, dayDeadlines);
+                    });
+                    
+                    // Click event for showing details
+                    day.addEventListener('click', () => {
+                        handleDateClick(day, dayDeadlines);
+                    });
+                    
+                    // Change cursor to indicate clickability
+                    day.style.cursor = 'pointer';
+                }
+                
+                calendarGrid.appendChild(day);
+            }
+            
+            // Fill remaining cells with next month's days
+            const totalCells = 42; // 6 rows x 7 columns
+            const currentGridSize = firstDay + daysInMonth;
+            const remainingCells = (currentGridSize > 35) ? totalCells - currentGridSize : 35 - currentGridSize;
+            
+            for (let i = 1; i <= remainingCells; i++) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day';
+                day.style.opacity = '0.5';
+                day.innerHTML = `<div class="day-number">${i}</div>`;
+                calendarGrid.appendChild(day);
+            }
+        }
+        
+        // Add this function to highlight important Indian academic dates
+        function highlightIndianImportantDates() {
+            const calendarDays = document.querySelectorAll('.calendar-day:not(.past-day)');
+            
+            // Important Indian academic dates
+            const importantDates = [
+                { date: '2025-01-26', title: 'Republic Day' },
+                { date: '2025-03-01', title: 'CBSE Board Exams Begin (Tentative)' },
+                { date: '2025-05-01', title: 'Labour Day - Most Universities Closed' },
+                { date: '2025-06-15', title: 'Typical College Admission Season Start' },
+                { date: '2025-08-15', title: 'Independence Day' },
+                { date: '2025-10-02', title: 'Gandhi Jayanti' },
+                { date: '2025-12-15', title: 'JEE Main Session 1 Registration End (Tentative)' },
+            ];
+            
+            calendarDays.forEach(day => {
+                const dayNumber = day.querySelector('.day-number').textContent;
+                
+                importantDates.forEach(importantDate => {
+                    const dateObj = new Date(importantDate.date + 'T00:00:00'); // Ensure it's parsed as local time
+                    if (dateObj.getDate() == dayNumber && 
+                        dateObj.getMonth() == currentMonth && 
+                        dateObj.getFullYear() == currentYear) {
+                        day.style.border = '2px dashed #F59E0B';
+                        day.title = importantDate.title;
+                    }
+                });
+            });
+        }
+
+        // Function to show deadline details in modal
+        function showDeadlineDetails(deadline) {
+            const deadlineDate = new Date(deadline.date);
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            
+            document.getElementById('modal-title').textContent = deadline.title;
+            document.getElementById('modal-type').textContent = typeNames[deadline.type];
+            document.getElementById('modal-date').textContent = `${monthNames[deadlineDate.getUTCMonth()]} ${deadlineDate.getUTCDate()}, ${deadlineDate.getUTCFullYear()} at ${formatTime(deadline.time)}`;
+            document.getElementById('modal-description').textContent = deadline.description;
+            document.getElementById('modal-priority').textContent = deadline.priority.charAt(0).toUpperCase() + deadline.priority.slice(1);
+            document.getElementById('modal-status').textContent = deadline.status.charAt(0).toUpperCase() + deadline.status.slice(1);
+            
+            // Store the current deadline ID for use in the mark completed action
+            deadlineModal.setAttribute('data-current-deadline-id', deadline.id);
+            
+            deadlineModal.classList.add('active');
+        }
+
+        // Function to format time
+        function formatTime(timeStr) {
+            if (!timeStr) return "N/A";
+            const [hours, minutes] = timeStr.split(':');
+            const hour = parseInt(hours);
+            const period = hour >= 12 ? 'PM' : 'AM';
+            const formattedHour = hour % 12 || 12;
+            
+            return `${formattedHour}:${minutes} ${period}`;
+        }
+
+        // Function to populate deadline list
+        function populateDeadlineList() {
+            // Clear existing list
+            deadlineList.innerHTML = '';
+            
+            // Get filtered deadlines
+            const filteredDeadlines = filterDeadlines(deadlinesData);
+            
+            // Show empty state if no deadlines
+            if (filteredDeadlines.length === 0) {
+                emptyState.style.display = 'block';
+                deadlineList.style.display = 'none';
+                return;
+            }
+            
+            // Hide empty state
+            emptyState.style.display = 'none';
+            deadlineList.style.display = 'block';
+            
+            // Sort deadlines
+            let sortedDeadlines = [...filteredDeadlines];
+            
+            switch(activeFilters.sort) {
+                case 'date-desc':
+                    sortedDeadlines.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    break;
+                case 'priority':
+                    const priorityOrder = { high: 3, medium: 2, low: 1 };
+                    sortedDeadlines.sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
+                    break;
+                case 'alphabetical':
+                    sortedDeadlines.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                default: // date-asc
+                    sortedDeadlines.sort((a, b) => new Date(a.date) - new Date(b.date));
+            }
+            
+            // Add deadlines to list
+            sortedDeadlines.forEach(deadline => {
+                const deadlineDate = new Date(deadline.date);
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                
+                const statusClass = deadline.status === 'completed' ? 'status-completed' : 
+                                   deadline.status === 'missed' ? 'status-missed' : 'status-upcoming';
+                const statusText = deadline.status.charAt(0).toUpperCase() + deadline.status.slice(1);
+                
+                const listItem = document.createElement('div');
+                listItem.className = 'deadline-list-item';
+                listItem.innerHTML = `
+                    <input type="checkbox" class="deadline-checkbox" data-id="${deadline.id}">
+                    <div class="deadline-date">
+                        <div class="deadline-day">${deadlineDate.getUTCDate()}</div>
+                        <div class="deadline-month">${monthNames[deadlineDate.getUTCMonth()]}</div>
+                    </div>
+                    <div class="deadline-content">
+                        <h4 class="deadline-title">${deadline.title}</h4>
+                        <span class="deadline-type">${typeNames[deadline.type]}</span>
+                        <div class="deadline-time">
+                            <i class="fas fa-clock"></i>
+                            <span>${formatTime(deadline.time)}</span>
+                        </div>
+                    </div>
+                    <span class="deadline-status ${statusClass}">${statusText}</span>
+                    <div class="deadline-actions">
+                        <button class="action-btn mark-complete" title="Mark as Completed" data-id="${deadline.id}">
+                            <i class="fas fa-check-circle"></i>
+                        </button>
+                        <button class="action-btn set-reminder" title="Set Reminder" data-id="${deadline.id}">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <button class="action-btn delete-deadline" title="Delete" data-id="${deadline.id}">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `;
+                
+                deadlineList.appendChild(listItem);
+            });
+			
+			// Add event listeners to checkboxes
+			document.querySelectorAll('.deadline-checkbox').forEach(checkbox => {
+				const deadlineId = checkbox.getAttribute('data-id');
+				checkbox.addEventListener('change', () => {
+					handleCheckboxChange(checkbox, deadlineId);
+				});
+			});
+            
+            // Add event listeners to action buttons
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const deadlineId = btn.getAttribute('data-id');
+                    const deadline = deadlinesData.find(d => d.id == deadlineId);
+                    
+                    if (btn.classList.contains('mark-complete')) {
+                        // Mark as completed logic
+                        deadline.status = 'completed';
+                        updateDeadlines();
+                        alert(`"${deadline.title}" marked as completed!`);
+                    } else if (btn.classList.contains('set-reminder')) {
+                        // Set reminder logic
+                        alert(`Reminder set for "${deadline.title}"!`);
+                    } else if (btn.classList.contains('delete-deadline')) {
+                        // Delete deadline logic
+                        if (confirm(`Are you sure you want to delete "${deadline.title}"?`)) {
+                            const index = deadlinesData.findIndex(d => d.id == deadlineId);
+                            if (index !== -1) {
+                                deadlinesData.splice(index, 1);
+                                updateDeadlines();
+                                alert(`"${deadline.title}" has been deleted.`);
+                            }
+                        }
+                    } else if (btn.classList.contains('view-details')) {
+                        // View details logic
+                        showDeadlineDetails(deadline);
+                    }
+                });
+            });
+        }
+
+        // Function to filter deadlines based on active filters
+        function filterDeadlines(deadlines) {
+            return deadlines.filter(deadline => {
+                // Category filter
+                if (!activeFilters.category.includes('all') && !activeFilters.category.includes(deadline.type)) {
+                    return false;
+                }
+                
+                // Status filter
+                if (!activeFilters.status.includes('all') && !activeFilters.status.includes(deadline.status)) {
+                    return false;
+                }
+                
+                // Timeframe filter
+                const today = new Date();
+                const deadlineDate = new Date(deadline.date);
+                
+                if (activeFilters.timeframe === 'week') {
+                    const nextWeek = new Date();
+                    nextWeek.setDate(today.getDate() + 7);
+                    
+                    if (deadlineDate < today || deadlineDate > nextWeek) {
+                        return false;
+                    }
+                } else if (activeFilters.timeframe === 'month') {
+                    const nextMonth = new Date();
+                    nextMonth.setDate(today.getDate() + 30);
+                    
+                    if (deadlineDate < today || deadlineDate > nextMonth) {
+                        return false;
+                    }
+                } else if (activeFilters.timeframe === 'completed') {
+                    if (deadline.status !== 'completed') {
+                        return false;
+                    }
+                } else if (activeFilters.timeframe === 'priority') {
+                    if (deadline.priority !== 'high') {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+        }
+
+        // Function to update both calendar and list views
+        function updateDeadlines() {
+            generateCalendar(currentMonth, currentYear);
+            highlightIndianImportantDates();
+            populateDeadlineList();
+            updateActiveFiltersDisplay();
+        }
+
+        // Function to update active filters display
+        function updateActiveFiltersDisplay() {
+            activeFiltersContainer.innerHTML = '';
+            
+            // Add category filters
+            if (!activeFilters.category.includes('all')) {
+                activeFilters.category.forEach(cat => {
+                    if (cat !== 'all') {
+                        const filterTag = document.createElement('div');
+                        filterTag.className = 'filter-tag';
+                        filterTag.innerHTML = `
+                            ${typeNames[cat]}
+                            <span class="close" data-type="category" data-value="${cat}">&times;</span>
+                        `;
+                        activeFiltersContainer.appendChild(filterTag);
+                    }
+                });
+            }
+            
+            // Add status filters
+            if (!activeFilters.status.includes('all')) {
+                activeFilters.status.forEach(status => {
+                    if (status !== 'all') {
+                        const filterTag = document.createElement('div');
+                        filterTag.className = 'filter-tag';
+                        filterTag.innerHTML = `
+                            ${status.charAt(0).toUpperCase() + status.slice(1)}
+                            <span class="close" data-type="status" data-value="${status}">&times;</span>
+                        `;
+                        activeFiltersContainer.appendChild(filterTag);
+                    }
+                });
+            }
+            
+            // Add timeframe filter
+            if (activeFilters.timeframe !== 'all') {
+                const timeframeNames = {
+                    'week': 'This Week',
+                    'month': 'Next 30 Days',
+                    'completed': 'Completed',
+                    'priority': 'Priority'
+                };
+                
+                const filterTag = document.createElement('div');
+                filterTag.className = 'filter-tag';
+                filterTag.innerHTML = `
+                    ${timeframeNames[activeFilters.timeframe]}
+                    <span class="close" data-type="timeframe" data-value="${activeFilters.timeframe}">&times;</span>
+                `;
+                activeFiltersContainer.appendChild(filterTag);
+            }
+            
+            // Add clear all button if there are active filters
+            if (activeFiltersContainer.children.length > 0) {
+                const clearAll = document.createElement('button');
+                clearAll.className = 'clear-filters';
+                clearAll.textContent = 'Clear All';
+                clearAll.addEventListener('click', resetAllFilters);
+                activeFiltersContainer.appendChild(clearAll);
+            }
+            
+            // Add event listeners to close buttons
+            document.querySelectorAll('.filter-tag .close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', (e) => {
+                    const type = closeBtn.getAttribute('data-type');
+                    const value = closeBtn.getAttribute('data-value');
+                    
+                    if (type === 'category' || type === 'status') {
+                        const index = activeFilters[type].indexOf(value);
+                        if (index !== -1) {
+                            activeFilters[type].splice(index, 1);
+                            
+                            // If no filters left, add 'all'
+                            if (activeFilters[type].length === 0) {
+                                activeFilters[type].push('all');
+                            }
+                        }
+                    } else if (type === 'timeframe') {
+                        activeFilters.timeframe = 'all';
+                    }
+                    
+                    updateDeadlines();
+                });
+            });
+        }
+
+        // Function to reset all filters
+        function resetAllFilters() {
+            activeFilters = {
+                category: ['all', 'exam', 'state_exam', 'application', 'scholarship', 'government_scheme', 'other'],
+                status: ['all', 'upcoming', 'missed'],
+                timeframe: 'all',
+                sort: 'date-asc'
+            };
+            
+            // Update checkboxes and radios
+            document.querySelectorAll('input[name="category"]').forEach(cb => {
+                cb.checked = true;
+            });
+            
+            document.querySelectorAll('input[name="status"]').forEach(cb => {
+                cb.checked = cb.value === 'all' || cb.value === 'upcoming' || cb.value === 'missed';
+            });
+            
+            document.querySelector('input[name="sort"][value="date-asc"]').checked = true;
+            
+            // Update sidebar filters
+            document.querySelectorAll('.sidebar-menu .sidebar-link').forEach(link => {
+                if (link.getAttribute('data-category') === 'all') {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            document.querySelectorAll('.quick-filters .filter-btn').forEach(btn => {
+                if (btn.getAttribute('data-timeframe') === 'all') {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            updateDeadlines();
+        }
+
+        // Event listeners for calendar navigation
+        prevMonthBtn.addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            updateDeadlines();
+        });
+
+        nextMonthBtn.addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            updateDeadlines();
+        });
+
+        // Event listeners for dropdown changes
+        monthDropdown.addEventListener('change', () => {
+            currentMonth = parseInt(monthDropdown.value);
+            updateDeadlines();
+        });
+
+        yearDropdown.addEventListener('change', () => {
+            currentYear = parseInt(yearDropdown.value);
+            updateDeadlines();
+        });
+
+        // Toggle Mobile Menu
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Toggle User Dropdown
+        userProfile.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (userDropdown.classList.contains('active') && !e.target.closest('.user-profile')) {
+                userDropdown.classList.remove('active');
+            }
+        });
+
+        // Toggle Mobile Sidebar
+        mobileSidebarToggle.addEventListener('click', () => {
+            mobileSidebar.classList.add('active');
+            sidebarOverlay.classList.add('active');
+        });
+
+        // Close Mobile Sidebar
+        closeSidebar.addEventListener('click', () => {
+            mobileSidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        });
+
+        sidebarOverlay.addEventListener('click', () => {
+            mobileSidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        });
+
+        // Toggle View (Calendar/List)
+        calendarViewBtn.addEventListener('click', () => {
+            calendarViewBtn.classList.add('active');
+            listViewBtn.classList.remove('active');
+            calendarView.style.display = 'block';
+            listView.style.display = 'none';
+        });
+
+        listViewBtn.addEventListener('click', () => {
+            listViewBtn.classList.add('active');
+            calendarViewBtn.classList.remove('active');
+            listView.style.display = 'block';
+            calendarView.style.display = 'none';
+        });
+
+        // Toggle Filter Dropdowns
+        document.querySelectorAll('.filter-btn-main').forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                dropdown.classList.toggle('active');
+                
+                // Close other dropdowns
+                document.querySelectorAll('.filter-btn-main').forEach(otherButton => {
+                    if (otherButton !== button) {
+                        otherButton.nextElementSibling.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.filter-group')) {
+                document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+        // Filter checkbox changes
+        document.querySelectorAll('input[name="category"]').forEach(cb => {
+            cb.addEventListener('change', () => {
+                if (cb.value === 'all') {
+                    if (cb.checked) {
+                        // Check all category boxes
+                        document.querySelectorAll('input[name="category"]').forEach(c => {
+                            c.checked = true;
+                        });
+                        activeFilters.category = ['all', 'exam', 'state_exam', 'application', 'scholarship', 'government_scheme', 'other'];
+                    } else {
+                        // Can't uncheck "all" without checking something else
+                        cb.checked = true;
+                    }
+                } else {
+                    if (cb.checked) {
+                        // Remove 'all' from filters if it's there
+                        const allIndex = activeFilters.category.indexOf('all');
+                        if (allIndex !== -1) {
+                            activeFilters.category.splice(allIndex, 1);
+                        }
+                        
+                        // Add this category to filters
+                        if (!activeFilters.category.includes(cb.value)) {
+                            activeFilters.category.push(cb.value);
+                        }
+                    } else {
+                        // Remove this category from filters
+                        const index = activeFilters.category.indexOf(cb.value);
+                        if (index !== -1) {
+                            activeFilters.category.splice(index, 1);
+                        }
+                        
+                        // If no categories selected, select 'all'
+                        if (activeFilters.category.length === 0) {
+                            activeFilters.category.push('all');
+                            document.querySelector('input[name="category"][value="all"]').checked = true;
+                        }
+                    }
+                    
+                    // Uncheck "all" if any specific category is unchecked
+                    if (!cb.checked) {
+                        document.querySelector('input[name="category"][value="all"]').checked = false;
+                    }
+                }
+                
+                updateDeadlines();
+            });
+        });
+
+        // Status checkbox changes
+        document.querySelectorAll('input[name="status"]').forEach(cb => {
+            cb.addEventListener('change', () => {
+                if (cb.value === 'all') {
+                    if (cb.checked) {
+                        // Check all status boxes
+                        document.querySelectorAll('input[name="status"]').forEach(c => {
+                            c.checked = true;
+                        });
+                        activeFilters.status = ['all', 'upcoming', 'completed', 'missed'];
+                    } else {
+                        // Can't uncheck "all" without checking something else
+                        cb.checked = true;
+                    }
+                } else {
+                    if (cb.checked) {
+                        // Remove 'all' from filters if it's there
+                        const allIndex = activeFilters.status.indexOf('all');
+                        if (allIndex !== -1) {
+                            activeFilters.status.splice(allIndex, 1);
+                        }
+                        
+                        // Add this status to filters
+                        if (!activeFilters.status.includes(cb.value)) {
+                            activeFilters.status.push(cb.value);
+                        }
+                    } else {
+                        // Remove this status from filters
+                        const index = activeFilters.status.indexOf(cb.value);
+                        if (index !== -1) {
+                            activeFilters.status.splice(index, 1);
+                        }
+                        
+                        // If no statuses selected, select 'all'
+                        if (activeFilters.status.length === 0) {
+                            activeFilters.status.push('all');
+                            document.querySelector('input[name="status"][value="all"]').checked = true;
+                        }
+                    }
+                    
+                    // Uncheck "all" if any specific status is unchecked
+                    if (!cb.checked) {
+                        document.querySelector('input[name="status"][value="all"]').checked = false;
+                    }
+                }
+                
+                updateDeadlines();
+            });
+        });
+
+        // Sort radio changes
+        document.querySelectorAll('input[name="sort"]').forEach(rb => {
+            rb.addEventListener('change', () => {
+                activeFilters.sort = rb.value;
+                populateDeadlineList();
+            });
+        });
+
+        // Sidebar category filters
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Update active class
+                document.querySelectorAll('.sidebar-link').forEach(l => {
+                    l.classList.remove('active');
+                });
+                link.classList.add('active');
+                
+                // Update filters
+                const category = link.getAttribute('data-category');
+                
+                if (category === 'all') {
+                    activeFilters.category = ['all', 'exam', 'state_exam', 'application', 'scholarship', 'government_scheme', 'other'];
+                    document.querySelectorAll('input[name="category"]').forEach(cb => {
+                        cb.checked = true;
+                    });
+                } else {
+                    activeFilters.category = [category];
+                    document.querySelectorAll('input[name="category"]').forEach(cb => {
+                        cb.checked = (cb.value === category);
+                    });
+                }
+                
+                updateDeadlines();
+                
+                // Close mobile sidebar if open
+                if (window.innerWidth <= 1100) {
+                    mobileSidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                }
+            });
+        });
+
+        // Quick filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active class
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                
+                // Update timeframe filter
+                activeFilters.timeframe = btn.getAttribute('data-timeframe');
+                updateDeadlines();
+                
+                // Close mobile sidebar if open
+                if (window.innerWidth <= 1100) {
+                    mobileSidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                }
+            });
+        });
+
+        // Close Deadline Modal
+        closeModal.addEventListener('click', () => {
+            deadlineModal.classList.remove('active');
+        });
+
+        // Mark as Completed - FIXED VERSION
+        markCompletedBtn.addEventListener('click', () => {
+            const deadlineId = parseInt(deadlineModal.getAttribute('data-current-deadline-id'));
+            const deadline = deadlinesData.find(d => d.id === deadlineId);
+            
+            if (deadline) {
+                deadline.status = 'completed';
+                updateDeadlines(); // This will refresh both calendar and list views
+                alert(`"${deadline.title}" marked as completed!`);
+            }
+            
+            deadlineModal.classList.remove('active');
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // DOM Elements for Add Deadline feature
+        const addDeadlineBtn = document.getElementById('add-deadline-btn');
+        const addDeadlineModal = document.getElementById('add-deadline-modal');
+        const closeAddModal = document.getElementById('close-add-modal');
+        const cancelAddDeadline = document.getElementById('cancel-add-deadline');
+        const saveDeadline = document.getElementById('save-deadline');
+        const newDeadlineDate = document.getElementById('new-deadline-date');
+        const dateError = document.getElementById('date-error');
+        const titleError = document.getElementById('title-error');
+        
+        // Set minimum date to today for the date input
+        function setMinDate() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1;
+            let dd = today.getDate();
+            
+            if (mm < 10) mm = '0' + mm;
+            if (dd < 10) dd = '0' + dd;
+            
+            const minDate = `${yyyy}-${mm}-${dd}`;
+            newDeadlineDate.setAttribute('min', minDate);
+            newDeadlineDate.value = minDate;
+        }
+        
+        // Validate date (must be today or future)
+        function validateDate(dateString) {
+            const selectedDate = new Date(dateString);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Reset time part for accurate comparison
+            
+            return selectedDate >= today;
+        }
+        
+        // Show Add Deadline Modal
+        addDeadlineBtn.addEventListener('click', () => {
+            setMinDate();
+            addDeadlineModal.classList.add('active');
+        });
+        
+        // Close Add Deadline Modal
+        closeAddModal.addEventListener('click', () => {
+            addDeadlineModal.classList.remove('active');
+        });
+        
+        cancelAddDeadline.addEventListener('click', () => {
+            addDeadlineModal.classList.remove('active');
+        });
+        
+        // Save new deadline
+        saveDeadline.addEventListener('click', () => {
+            const title = document.getElementById('new-deadline-title').value.trim();
+            const type = document.getElementById('new-deadline-type').value;
+            const date = newDeadlineDate.value;
+            const time = document.getElementById('new-deadline-time').value;
+            const priority = document.getElementById('new-deadline-priority').value;
+            const description = document.getElementById('new-deadline-description').value.trim();
+            
+            // Reset errors
+            titleError.style.display = 'none';
+            dateError.style.display = 'none';
+            
+            let isValid = true;
+            
+            // Validate title
+            if (!title) {
+                titleError.style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate date
+            if (!validateDate(date)) {
+                dateError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Create new deadline object
+            const newDeadline = {
+                id: Date.now(), // Use timestamp as unique ID
+                title: title,
+                type: type,
+                date: date,
+                time: time,
+                status: 'upcoming',
+                priority: priority,
+                description: description || 'No description provided.'
+            };
+            
+            // Add to deadlines data
+            deadlinesData.push(newDeadline);
+            
+            // Update views
+            updateDeadlines();
+            
+            // Close modal and show success message
+            addDeadlineModal.classList.remove('active');
+            alert(`"${title}" has been added successfully!`);
+            
+            // Reset form
+            document.getElementById('new-deadline-title').value = '';
+            document.getElementById('new-deadline-description').value = '';
+            setMinDate();
+        });
+
+        // --- Start of newly added search code ---
+        
+        // DOM Elements for Search
+        const searchInput = document.querySelector('.search-input');
+        const searchIcon = document.querySelector('.search-icon');
+        
+        // Enhanced search function
+        function performSearch() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const searchResultsContainer = document.getElementById('search-results-count');
+            
+            if (searchTerm === '') {
+                searchResultsContainer.classList.remove('active');
+                updateDeadlines();
+                return;
+            }
+            
+            // Filter deadlines based on search term
+            const searchResults = deadlinesData.filter(deadline => {
+                return (
+                    deadline.title.toLowerCase().includes(searchTerm) ||
+                    deadline.type.toLowerCase().includes(searchTerm) ||
+                    (deadline.description && deadline.description.toLowerCase().includes(searchTerm))
+                );
+            });
+            
+            // Show search results count
+            searchResultsContainer.textContent = `Found ${searchResults.length} matching deadlines`;
+            searchResultsContainer.classList.add('active');
+            
+            // Temporarily override the filterDeadlines function to use search results
+            const originalFilterDeadlines = filterDeadlines;
+            
+            // Define a new filtering function that uses search results as the base
+            const searchFilterFunction = function() {
+                return searchResults.filter(deadline => {
+                    // Apply other active filters to search results
+                    if (!activeFilters.category.includes('all') && !activeFilters.category.includes(deadline.type)) {
+                        return false;
+                    }
+                    
+                    if (!activeFilters.status.includes('all') && !activeFilters.status.includes(deadline.status)) {
+                        return false;
+                    }
+                    
+                    const today = new Date();
+                    const deadlineDate = new Date(deadline.date);
+                    
+                    if (activeFilters.timeframe === 'week') {
+                        const nextWeek = new Date();
+                        nextWeek.setDate(today.getDate() + 7);
+                        if (deadlineDate < today || deadlineDate > nextWeek) return false;
+                    } else if (activeFilters.timeframe === 'month') {
+                        const nextMonth = new Date();
+                        nextMonth.setDate(today.getDate() + 30);
+                        if (deadlineDate < today || deadlineDate > nextMonth) return false;
+                    } else if (activeFilters.timeframe === 'completed') {
+                        if (deadline.status !== 'completed') return false;
+                    } else if (activeFilters.timeframe === 'priority') {
+                        if (deadline.priority !== 'high') return false;
+                    }
+                    
+                    return true;
+                });
+            };
+            
+            // Temporarily replace filterDeadlines with our search-specific version
+            window.filterDeadlines = searchFilterFunction;
+            
+            updateDeadlines();
+            
+            // Restore the original filter function
+            window.filterDeadlines = originalFilterDeadlines;
+        }
+
+        // Event listeners for search
+        searchInput.addEventListener('input', performSearch);
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        searchIcon.addEventListener('click', performSearch);
+
+        // Update the resetAllFilters function to clear search
+        const originalResetAllFilters = resetAllFilters;
+        window.resetAllFilters = function() {
+            originalResetAllFilters();
+            searchInput.value = '';
+            const searchResultsContainer = document.getElementById('search-results-count');
+            if (searchResultsContainer) {
+                searchResultsContainer.classList.remove('active');
+            }
+            updateDeadlines();
+        };
+        
+        // --- End of newly added search code ---
+
+        // --- Start of new Edit Deadline code ---
+        const editDeadlineModal = document.getElementById('edit-deadline-modal');
+        const closeEditModal = document.getElementById('close-edit-modal');
+        const cancelEditDeadline = document.getElementById('cancel-edit-deadline');
+        const updateDeadlineBtn = document.getElementById('update-deadline');
+        const editTitleError = document.getElementById('edit-title-error');
+        const editDateError = document.getElementById('edit-date-error');
+
+        // Replace the existing editDeadlineBtn event listener with this:
+        editDeadlineBtn.addEventListener('click', () => {
+            const deadlineId = parseInt(deadlineModal.getAttribute('data-current-deadline-id'));
+            const deadline = deadlinesData.find(d => d.id === deadlineId);
+            
+            if (deadline) {
+                openEditDeadlineModal(deadline);
+            }
+        });
+
+        // Function to open edit modal with pre-filled data
+        function openEditDeadlineModal(deadline) {
+            // Close the details modal
+            deadlineModal.classList.remove('active');
+            
+            // Pre-fill the form with existing data
+            document.getElementById('edit-deadline-id').value = deadline.id;
+            document.getElementById('edit-deadline-title').value = deadline.title;
+            document.getElementById('edit-deadline-type').value = deadline.type;
+            document.getElementById('edit-deadline-date').value = deadline.date;
+            document.getElementById('edit-deadline-time').value = deadline.time;
+            document.getElementById('edit-deadline-priority').value = deadline.priority;
+            document.getElementById('edit-deadline-description').value = deadline.description;
+            
+            // Remove any previous error messages
+            editTitleError.style.display = 'none';
+            editDateError.style.display = 'none';
+            
+            // Show the edit modal
+            editDeadlineModal.classList.add('active');
+        }
+
+        // Close edit modal
+        closeEditModal.addEventListener('click', () => {
+            editDeadlineModal.classList.remove('active');
+        });
+
+        cancelEditDeadline.addEventListener('click', () => {
+            editDeadlineModal.classList.remove('active');
+        });
+
+        // Update deadline functionality
+        updateDeadlineBtn.addEventListener('click', () => {
+            const id = parseInt(document.getElementById('edit-deadline-id').value);
+            const title = document.getElementById('edit-deadline-title').value.trim();
+            const type = document.getElementById('edit-deadline-type').value;
+            const date = document.getElementById('edit-deadline-date').value;
+            const time = document.getElementById('edit-deadline-time').value;
+            const priority = document.getElementById('edit-deadline-priority').value;
+            const description = document.getElementById('edit-deadline-description').value.trim();
+            
+            // Reset errors
+            editTitleError.style.display = 'none';
+            editDateError.style.display = 'none';
+            
+            let isValid = true;
+            
+            // Validate title
+            if (!title) {
+                editTitleError.style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate date
+            if (!date) {
+                editDateError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Find the deadline in our data array
+            const deadlineIndex = deadlinesData.findIndex(d => d.id === id);
+            
+            if (deadlineIndex !== -1) {
+                // Update the deadline
+                deadlinesData[deadlineIndex] = {
+                    ...deadlinesData[deadlineIndex],
+                    title: title,
+                    type: type,
+                    date: date,
+                    time: time,
+                    priority: priority,
+                    description: description || 'No description provided.'
+                };
+                
+                // Update views
+                updateDeadlines();
+                
+                // Close modal and show success message
+                editDeadlineModal.classList.remove('active');
+                alert(`"${title}" has been updated successfully!`);
+            }
+        });
+        // --- End of new Edit Deadline code ---
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check and update statuses first
+            updateDeadlineStatuses();
+
+            calendarView.style.display = 'block';
+            listView.style.display = 'none';
+            
+            // Initialize calendar with current month and year
+            updateDeadlines();
+            
+            // Populate deadline list
+            populateDeadlineList();
+
+            // Set minimum date for the add deadline form
+            setMinDate();
+			
+			// Initialize bulk actions state
+			updateBulkActionsState();
+			
+			// Add event listeners for bulk action buttons
+			// Desktop buttons
+			document.querySelector('.bulk-actions .btn:nth-child(1)').addEventListener('click', markSelectedAsCompleted);
+			document.querySelector('.bulk-actions .btn:nth-child(2)').addEventListener('click', setReminderForSelected);
+			document.querySelector('.bulk-actions .btn:nth-child(3)').addEventListener('click', deleteSelectedDeadlines);
+			
+			// Mobile buttons
+			document.querySelector('.bulk-actions-mobile .btn:nth-child(1)').addEventListener('click', markSelectedAsCompleted);
+			document.querySelector('.bulk-actions-mobile .btn:nth-child(2)').addEventListener('click', setReminderForSelected);
+			document.querySelector('.bulk-actions-mobile .btn:nth-child(3)').addEventListener('click', deleteSelectedDeadlines);
+        });
+    </script>
+    <script>
+        // Mobile filter functionality
+        const mobileFilterToggle = document.getElementById('mobile-filter-toggle');
+        const mobileFilterContent = document.getElementById('mobile-filter-content');
+        const mobileFilterOptions = document.querySelectorAll('.mobile-filter-option');
+        const mobileSortOptions = document.querySelectorAll('input[name="mobile-sort"]');
+        const applyMobileFiltersBtn = document.getElementById('apply-mobile-filters');
+
+        // Toggle mobile filter content
+        mobileFilterToggle.addEventListener('click', () => {
+            mobileFilterContent.classList.toggle('active');
+            mobileFilterToggle.querySelector('.mobile-filter-toggle').classList.toggle('active');
+        });
+
+        // Mobile filter option selection
+        mobileFilterOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const filterType = option.getAttribute('data-filter-type');
+                const value = option.getAttribute('data-value');
+                
+                // For category, status, and timeframe filters
+                if (filterType !== 'sort') {
+                    // If "All" is selected, deselect others in same group
+                    if (value === 'all') {
+                        document.querySelectorAll(`.mobile-filter-option[data-filter-type="${filterType}"]`).forEach(opt => {
+                            opt.classList.remove('active');
+                        });
+                        option.classList.add('active');
+                    } else {
+                        // Deselect "All" if a specific option is selected
+                        const allOption = document.querySelector(`.mobile-filter-option[data-filter-type="${filterType}"][data-value="all"]`);
+                        if (allOption) {
+                            allOption.classList.remove('active');
+                        }
+                        option.classList.toggle('active');
+                        
+                        // If no options are selected, select "All"
+                        const activeOptions = document.querySelectorAll(`.mobile-filter-option[data-filter-type="${filterType}"].active`);
+                        if (activeOptions.length === 0) {
+                            allOption.classList.add('active');
+                        }
+                    }
+                }
+            });
+        });
+
+        // Mobile sort option selection
+        mobileSortOptions.forEach(option => {
+            option.addEventListener('change', () => {
+                document.querySelectorAll('.mobile-sort-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                option.parentElement.classList.add('active');
+            });
+        });
+
+        // Apply mobile filters
+        applyMobileFiltersBtn.addEventListener('click', () => {
+            // Get selected categories
+            const selectedCategories = [];
+            document.querySelectorAll('.mobile-filter-option[data-filter-type="category"].active').forEach(opt => {
+                selectedCategories.push(opt.getAttribute('data-value'));
+            });
+            
+            // Get selected statuses
+            const selectedStatuses = [];
+            document.querySelectorAll('.mobile-filter-option[data-filter-type="status"].active').forEach(opt => {
+                selectedStatuses.push(opt.getAttribute('data-value'));
+            });
+            
+            // Get selected timeframe
+            let selectedTimeframe = 'all';
+            document.querySelectorAll('.mobile-filter-option[data-filter-type="timeframe"].active').forEach(opt => {
+                selectedTimeframe = opt.getAttribute('data-value');
+            });
+            
+            // Get selected sort
+            let selectedSort = 'date-asc';
+            document.querySelectorAll('input[name="mobile-sort"]').forEach(opt => {
+                if (opt.checked) {
+                    selectedSort = opt.value;
+                }
+            });
+            
+            // Update active filters
+            activeFilters.category = selectedCategories.includes('all') ? 
+                ['all', 'exam', 'state_exam', 'application', 'scholarship', 'government_scheme', 'other'] : selectedCategories;
+            
+            activeFilters.status = selectedStatuses.includes('all') ? 
+                ['all', 'upcoming', 'completed', 'missed'] : selectedStatuses;
+            
+            activeFilters.timeframe = selectedTimeframe;
+            activeFilters.sort = selectedSort;
+            
+            // Update views
+            updateDeadlines();
+            
+            // Close mobile filter panel
+            mobileFilterContent.classList.remove('active');
+            mobileFilterToggle.querySelector('.mobile-filter-toggle').classList.remove('active');
+        });
+
+        // Close mobile filter when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#mobile-filters') && mobileFilterContent.classList.contains('active')) {
+                mobileFilterContent.classList.remove('active');
+                mobileFilterToggle.querySelector('.mobile-filter-toggle').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
+

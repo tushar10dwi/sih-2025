@@ -1,0 +1,105 @@
+{
+  "id": "situational_judgement_values",
+  "name": "Situational Judgement & Values",
+  "modules": [
+    {
+      "id": "workplace_scenarios",
+      "name": "Workplace Scenarios",
+      [cite_start]"instructions": "Choose the most effective course of action. [cite: 191]",
+      "questions": [
+        {
+          "id": "q1", "type": "mcq", "text": "You are the team leader for a project. One member is consistently not completing their part of the work, causing delays. [cite_start]You would: [cite: 192, 193]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Report them to the teacher immediately. [cite: 194]" },
+            [cite_start]{ "id": "b", "text": "Talk to them in private to understand if they have a problem. [cite: 195]" },
+            [cite_start]{ "id": "c", "text": "Do their work yourself to avoid delays. [cite: 196]" },
+            [cite_start]{ "id": "d", "text": "Complain about them to other team members. [cite: 197]" }
+          ]
+        },
+        {
+          "id": "q2", "type": "mcq", "text": "You discover a mistake in a report just after your team has submitted it. This mistake could lower your team's grade. [cite_start]You would: [cite: 198, 199]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Hope the teacher doesn't notice it. [cite: 200]" },
+            [cite_start]{ "id": "b", "text": "Blame the team member responsible for that section. [cite: 201]" },
+            [cite_start]{ "id": "c", "text": "Immediately inform the teacher about the mistake and ask for a chance to correct it. [cite: 202]" },
+            [cite_start]{ "id": "d", "text": "Discuss it with the team and decide to keep quiet. [cite: 203]" }
+          ]
+        },
+        {
+          "id": "q3", "type": "mcq", "text": "You are given a very challenging task that you have never done before. [cite_start]You would: [cite: 204, 205]",
+          "options": [
+            { "id": "a", "text": "Tell your teacher you can't do it." },
+            [cite_start]{ "id": "b", "text": "Try to do it on your own, researching and learning as you go. [cite: 206]" },
+            [cite_start]{ "id": "c", "text": "Ask a friend to do it for you. [cite: 207]" },
+            [cite_start]{ "id": "d", "text": "Break down the task, attempt what you can, and ask for help on specific parts you're stuck on. [cite: 208]" }
+          ]
+        },
+        {
+          "id": "q4", "type": "mcq", "text": "A classmate suggests using an unfair method (like copying from the internet) to win an inter-school competition. [cite_start]You would: [cite: 209]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Agree because you want to win at any cost. [cite: 210]" },
+            [cite_start]{ "id": "b", "text": "Disagree and explain that it's unethical and the risk is not worth it. [cite: 211]" },
+            [cite_start]{ "id": "c", "text": "Stay quiet and let the others decide. [cite: 212]" },
+            [cite_start]{ "id": "d", "text": "Tell the classmate you won't participate if they cheat, and try to convince others too. [cite: 213]" }
+          ]
+        },
+        {
+          "id": "q5", "type": "mcq", "text": "Your teacher gives you feedback that your presentation style is not engaging. [cite_start]You would: [cite: 214]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Feel disheartened and ignore the feedback. [cite: 215]" },
+            [cite_start]{ "id": "b", "text": "Argue with the teacher, defending your style. [cite: 216]" },
+            [cite_start]{ "id": "c", "text": "Thank the teacher and ask for specific tips on how you can improve. [cite: 217]" },
+            [cite_start]{ "id": "d", "text": "Think the teacher is biased against you. [cite: 218]" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "work_values",
+      "name": "Work Values",
+      [cite_start]"instructions": "Rank the following from 1 (Most Important) to 3 (Least Important) for you in a future career. [cite: 220]",
+      "questions": [
+        {
+          [cite_start]"id": "q1", "type": "ranking", "text": "What is most important to you? [cite: 221]",
+          "items": [
+            [cite_start]"Having a very high salary. [cite: 222]",
+            [cite_start]"Doing work that helps society. [cite: 223]",
+            [cite_start]"Having a stable, secure job. [cite: 224]"
+          ]
+        },
+        {
+          [cite_start]"id": "q2", "type": "ranking", "text": "I would prefer a job that: [cite: 225]",
+          "items": [
+            [cite_start]"Allows me to be creative and innovative. [cite: 226]",
+            [cite_start]"Gives me a position of power and leadership. [cite: 227]",
+            [cite_start]"Has a predictable, 9-to-5 routine. [cite: 228]"
+          ]
+        },
+        {
+          [cite_start]"id": "q3", "type": "ranking", "text": "In my career, I value: [cite: 229]",
+          "items": [
+            [cite_start]"The opportunity to learn new things constantly. [cite: 230]",
+            [cite_start]"A friendly and supportive work environment. [cite: 231]",
+            [cite_start]"The chance to become famous or well-respected in my field. [cite: 232]"
+          ]
+        },
+        {
+          [cite_start]"id": "q4", "type": "ranking", "text": "I would be happiest if my job: [cite: 233]",
+          "items": [
+            [cite_start]"Involves traveling and exploring new places. [cite: 234]",
+            [cite_start]"Offers a good work-life balance. [cite: 235]",
+            [cite_start]"Challenges me with difficult problems to solve. [cite: 236]"
+          ]
+        },
+        {
+          [cite_start]"id": "q5", "type": "ranking", "text": "When choosing a career, my top priority is: [cite: 237]",
+          "items": [
+            [cite_start]"Independence and the freedom to make my own decisions. [cite: 238]",
+            [cite_start]"Working for a prestigious and well-known company (e.g., Google, Tata). [cite: 239]",
+            [cite_start]"Work that aligns with my personal passions and hobbies. [cite: 240]"
+          ]
+        }
+      ]
+    }
+  ]
+}

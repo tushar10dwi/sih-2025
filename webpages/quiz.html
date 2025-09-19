@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaviDisha - Psychometric Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        :root {
+            --primary: #1E3A8A; --primary-light: #3b5998; --secondary: #059669; --accent: #F59E0B;
+            --background: #F9FAFB; --text-dark: #1F2937; --text-light: #6B7280; --white: #FFFFFF;
+            --error: #EF4444; --success: #10B981; --warning: #F59E0B; --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1); --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-dark); background-color: var(--background); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1.3; }
+        header { position: sticky; top: 0; left: 0; width: 100%; background-color: var(--white); box-shadow: var(--card-shadow); z-index: 1000; padding: 15px 0; }
+        .header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .logo-text { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 800; color: var(--primary); }
+        .logo-accent { color: var(--accent); }
+        .container { width: 100%; max-width: 1200px; margin: 30px auto; padding: 0 20px; flex: 1; }
+        .dashboard-card, .results-section, .question-card { background-color: var(--white); border-radius: 12px; box-shadow: var(--card-shadow); padding: 25px; transition: var(--transition); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card-title { font-size: 1.2rem; color: var(--primary); }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 500; }
+        .form-select { width: 100%; padding: 12px 15px; border: 1px solid #E5E7EB; border-radius: 8px; font-size: 1rem; }
+        .btn { display: inline-block; padding: 12px 24px; border-radius: 8px; font-weight: 500; font-size: 1rem; cursor: pointer; transition: var(--transition); text-decoration: none; text-align: center; border: none; }
+        .btn-primary { background-color: var(--primary); color: var(--white); }
+        .btn-primary:hover { background-color: var(--primary-light); }
+        .btn-secondary { background-color: transparent; color: var(--primary); border: 1px solid var(--primary); }
+        .btn-success { background-color: var(--success); color: var(--white); }
+        .btn-full { width: 100%; }
+        .btn:disabled { background-color: #9CA3AF; cursor: not-allowed; }
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #E5E7EB; }
+        .quiz-title { font-size: 1.5rem; color: var(--primary); }
+        .quiz-container { display: flex; gap: 25px; }
+        .quiz-sidebar { width: 250px; background-color: var(--white); border-radius: 12px; box-shadow: var(--card-shadow); padding: 20px; height: fit-content; }
+        .quiz-main { flex: 1; }
+        .question-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .question-number { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background-color: var(--background); font-weight: 500; cursor: pointer; transition: var(--transition); }
+        .question-number.current { background-color: var(--primary); color: var(--white); }
+        .question-number.answered { background-color: var(--success); color: var(--white); }
+        .question-text { font-size: 1.1rem; font-weight: 500; margin-bottom: 20px; }
+        .options-container { margin-bottom: 20px; }
+        .option-label { display: flex; align-items: center; padding: 12px 15px; border: 1px solid #E5E7EB; border-radius: 8px; cursor: pointer; transition: var(--transition); margin-bottom: 12px; }
+        .option-label:hover { border-color: var(--primary); background-color: rgba(30, 58, 138, 0.05); }
+        .option-input { margin-right: 12px; }
+        .likert-scale { display: flex; justify-content: space-between; margin: 20px 0; }
+        .likert-option { display: flex; flex-direction: column; align-items: center; flex: 1; text-align: center; }
+        .likert-input { margin-bottom: 8px; }
+        .likert-label { font-size: 0.85rem; color: var(--text-light); }
+        .ranking-list { list-style: none; margin-bottom: 20px; }
+        .ranking-item { padding: 12px 15px; background-color: var(--background); border-radius: 8px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+        .ranking-item.selected { background-color: rgba(5, 150, 105, 0.1); border: 1px solid var(--success); }
+        .ranking-item-number { width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background-color: var(--background); font-weight: 500; margin-right: 10px; }
+        .ranking-item.selected .ranking-item-number { background-color: var(--success); color: var(--white); }
+        .quiz-navigation { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; }
+        .quiz-timer { background-color: var(--primary); color: white; padding: 8px 16px; border-radius: 20px; font-weight: 500; font-size: 0.9rem; }
+        .results-header { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #E5E7EB; }
+        .results-title { font-size: 1.5rem; color: var(--primary); }
+        .response-item { margin-bottom: 25px; }
+        .response-question { font-weight: 600; color: var(--primary); margin-bottom: 8px; }
+        .response-answer { padding-left: 20px; color: var(--text-dark); }
+        .response-answer ol { padding-left: 20px; }
+        .results-actions { display: flex; gap: 15px; justify-content: center; margin-top: 30px; }
+        .hidden { display: none; }
+        .loading { text-align: center; padding: 20px; }
+        .quiz-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
+        .quiz-card { background-color: var(--white); border-radius: 12px; box-shadow: var(--card-shadow); padding: 20px; transition: var(--transition); cursor: pointer; }
+        .quiz-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-3px); }
+        .quiz-card-title { font-size: 1.2rem; color: var(--primary); margin-bottom: 10px; }
+        .quiz-card-description { color: var(--text-light); font-size: 0.9rem; }
+        @media (max-width: 1024px) { .quiz-container { flex-direction: column; } .quiz-sidebar { width: 100%; } .quiz-list { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { 
+            .quiz-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .quiz-navigation { flex-direction: column; gap: 10px; }
+            .quiz-navigation .btn { width: 100%; }
+            .results-actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="header-container">
+            <div class="logo-text">Navi<span class="logo-accent">Disha</span></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="dashboard">
+            <div class="dashboard-card">
+                <div class="card-header"><h3 class="card-title">Psychometric Test</h3></div>
+                <div class="card-content">
+                    <p>This tool contains several psychometric tests. Please choose one from the list below to begin.</p>
+                    <div id="quiz-list-container" class="quiz-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="quiz-screen" class="hidden">
+            <div class="quiz-header">
+                <div>
+                    <h2 class="quiz-title" id="quiz-title">Quiz Title</h2>
+                    <div class="quiz-timer" id="quiz-timer">Time: 00:00</div>
+                </div>
+                <button id="back-to-dashboard" class="btn btn-secondary">Back to Tests</button>
+            </div>
+            <div class="quiz-container">
+                <aside class="quiz-sidebar">
+                    <h3>Questions</h3>
+                    <div class="question-grid" id="question-grid"></div>
+                    <p><span id="answered-count">0</span> of <span id="total-questions">0</span> answered</p>
+                </aside>
+                <main class="quiz-main">
+                    <div class="question-card">
+                        <h3 class="question-text" id="question-text"></h3>
+                        <div class="options-container" id="options-container"></div>
+                        <div class="quiz-navigation">
+                            <button id="prev-btn" class="btn btn-secondary">Previous</button>
+                            <button id="next-btn" class="btn btn-primary">Next</button>
+                        </div>
+                    </div>
+                    <button id="submit-quiz" class="btn btn-success btn-full">Submit Test</button>
+                </main>
+            </div>
+        </div>
+
+        <div id="results-screen" class="hidden">
+            <div class="results-section">
+                <div class="results-header">
+                    <h2 class="results-title">Your Responses</h2>
+                    <p>Here is a summary of the answers you provided.</p>
+                </div>
+                <div id="responses-summary"></div>
+                <div class="results-actions">
+                    <button id="download-pdf" class="btn btn-secondary">Download PDF Report</button>
+                    <button id="restart-test" class="btn btn-primary">Take Another Test</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading-screen" class="hidden">
+            <div class="dashboard-card">
+                <div class="loading">
+                    <h3>Loading Test Data...</h3>
+                    <p>Please wait while we prepare your test.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let testData = null;
+        let allQuestions = [];
+        let currentQuestionIndex = 0;
+        let userResponses = {};
+        let availableQuizzes = [];
+        let timerInterval = null;
+        let timeSpent = 0;
+
+        // DOM elements
+        const dashboardEl = document.getElementById('dashboard');
+        const quizScreenEl = document.getElementById('quiz-screen');
+        const resultsScreenEl = document.getElementById('results-screen');
+        const loadingScreenEl = document.getElementById('loading-screen');
+        const quizListContainerEl = document.getElementById('quiz-list-container');
+        const backToDashboardBtn = document.getElementById('back-to-dashboard');
+        const quizTitleEl = document.getElementById('quiz-title');
+        const quizTimerEl = document.getElementById('quiz-timer');
+        const questionGridEl = document.getElementById('question-grid');
+        const answeredCountEl = document.getElementById('answered-count');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainerEl = document.getElementById('options-container');
+        const prevBtnEl = document.getElementById('prev-btn');
+        const nextBtnEl = document.getElementById('next-btn');
+        const submitQuizBtn = document.getElementById('submit-quiz');
+        const responsesSummaryEl = document.getElementById('responses-summary');
+        const downloadPdfBtn = document.getElementById('download-pdf');
+        const restartTestBtn = document.getElementById('restart-test');
+
+        // Hardcoded test data for Aptitude Test
+        const aptitudeTestData = {
+            "id": "aptitude",
+            "name": "Aptitude Test",
+            "description": "Test your numerical, verbal, logical, and abstract reasoning skills.",
+            "time_limit": 1800, // 30 minutes in seconds
+            "modules": [
+                {
+                    "name": "Numerical Reasoning",
+                    "questions": [
+                        {
+                            "id": "num1",
+                            "text": "If a train travels 300 miles in 5 hours, what is its average speed?",
+                            "type": "mcq",
+                            "options": [
+                                {"id": "a", "text": "50 mph"},
+                                {"id": "b", "text": "55 mph"},
+                                {"id": "c", "text": "60 mph"},
+                                {"id": "d", "text": "65 mph"}
+                            ]
+                        },
+                        {
+                            "id": "num2",
+                            "text": "A shirt originally priced at $40 is on sale for 20% off. What is the sale price?",
+                            "type": "mcq",
+                            "options": [
+                                {"id": "a", "text": "$28"},
+                                {"id": "b", "text": "$30"},
+                                {"id": "c", "text": "$32"},
+                                {"id": "d", "text": "$35"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Verbal Reasoning",
+                    "questions": [
+                        {
+                            "id": "verb1",
+                            "text": "Choose the word that is most similar in meaning to 'BENEVOLENT':",
+                            "type": "mcq",
+                            "options": [
+                                {"id": "a", "text": "Kind"},
+                                {"id": "b", "text": "Stubborn"},
+                                {"id": "c", "text": "Selfish"},
+                                {"id": "d", "text": "Hostile"}
+                            ]
+                        },
+                        {
+                            "id": "verb2",
+                            "text": "Which of the following is an antonym for 'TRANSPARENT'?",
+                            "type": "mcq",
+                            "options": [
+                                {"id": "a", "text": "Clear"},
+                                {"id": "b", "text": "Opaque"},
+                                {"id": "c", "text": "Visible"},
+                                {"id": "d", "text": "Glasslike"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Logical Reasoning",
+                    "questions": [
+                        {
+                            "id": "log1",
+                            "text": "If all roses are flowers and some flowers fade quickly, which statement must be true?",
+                            "type": "mcq",
+                            "options": [
+                                {"id": "a", "text": "All roses fade quickly"},
+                                {"id": "b", "text": "Some roses fade quickly"},
+                                {"id": "c", "text": "No roses fade quickly"},
+                                {"id": "d", "text": "Some flowers that fade quickly are roses"}
+                            ]
+                        },
+                        {
+                            "id": "log2",
+                            "text": "If A is taller than B, and B is taller than C, which statement is correct?",
+                            "type": "mcq",
+                            "options": [
+                                {"id": "a", "text": "C is taller than A"},
+                                {"id": "b", "text": "A is taller than C"},
+                                {"id": "c", "text": "B is shorter than C"},
+                                {"id": "d", "text": "C is the tallest"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Abstract Reasoning",
+                    "questions": [
+                        {
+                            "id": "abs1",
+                            "text": "Which figure completes the series? [Imagine a series of shapes]",
+                            "type": "mcq",
+                            "options": [
+                                {"id": "a", "text": "Option A"},
+                                {"id": "b", "text": "Option B"},
+                                {"id": "c", "text": "Option C"},
+                                {"id": "d", "text": "Option D"}
+                            ]
+                        },
+                        {
+                            "id": "abs2",
+                            "text": "Which pattern is different from the others?",
+                            "type": "mcq",
+                            "options": [
+                                {"id": "a", "text": "Pattern A"},
+                                {"id": "b", "text": "Pattern B"},
+                                {"id": "c", "text": "Pattern C"},
+                                {"id": "d", "text": "Pattern D"}
+                            ]
+                        }
+                    ]
+                }
+            ],
+
+        };
+
+        // Initialize App
+        function initApp() {
+            // Load available quizzes
+            scanForQuizzes();
+            
+            // Set up event listeners
+            backToDashboardBtn.addEventListener('click', showDashboard);
+            prevBtnEl.addEventListener('click', () => navigateQuestion(-1));
+            nextBtnEl.addEventListener('click', () => navigateQuestion(1));
+            submitQuizBtn.addEventListener('click', submitTest);
+            restartTestBtn.addEventListener('click', showDashboard);
+            downloadPdfBtn.addEventListener('click', downloadResultsPDF);
+        }
+        
+        // Scan for available quizzes
+        async function scanForQuizzes() {
+            // Default quizzes
+            availableQuizzes = [
+                { id: "aptitude", name: "Aptitude Test", file: "test1_aptitude.json", description: "Test your numerical, verbal, logical, and abstract reasoning skills.", hardcoded: true },
+                { id: "personality", name: "Personality Test", file: "test2_personality.json", description: "Discover your personality traits based on the Big Five model.", hardcoded: true },
+                { id: "interests", name: "Interests Assessment", file: "test3_interests.json", description: "Identify your career interests based on Holland's RIASEC model.", hardcoded: false },
+                { id: "situational_judgement_values", name: "Situational Judgement & Values", file: "test4_situational_judgement.json", description: "Evaluate your decision-making in workplace scenarios and work values.", hardcoded: false }
+            ];
+            
+            // Display the quizzes
+            displayQuizList();
+        }
+        
+        // Display the list of available quizzes
+        function displayQuizList() {
+            quizListContainerEl.innerHTML = '';
+            
+            availableQuizzes.forEach(quiz => {
+                const quizCard = document.createElement('div');
+                quizCard.className = 'quiz-card';
+                quizCard.innerHTML = `
+                    <h3 class="quiz-card-title">${quiz.name}</h3>
+                    <p class="quiz-card-description">${quiz.description}</p>
+                `;
+                quizCard.addEventListener('click', () => startTest(quiz));
+                quizListContainerEl.appendChild(quizCard);
+            });
+        }
+        
+        // Show the dashboard
+        function showDashboard() {
+            // Clear any running timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            
+            quizScreenEl.classList.add('hidden');
+            resultsScreenEl.classList.add('hidden');
+            loadingScreenEl.classList.add('hidden');
+            dashboardEl.classList.remove('hidden');
+        }
+
+        // Start the test
+        async function startTest(quiz) {
+            // Show loading screen
+            dashboardEl.classList.add('hidden');
+            loadingScreenEl.classList.remove('hidden');
+
+            try {
+                // Use hardcoded data for aptitude test, otherwise load from file
+                if (quiz.hardcoded && quiz.id === "aptitude") {
+                    testData = aptitudeTestData;
+                } else {
+                    // Load test data from JSON file
+                    const response = await fetch(quiz.file);
+                    if (!response.ok) {
+                        throw new Error(`Failed to load test data: ${response.status}`);
+                    }
+                    
+                    let testDataRaw = await response.text();
+                    
+                    // Clean up the JSON by removing citation markers
+                    testDataRaw = testDataRaw.replace(/\[cite_start\]/g, '');
+                    testDataRaw = testDataRaw.replace(/\[cite:\s*\d+(?:,\s*\d+)*\]/g, '');
+                    
+                    testData = JSON.parse(testDataRaw);
+                }
+                
+                // Flatten questions from all modules into a single array
+                allQuestions = testData.modules.flatMap(module => module.questions || []);
+                
+                if(allQuestions.length === 0){
+                    alert("The selected test contains no questions.");
+                    loadingScreenEl.classList.add('hidden');
+                    dashboardEl.classList.remove('hidden');
+                    return;
+                }
+
+                userResponses = {};
+                currentQuestionIndex = 0;
+                timeSpent = 0;
+                
+                loadingScreenEl.classList.add('hidden');
+                quizScreenEl.classList.remove('hidden');
+                
+                setupQuiz();
+            } catch (error) {
+                console.error("Error loading test data:", error);
+                alert("Failed to load the test. Please try again.");
+                loadingScreenEl.classList.add('hidden');
+                dashboardEl.classList.remove('hidden');
+            }
+        }
+
+        // Set up the quiz interface
+        function setupQuiz() {
+            quizTitleEl.textContent = testData.name || 'Psychometric Test';
+            totalQuestionsEl.textContent = allQuestions.length;
+            generateQuestionGrid();
+            showQuestion(currentQuestionIndex);
+            
+            // Start the timer if the test has a time limit
+            if (testData.time_limit) {
+                startTimer(testData.time_limit);
+            } else {
+                quizTimerEl.textContent = "No time limit";
+            }
+        }
+        
+        // Start the quiz timer
+        function startTimer(timeLimit) {
+            timeSpent = 0;
+            updateTimerDisplay(timeLimit);
+            
+            timerInterval = setInterval(() => {
+                timeSpent++;
+                const timeLeft = timeLimit - timeSpent;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Time's up! Your test will be submitted automatically.");
+                    submitTest();
+                    return;
+                }
+                
+                updateTimerDisplay(timeLeft);
+            }, 1000);
+        }
+        
+        // Update the timer display
+        function updateTimerDisplay(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            quizTimerEl.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            
+            // Change color when time is running low (last 5 minutes)
+            if (seconds < 300) {
+                quizTimerEl.style.backgroundColor = "var(--error)";
+            }
+        }
+
+        // Generate the question navigation grid
+        function generateQuestionGrid() {
+            questionGridEl.innerHTML = '';
+            allQuestions.forEach((_, index) => {
+                const qNum = document.createElement('div');
+                qNum.className = 'question-number';
+                qNum.textContent = index + 1;
+                qNum.dataset.index = index;
+                qNum.addEventListener('click', () => showQuestion(index));
+                questionGridEl.appendChild(qNum);
+            });
+        }
+        
+        // Navigate between questions
+        function navigateQuestion(direction) {
+            const newIndex = currentQuestionIndex + direction;
+            if (newIndex >= 0 && newIndex < allQuestions.length) {
+                showQuestion(newIndex);
+            }
+        }
+
+        // Display a question
+        function showQuestion(index) {
+            currentQuestionIndex = index;
+            const question = allQuestions[index];
+            
+            // Clean question text from any citation markers
+            const cleanQuestionText = question.text.replace(/\[cite_start\]/g, '')
+                                                   .replace(/\[cite:\s*\d+(?:,\s*\d+)*\]/g, '');
+            
+            questionTextEl.textContent = `${index + 1}. ${cleanQuestionText}`;
+            optionsContainerEl.innerHTML = '';
+
+            // Render options based on type
+            const type = question.type;
+            if (type === 'mcq' || type === 'paired_choice') renderMCQOptions(question);
+            else if (type === 'likert') renderLikertOptions(question);
+            else if (type === 'ranking') renderRankingOptions(question);
+            else if (type === 'yes_no') renderYesNoOptions(question);
+
+            updateUI();
+        }
+
+        // Render options for MCQ, paired_choice
+        function renderMCQOptions(question) {
+            (question.options || []).forEach(option => {
+                // Clean option text from any citation markers
+                const cleanOptionText = option.text.replace(/\[cite_start\]/g, '')
+                                                   .replace(/\[cite:\s*\d+(?:,\s*\d+)*\]/g, '');
+                
+                const label = document.createElement('label');
+                label.className = 'option-label';
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `q_${question.id}`;
+                input.value = option.id;
+                input.className = 'option-input';
+                if (userResponses[question.id]?.answer === option.id) {
+                    input.checked = true;
+                }
+                input.addEventListener('change', (e) => saveResponse(question.id, e.target.value));
+                label.appendChild(input);
+                label.append(cleanOptionText);
+                optionsContainerEl.appendChild(label);
+            });
+        }
+
+        // Render options for Yes/No
+        function renderYesNoOptions(question) {
+            const options = [{id: 'yes', text: 'Yes'}, {id: 'no', text: 'No'}];
+            options.forEach(option => {
+                const label = document.createElement('label');
+                label.className = 'option-label';
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `q_${question.id}`;
+                input.value = option.id;
+                input.className = 'option-input';
+                if (userResponses[question.id]?.answer === option.id) {
+                    input.checked = true;
+                }
+                input.addEventListener('change', (e) => saveResponse(question.id, e.target.value));
+                label.appendChild(input);
+                label.append(option.text);
+                optionsContainerEl.appendChild(label);
+            });
+        }
+
+        // Render options for Likert scale
+        function renderLikertOptions(question) {
+            const scaleContainer = document.createElement('div');
+            scaleContainer.className = 'likert-scale';
+            
+            // Use the test's scale or default to a standard Likert scale
+            const scaleText = testData.scale || "1-Strongly Disagree, 2-Disagree, 3-Neutral, 4-Agree, 5-Strongly Agree";
+            const cleanScaleText = scaleText.replace(/\[cite_start\]/g, '')
+                                           .replace(/\[cite:\s*\d+(?:,\s*\d+)*\]/g, '');
+            
+            const labels = cleanScaleText.match(/\d-([^,]+)/g).map(s => s.substring(2).trim());
+
+            labels.forEach((text, index) => {
+                const value = index + 1;
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'likert-option';
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `q_${question.id}`;
+                input.value = value;
+                input.className = 'likert-input';
+                 if (userResponses[question.id]?.answer == value) {
+                    input.checked = true;
+                }
+                input.addEventListener('change', (e) => saveResponse(question.id, parseInt(e.target.value)));
+                const label = document.createElement('label');
+                label.className = 'likert-label';
+                label.textContent = text;
+                optionDiv.appendChild(input);
+                optionDiv.appendChild(label);
+                scaleContainer.appendChild(optionDiv);
+            });
+            optionsContainerEl.appendChild(scaleContainer);
+        }
+
+        // Render options for Ranking (without drag and drop)
+        function renderRankingOptions(question) {
+            const container = document.createElement('div');
+            
+            // Clean items from any citation markers
+            const cleanItems = question.items.map(item => 
+                item.replace(/\[cite_start\]/g, '')
+                    .replace(/\[cite:\s*\d+(?:,\s*\d+)*\]/g, '')
+            );
+            
+            // Get saved order if exists
+            const savedOrder = userResponses[question.id]?.answer || [];
+            
+            // Create instruction text
+            const instruction = document.createElement('p');
+            instruction.textContent = "Click on the items in the order of your preference (1 = highest priority):";
+            instruction.style.marginBottom = '15px';
+            instruction.style.fontWeight = '500';
+            container.appendChild(instruction);
+            
+            // Create list of items to select
+            cleanItems.forEach(itemText => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'ranking-item';
+                itemDiv.dataset.text = itemText;
+                
+                // Check if this item is already ranked
+                const rankIndex = savedOrder.indexOf(itemText);
+                const isSelected = rankIndex !== -1;
+                
+                if (isSelected) {
+                    itemDiv.classList.add('selected');
+                }
+                
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'ranking-item-number';
+                numberSpan.textContent = isSelected ? (rankIndex + 1) : '';
+                
+                const textSpan = document.createElement('span');
+                textSpan.textContent = itemText;
+                textSpan.style.flex = '1';
+                
+                itemDiv.appendChild(numberSpan);
+                itemDiv.appendChild(textSpan);
+                
+                itemDiv.addEventListener('click', () => {
+                    handleRankingSelection(question.id, itemText, cleanItems);
+                });
+                
+                container.appendChild(itemDiv);
+            });
+            
+            // Add reset button
+            const resetButton = document.createElement('button');
+            resetButton.textContent = 'Reset Ranking';
+            resetButton.className = 'btn btn-secondary';
+            resetButton.style.marginTop = '15px';
+            resetButton.addEventListener('click', () => {
+                userResponses[question.id] = { answer: [] };
+                showQuestion(currentQuestionIndex); // Refresh the question view
+            });
+            
+            container.appendChild(resetButton);
+            optionsContainerEl.appendChild(container);
+        }
+        
+        // Handle ranking selection
+        function handleRankingSelection(questionId, itemText, allItems) {
+            if (!userResponses[questionId]) {
+                userResponses[questionId] = { answer: [] };
+            }
+            
+            const currentRanking = userResponses[questionId].answer;
+            
+            // If item is already ranked, remove it
+            if (currentRanking.includes(itemText)) {
+                userResponses[questionId].answer = currentRanking.filter(item => item !== itemText);
+            } 
+            // If not ranked yet, add it to the end
+            else {
+                userResponses[questionId].answer = [...currentRanking, itemText];
+            }
+            
+            // Update the UI
+            showQuestion(currentQuestionIndex);
+        }
+
+        // Save a response
+        function saveResponse(questionId, answer) {
+            userResponses[questionId] = { answer };
+            updateUI();
+        }
+        
+        // Update UI elements like buttons and counts
+        function updateUI() {
+            // Update counts
+            const answeredCount = Object.keys(userResponses).length;
+            answeredCountEl.textContent = answeredCount;
+
+            // Update question grid
+            document.querySelectorAll('.question-number').forEach(qNum => {
+                qNum.classList.remove('current', 'answered');
+                const index = parseInt(qNum.dataset.index);
+                const qId = allQuestions[index].id;
+                if (userResponses[qId]) {
+                    qNum.classList.add('answered');
+                }
+                if (index === currentQuestionIndex) {
+                    qNum.classList.add('current');
+                }
+            });
+            
+            // Update navigation buttons
+            prevBtnEl.disabled = currentQuestionIndex === 0;
+            nextBtnEl.disabled = currentQuestionIndex === allQuestions.length - 1;
+        }
+
+        // Submit the test
+        function submitTest() {
+            // Clear the timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            
+            if (confirm("Are you sure you want to submit the test?")) {
+                displayResults();
+                quizScreenEl.classList.add('hidden');
+                resultsScreenEl.classList.remove('hidden');
+            }
+        }
+        
+        // Display the final results
+        function displayResults() {
+            responsesSummaryEl.innerHTML = '';
+            allQuestions.forEach((q, index) => {
+                const responseItem = document.createElement('div');
+                responseItem.className = 'response-item';
+                const responseQuestion = document.createElement('div');
+                responseQuestion.className = 'response-question';
+                
+                // Clean question text from any citation markers
+                const cleanQuestionText = q.text.replace(/\[cite_start\]/g, '')
+                                               .replace(/\[cite:\s*\d+(?:,\s*\d+)*\]/g, '');
+                
+                responseQuestion.textContent = `${index + 1}. ${cleanQuestionText}`;
+                
+                const responseAnswer = document.createElement('div');
+                responseAnswer.className = 'response-answer';
+                const savedResponse = userResponses[q.id];
+
+                if (savedResponse) {
+                    responseAnswer.innerHTML = formatAnswer(q, savedResponse.answer);
+                } else {
+                    responseAnswer.textContent = 'Not Answered';
+                }
+
+                responseItem.appendChild(responseQuestion);
+                responseItem.appendChild(responseAnswer);
+                responsesSummaryEl.appendChild(responseItem);
+            });
+        }
+        
+        // Format the answer for display
+        function formatAnswer(question, answer) {
+            switch (question.type) {
+                case 'mcq':
+                case 'paired_choice':
+                    const option = question.options.find(opt => opt.id === answer);
+                    if (option) {
+                        // Clean option text from any citation markers
+                        return option.text.replace(/\[cite_start\]/g, '')
+                                          .replace(/\[cite:\s*\d+(?:,\s*\d+)*\]/g, '');
+                    }
+                    return 'N/A';
+                case 'yes_no':
+                    return answer === 'yes' ? 'Yes' : 'No';
+                case 'likert':
+                    const scaleText = testData.scale || "1-Strongly Disagree, 2-Disagree, 3-Neutral, 4-Agree, 5-Strongly Agree";
+                    const cleanScaleText = scaleText.replace(/\[cite_start\]/g, '')
+                                                   .replace(/\[cite:\s*\d+(?:,\s*\d+)*\]/g, '');
+                    const labels = cleanScaleText.match(/\d-([^,]+)/g).map(s => s.substring(2).trim());
+                    return `${answer} - ${labels[answer - 1]}`;
+                case 'ranking':
+                    if (Array.isArray(answer) && answer.length > 0) {
+                        let html = '<ol>';
+                        answer.forEach(item => {
+                            // Clean item text from any citation markers
+                            const cleanItem = item.replace(/\[cite_start\]/g, '')
+                                                 .replace(/\[cite:\s*\d+(?:,\s*\d+)*\]/g, '');
+                            html += `<li>${cleanItem}</li>`;
+                        });
+                        html += '</ol>';
+                        return html;
+                    }
+                    return 'Not ranked';
+                default:
+                    return answer;
+            }
+        }
+
+        // Download results as PDF
+        function downloadResultsPDF() {
+            alert("PDF download functionality would be implemented here with jsPDF.");
+            // In a real implementation, this would generate a PDF with the results
+        }
+
+        // Initialize the app when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>

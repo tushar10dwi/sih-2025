@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaviDisha - Profile Setup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --primary-light: #3b5998;
+            --secondary: #059669;
+            --accent: #F59E0B;
+            --background: #F9FAFB;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --white: #FFFFFF;
+            --error: #EF4444;
+            --success: #10B981;
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.05) 0%, rgba(5, 150, 105, 0.05) 100%);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        /* Header Styles */
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-left: 10px;
+        }
+
+        .logo-accent {
+            color: var(--accent);
+        }
+
+        .skip-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .skip-link:hover {
+            color: var(--primary-light);
+            text-decoration: underline;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .onboarding-container {
+            flex: 1;
+            max-width: 700px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .onboarding-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .onboarding-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 10s infinite linear;
+        }
+
+        .onboarding-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .onboarding-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .progress-container {
+            padding: 20px 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 4px;
+            transition: var(--transition);
+            width: 20%;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+        }
+
+        .onboarding-body {
+            padding: 30px;
+        }
+
+        .step-container {
+            display: none;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: var(--transition);
+        }
+
+        .step-container.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .step-description {
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--background);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
+        }
+
+        .form-input.error {
+            border-color: var(--error);
+        }
+
+        .form-input.success {
+            border-color: var(--success);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        .select-wrapper select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        .hint-text {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .interest-item {
+            position: relative;
+        }
+
+        .interest-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .interest-label {
+            display: block;
+            padding: 12px 15px;
+            background-color: var(--background);
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .interest-input:checked + .interest-label {
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .interest-input:not(:checked):hover + .interest-label {
+            border-color: var(--primary-light);
+        }
+
+        .chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .skill-chip {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            background-color: var(--background);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid #E5E7EB;
+        }
+
+        .skill-chip:hover {
+            background-color: #E5E7EB;
+        }
+
+        .skill-chip.selected {
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .skill-chip .remove {
+            margin-left: 5px;
+            font-size: 0.75rem;
+        }
+
+        .skill-input-container {
+            position: relative;
+            margin-top: 15px;
+        }
+
+        .skill-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .skill-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--white);
+            border-radius: 0 0 10px 10px;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+            display: none;
+        }
+
+        .skill-suggestion {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .skill-suggestion:hover {
+            background-color: var(--background);
+        }
+
+        .summary-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .summary-label {
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .summary-value {
+            font-size: 1.1rem;
+        }
+
+        .summary-edit {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        .summary-edit:hover {
+            text-decoration: underline;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(30, 58, 138, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-accent:hover {
+            background-color: #E69008;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Success Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 60px;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .modal-text {
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .onboarding-container {
+                max-width: 100%;
+            }
+            
+            .onboarding-header {
+                padding: 20px;
+            }
+            
+            .onboarding-body {
+                padding: 20px;
+            }
+            
+            .interests-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .interests-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .skip-link {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="header-container">
+            <a href="landing_page.html" class="logo">
+                <div class="logo-text">Navi<span class="logo-accent">Disha</span></div>
+            </a>
+            
+            <a href="dashboard.html" class="skip-link">Skip for now</a>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Onboarding Container -->
+        <div class="onboarding-container">
+            <div class="onboarding-header">
+                <h2 class="onboarding-title">Your Career Journey Starts Here</h2>
+                <p class="onboarding-subtitle">Complete your profile to get personalized career guidance</p>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="current-step">Step 1 of 5</span>
+                        <span id="progress-percent">20%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="onboarding-body">
+                <!-- Step 1: Personal Info -->
+                <div class="step-container active" id="step-1">
+                    <h3 class="step-title">Tell Us About Yourself</h3>
+                    <p class="step-description">We'll use this information to personalize your career recommendations.</p>
+                    
+                    <form id="personal-info-form">
+                        <div class="form-group">
+                            <label for="full-name" class="form-label">Full Name</label>
+                            <input type="text" id="full-name" class="form-input" placeholder="Enter your full name" required>
+                            <div class="error-message" id="name-error">Please enter your name</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" id="email" class="form-input" placeholder="Enter your email address" required>
+                            <div class="error-message" id="email-error">Please enter a valid email address</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="grade" class="form-label">Grade/Class</label>
+                            <div class="select-wrapper">
+                                <select id="grade" class="form-input" required>
+                                    <option value="" disabled selected>Select your grade</option>
+                                    <option value="9">Grade 9</option>
+                                    <option value="10">Grade 10</option>
+                                    <option value="11">Grade 11</option>
+                                    <option value="12">Grade 12</option>
+                                    <option value="college">College</option>
+                                    <option value="graduate">Graduate</option>
+                                </select>
+                            </div>
+                            <div class="error-message" id="grade-error">Please select your grade</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="stream" class="form-label">Academic Stream</label>
+                            <div class="select-wrapper">
+                                <select id="stream" class="form-input" required>
+                                    <option value="" disabled selected>Select your academic stream</option>
+                                    <option value="science">Science</option>
+                                    <option value="commerce">Commerce</option>
+                                    <option value="arts">Arts</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="error-message" id="stream-error">Please select your academic stream</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" id="location" class="form-input" placeholder="Enter your country/state">
+                            <div class="hint-text">We'll try to auto-detect your location for better recommendations</div>
+                        </div>
+                    </form>
+                    
+                    <div class="buttons-container">
+                        <button class="btn btn-secondary" id="back-1" disabled>Back</button>
+                        <button class="btn btn-primary" id="next-1">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Career Interests -->
+                <div class="step-container" id="step-2">
+                    <h3 class="step-title">Your Career Interests</h3>
+                    <p class="step-description">Select areas that interest you. We'll suggest careers based on your choices.</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Select your interests</label>
+                        <div class="interests-grid" id="interests-container">
+                            <!-- Interests will be populated by JavaScript -->
+                        </div>
+                        <div class="error-message" id="interests-error">Please select at least one interest</div>
+                    </div>
+                    
+                    <div class="buttons-container">
+                        <button class="btn btn-secondary" id="back-2">Back</button>
+                        <button class="btn btn-primary" id="next-2">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Goals & Aspirations -->
+                <div class="step-container" id="step-3">
+                    <h3 class="step-title">Your Goals & Aspirations</h3>
+                    <p class="step-description">Tell us about your career goals and what you hope to achieve.</p>
+                    
+                    <div class="form-group">
+                        <label for="career-goal" class="form-label">Career Goal</label>
+                        <div class="select-wrapper">
+                            <select id="career-goal" class="form-input">
+                                <option value="" disabled selected>Select your primary career goal</option>
+                                <option value="engineering">Become an Engineer</option>
+                                <option value="doctor">Become a Doctor</option>
+                                <option value="research">Pursue Research</option>
+                                <option value="business">Start a Business</option>
+                                <option value="designer">Become a Designer</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="goal-details" class="form-label">More about your goals</label>
+                        <textarea id="goal-details" class="form-input" rows="4" placeholder="Tell us more about your aspirations and what you hope to achieve in your career..."></textarea>
+                    </div>
+                    
+                    <div class="buttons-container">
+                        <button class="btn btn-secondary" id="back-3">Back</button>
+                        <button class="btn btn-primary" id="next-3">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Skills & Preferences -->
+                <div class="step-container" id="step-4">
+                    <h3 class="step-title">Your Skills & Preferences</h3>
+                    <p class="step-description">Select skills you have or would like to develop.</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Select your skills</label>
+                        <div class="chips-container" id="skills-container">
+                            <!-- Skills will be populated by JavaScript -->
+                        </div>
+                        
+                        <div class="skill-input-container">
+                            <input type="text" id="skill-input" class="skill-input" placeholder="Type a skill and press Enter to add">
+                            <div class="skill-suggestions" id="skill-suggestions"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="work-preference" class="form-label">Work Environment Preference</label>
+                        <div class="select-wrapper">
+                            <select id="work-preference" class="form-input">
+                                <option value="" disabled selected>Select your preferred work environment</option>
+                                <option value="office">Office</option>
+                                <option value="remote">Remote</option>
+                                <option value="hybrid">Hybrid</option>
+                                <option value="outdoor">Outdoor</option>
+                                <option value="travel">Frequent Travel</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="buttons-container">
+                        <button class="btn btn-secondary" id="back-4">Back</button>
+                        <button class="btn btn-primary" id="next-4">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 5: Summary & Confirmation -->
+                <div class="step-container" id="step-5">
+                    <h3 class="step-title">Review Your Information</h3>
+                    <p class="step-description">Please review your information and submit to complete your profile.</p>
+                    
+                    <div class="summary-item">
+                        <div class="summary-label">Personal Information</div>
+                        <div class="summary-value" id="summary-name"></div>
+                        <div class="summary-value" id="summary-email"></div>
+                        <div class="summary-value" id="summary-grade"></div>
+                        <div class="summary-value" id="summary-stream"></div>
+                        <div class="summary-value" id="summary-location"></div>
+                        <a href="#" class="summary-edit" data-step="1">Edit</a>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div class="summary-label">Career Interests</div>
+                        <div class="summary-value" id="summary-interests"></div>
+                        <a href="#" class="summary-edit" data-step="2">Edit</a>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div class="summary-label">Goals & Aspirations</div>
+                        <div class="summary-value" id="summary-goal"></div>
+                        <div class="summary-value" id="summary-goal-details"></div>
+                        <a href="#" class="summary-edit" data-step="3">Edit</a>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div class="summary-label">Skills & Preferences</div>
+                        <div class="summary-value" id="summary-skills"></div>
+                        <div class="summary-value" id="summary-work-pref"></div>
+                        <a href="#" class="summary-edit" data-step="4">Edit</a>
+                    </div>
+                    
+                    <div class="buttons-container">
+                        <button class="btn btn-secondary" id="back-5">Back</button>
+                        <button class="btn btn-accent" id="complete-profile">Finish & Create Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="modal-title">Profile Created Successfully!</h3>
+            <p class="modal-text">Your profile has been set up successfully. You can now explore personalized career recommendations.</p>
+            <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+        </div>
+    </div>
+    
+    <script>
+        // Data for interests and skills
+        const interestsData = {
+            science: ['STEM', 'Medicine', 'Research', 'Biotechnology', 'Environmental Science'],
+            commerce: ['Business', 'Finance', 'Marketing', 'Entrepreneurship', 'Economics'],
+            arts: ['Literature', 'History', 'Psychology', 'Sociology', 'Philosophy'],
+            general: ['Technology', 'Design', 'Education', 'Law', 'Government', 'Healthcare']
+        };
+        
+        const skillsData = [
+            'Problem Solving', 'Communication', 'Leadership', 'Teamwork', 'Creativity',
+            'Critical Thinking', 'Time Management', 'Adaptability', 'Research', 'Writing',
+            'Programming', 'Data Analysis', 'Design', 'Public Speaking', 'Mathematics'
+        ];
+        
+        // Initialize state
+        let currentStep = 1;
+        const totalSteps = 5;
+        const userData = {
+            personalInfo: {},
+            interests: [],
+            goals: {},
+            skills: []
+        };
+        
+        // DOM Elements
+        const progressFill = document.getElementById('progress-fill');
+        const currentStepElement = document.getElementById('current-step');
+        const progressPercent = document.getElementById('progress-percent');
+        const stepContainers = document.querySelectorAll('.step-container');
+        const nextButtons = {
+            1: document.getElementById('next-1'),
+            2: document.getElementById('next-2'),
+            3: document.getElementById('next-3'),
+            4: document.getElementById('next-4')
+        };
+        const backButtons = {
+            2: document.getElementById('back-2'),
+            3: document.getElementById('back-3'),
+            4: document.getElementById('back-4'),
+            5: document.getElementById('back-5')
+        };
+        const completeButton = document.getElementById('complete-profile');
+        const successModal = document.getElementById('success-modal');
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            populateInterests();
+            populateSkills();
+            setupEventListeners();
+            tryGeolocation();
+        });
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            // Next buttons
+            nextButtons[1].addEventListener('click', validateStep1);
+            nextButtons[2].addEventListener('click', validateStep2);
+            nextButtons[3].addEventListener('click', validateStep3);
+            nextButtons[4].addEventListener('click', validateStep4);
+            
+            // Back buttons
+            backButtons[2].addEventListener('click', () => navigateToStep(1));
+            backButtons[3].addEventListener('click', () => navigateToStep(2));
+            backButtons[4].addEventListener('click', () => navigateToStep(3));
+            backButtons[5].addEventListener('click', () => navigateToStep(4));
+            
+            // Complete button
+            completeButton.addEventListener('click', completeProfile);
+            
+            // Edit summary links
+            document.querySelectorAll('.summary-edit').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const step = parseInt(this.getAttribute('data-step'));
+                    navigateToStep(step);
+                });
+            });
+            
+            // Stream change event
+            document.getElementById('stream').addEventListener('change', function() {
+                populateInterests();
+            });
+            
+            // Skill input
+            const skillInput = document.getElementById('skill-input');
+            const skillSuggestions = document.getElementById('skill-suggestions');
+            
+            skillInput.addEventListener('focus', function() {
+                showSkillSuggestions();
+            });
+            
+            skillInput.addEventListener('input', function() {
+                showSkillSuggestions();
+            });
+            
+            skillInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addCustomSkill(this.value);
+                    this.value = '';
+                    skillSuggestions.style.display = 'none';
+                }
+            });
+            
+            // Close suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!skillInput.contains(e.target) && !skillSuggestions.contains(e.target)) {
+                    skillSuggestions.style.display = 'none';
+                }
+            });
+        }
+        
+        // Try to get user's location
+        function tryGeolocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        // In a real app, we would reverse geocode to get location name
+                        // For demo, we'll just set a placeholder
+                        document.getElementById('location').placeholder = 'Detected: United States';
+                    },
+                    function(error) {
+                        // Silently fail - user might not have allowed location access
+                        console.log('Location access not granted or failed');
+                    }
+                );
+            }
+        }
+        
+        // Populate interests based on selected stream
+        function populateInterests() {
+            const stream = document.getElementById('stream').value;
+            const interestsContainer = document.getElementById('interests-container');
+            interestsContainer.innerHTML = '';
+            
+            let interestsToShow = [...interestsData.general];
+            
+            if (stream && interestsData[stream]) {
+                interestsToShow = [...interestsData[stream], ...interestsToShow];
+            }
+            
+            interestsToShow.forEach(interest => {
+                const interestId = `interest-${interest.toLowerCase().replace(/\s+/g, '-')}`;
+                
+                const interestItem = document.createElement('div');
+                interestItem.className = 'interest-item';
+                
+                interestItem.innerHTML = `
+                    <input type="checkbox" id="${interestId}" class="interest-input" value="${interest}">
+                    <label for="${interestId}" class="interest-label">${interest}</label>
+                `;
+                
+                interestsContainer.appendChild(interestItem);
+            });
+        }
+        
+        // Populate skills chips
+        function populateSkills() {
+            const skillsContainer = document.getElementById('skills-container');
+            skillsContainer.innerHTML = '';
+            
+            skillsData.forEach(skill => {
+                const skillChip = document.createElement('div');
+                skillChip.className = 'skill-chip';
+                skillChip.setAttribute('data-skill', skill);
+                skillChip.textContent = skill;
+                
+                skillChip.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    
+                    const skill = this.getAttribute('data-skill');
+                    if (this.classList.contains('selected')) {
+                        if (!userData.skills.includes(skill)) {
+                            userData.skills.push(skill);
+                        }
+                    } else {
+                        userData.skills = userData.skills.filter(s => s !== skill);
+                    }
+                });
+                
+                skillsContainer.appendChild(skillChip);
+            });
+        }
+        
+        // Show skill suggestions
+        function showSkillSuggestions() {
+            const input = document.getElementById('skill-input').value.toLowerCase();
+            const suggestionsContainer = document.getElementById('skill-suggestions');
+            
+            if (!input) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+            
+            const filteredSkills = skillsData.filter(skill => 
+                skill.toLowerCase().includes(input) && !userData.skills.includes(skill)
+            );
+            
+            if (filteredSkills.length === 0) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+            
+            suggestionsContainer.innerHTML = '';
+            filteredSkills.forEach(skill => {
+                const suggestion = document.createElement('div');
+                suggestion.className = 'skill-suggestion';
+                suggestion.textContent = skill;
+                
+                suggestion.addEventListener('click', function() {
+                    addCustomSkill(skill);
+                    document.getElementById('skill-input').value = '';
+                    suggestionsContainer.style.display = 'none';
+                });
+                
+                suggestionsContainer.appendChild(suggestion);
+            });
+            
+            suggestionsContainer.style.display = 'block';
+        }
+        
+        // Add custom skill
+        function addCustomSkill(skill) {
+            if (!skill.trim() || userData.skills.includes(skill)) return;
+            
+            userData.skills.push(skill);
+            
+            const skillsContainer = document.getElementById('skills-container');
+            const skillChip = document.createElement('div');
+            skillChip.className = 'skill-chip selected';
+            skillChip.setAttribute('data-skill', skill);
+            skillChip.innerHTML = `${skill} <span class="remove">×</span>`;
+            
+            skillChip.addEventListener('click', function() {
+                this.remove();
+                userData.skills = userData.skills.filter(s => s !== skill);
+            });
+            
+            skillsContainer.appendChild(skillChip);
+        }
+        
+        // Validate step 1
+        function validateStep1() {
+            const name = document.getElementById('full-name');
+            const email = document.getElementById('email');
+            const grade = document.getElementById('grade');
+            const stream = document.getElementById('stream');
+            
+            let isValid = true;
+            
+            if (!name.value.trim()) {
+                document.getElementById('name-error').style.display = 'block';
+                name.classList.add('error');
+                isValid = false;
+            } else {
+                document.getElementById('name-error').style.display = 'none';
+                name.classList.remove('error');
+            }
+            
+            if (!email.value.trim() || !isValidEmail(email.value)) {
+                document.getElementById('email-error').style.display = 'block';
+                email.classList.add('error');
+                isValid = false;
+            } else {
+                document.getElementById('email-error').style.display = 'none';
+                email.classList.remove('error');
+            }
+            
+            if (!grade.value) {
+                document.getElementById('grade-error').style.display = 'block';
+                grade.classList.add('error');
+                isValid = false;
+            } else {
+                document.getElementById('grade-error').style.display = 'none';
+                grade.classList.remove('error');
+            }
+            
+            if (!stream.value) {
+                document.getElementById('stream-error').style.display = 'block';
+                stream.classList.add('error');
+                isValid = false;
+            } else {
+                document.getElementById('stream-error').style.display = 'none';
+                stream.classList.remove('error');
+            }
+            
+            if (isValid) {
+                // Save data
+                userData.personalInfo = {
+                    name: name.value.trim(),
+                    email: email.value.trim(),
+                    grade: grade.options[grade.selectedIndex].text,
+                    stream: stream.options[stream.selectedIndex].text,
+                    location: document.getElementById('location').value.trim() || 'Not specified'
+                };
+                
+                navigateToStep(2);
+            }
+        }
+        
+        // Validate step 2
+        function validateStep2() {
+            const selectedInterests = document.querySelectorAll('.interest-input:checked');
+            
+            if (selectedInterests.length === 0) {
+                document.getElementById('interests-error').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('interests-error').style.display = 'none';
+            
+            // Save data
+            userData.interests = Array.from(selectedInterests).map(input => input.value);
+            
+            navigateToStep(3);
+        }
+        
+        // Validate step 3
+        function validateStep3() {
+            const careerGoal = document.getElementById('career-goal');
+            const goalDetails = document.getElementById('goal-details');
+            
+            // Save data
+            userData.goals = {
+                careerGoal: careerGoal.value ? careerGoal.options[careerGoal.selectedIndex].text : 'Not specified',
+                goalDetails: goalDetails.value.trim() || 'Not specified'
+            };
+            
+            navigateToStep(4);
+        }
+        
+        // Validate step 4
+        function validateStep4() {
+            const workPreference = document.getElementById('work-preference');
+            
+            // Save data
+            userData.workPreference = workPreference.value ? workPreference.options[workPreference.selectedIndex].text : 'Not specified';
+            
+            // Update summary
+            updateSummary();
+            
+            navigateToStep(5);
+        }
+        
+        // Update summary page
+        function updateSummary() {
+            document.getElementById('summary-name').textContent = `Name: ${userData.personalInfo.name}`;
+            document.getElementById('summary-email').textContent = `Email: ${userData.personalInfo.email}`;
+            document.getElementById('summary-grade').textContent = `Grade: ${userData.personalInfo.grade}`;
+            document.getElementById('summary-stream').textContent = `Stream: ${userData.personalInfo.stream}`;
+            document.getElementById('summary-location').textContent = `Location: ${userData.personalInfo.location}`;
+            
+            document.getElementById('summary-interests').textContent = userData.interests.join(', ') || 'None selected';
+            document.getElementById('summary-goal').textContent = `Career Goal: ${userData.goals.careerGoal}`;
+            document.getElementById('summary-goal-details').textContent = `Details: ${userData.goals.goalDetails}`;
+            document.getElementById('summary-skills').textContent = `Skills: ${userData.skills.join(', ') || 'None selected'}`;
+            document.getElementById('summary-work-pref').textContent = `Work Preference: ${userData.workPreference}`;
+        }
+        
+        // Complete profile
+        function completeProfile() {
+            // In a real app, we would send the data to the server here
+            // For demo, we'll just show the success modal
+            
+            // Simulate API call
+            completeButton.disabled = true;
+            completeButton.textContent = 'Processing...';
+            
+            setTimeout(() => {
+                successModal.classList.add('active');
+                
+                // Save to localStorage for demo purposes
+                localStorage.setItem('userProfile', JSON.stringify(userData));
+            }, 1500);
+        }
+        
+        // Navigate to a specific step
+        function navigateToStep(step) {
+            // Hide current step
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            
+            // Show new step
+            document.getElementById(`step-${step}`).classList.add('active');
+            
+            // Update current step
+            currentStep = step;
+            updateProgress();
+        }
+        
+        // Update progress bar and text
+        function updateProgress() {
+            const percentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            progressFill.style.width = `${percentage}%`;
+            currentStepElement.textContent = `Step ${currentStep} of ${totalSteps}`;
+            progressPercent.textContent = `${Math.round(percentage)}%`;
+        }
+        
+        // Email validation
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

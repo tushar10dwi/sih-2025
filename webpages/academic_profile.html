@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaviDisha - Academic Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --primary-light: #3b5998;
+            --secondary: #059669;
+            --accent: #F59E0B;
+            --background: #F9FAFB;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --white: #FFFFFF;
+            --error: #EF4444;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        /* Header Styles */
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-left: 10px;
+        }
+
+        .logo-accent {
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .notification-icon:hover {
+            color: var(--primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--error);
+            color: var(--white);
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow-hover);
+            width: 200px;
+            z-index: 100;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .user-dropdown.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-item {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--background);
+        }
+
+        .dropdown-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 3px auto;
+            background-color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        /* Mobile Sidebar Toggle */
+        .mobile-sidebar-toggle {
+            display: none; /* Hidden by default */
+            position: fixed;
+            left: 10px;
+            top: 80px;
+            z-index: 999;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--card-shadow-hover);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* Show the toggle only when the screen is squeezed */
+        @media (max-width: 1100px) {
+            .mobile-sidebar-toggle {
+                display: flex;
+            }
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow-hover);
+            z-index: 1002;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            padding: 70px 20px 30px;
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(300px);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            height: fit-content;
+            transition: var(--transition);
+        }
+
+        /* Hide desktop sidebar when screen is squeezed */
+        @media (max-width: 1100px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
+        .sidebar-header {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: var(--background);
+            color: var(--primary);
+        }
+
+        .sidebar-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Academic Profile Form */
+        .profile-form {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-tooltip {
+            margin-left: 5px;
+            color: var(--text-light);
+            cursor: help;
+            position: relative;
+        }
+
+        .tooltip-text {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--text-dark);
+            color: var(--white);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .info-tooltip:hover .tooltip-text {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: var(--transition);
+            background-color: var(--white);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-input {
+            margin-right: 10px;
+        }
+
+        .checkbox-label {
+            font-weight: 500;
+        }
+
+        .partner-college {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: rgba(245, 158, 11, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .partner-college p {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .partner-college strong {
+            color: var(--accent);
+        }
+
+        .dynamic-list {
+            margin-top: 15px;
+        }
+
+        .list-item {
+            background-color: var(--background);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+        }
+
+        .remove-item {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--error);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .add-item-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .add-item-btn:hover {
+            background-color: #047857;
+        }
+
+        .add-item-btn i {
+            margin-right: 8px;
+        }
+
+        .chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .chip {
+            background-color: var(--primary-light);
+            color: var(--white);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .chip-remove {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+
+        .chip-input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .chip-input {
+            width: 100%;
+            padding-right: 50px;
+        }
+
+        .chip-add {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(30, 58, 138, 0.1);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .save-confirmation {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: var(--white);
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow-hover);
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+            z-index: 1001;
+        }
+
+        .save-confirmation.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .save-confirmation i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--white);
+            margin-left: 10px;
+        }
+
+        .footer-desc {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .footer-heading {
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 12px;
+        }
+
+        .footer-link a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link a:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background-color: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--card-shadow);
+                padding: 20px 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                margin: 15px 0;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 15px;
+            }
+            
+            .user-name {
+                display: none;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .form-group {
+                width: 100%;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .mobile-sidebar-toggle {
+                top: 70px;
+            }
+            
+            /* Fixed mobile sidebar */
+            .mobile-sidebar {
+                width: 100%;
+                left: -100%;
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .mobile-sidebar.active {
+                transform: translateX(100%);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .profile-form {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header / Navigation -->
+    <header id="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-text">Navi<span class="logo-accent">Disha</span></div>
+            </a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="roadmaps.html" class="nav-link">Roadmaps</a></li>
+                <li class="nav-item"><a href="recommendation.html" class="nav-link">Recommendations</a></li>
+                <li class="nav-item"><a href="progress.html" class="nav-link">Progress</a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link">Support</a></li>
+            </ul>
+            
+            <div class="header-right">
+                <a href="notification_center.html" class="notification-icon">
+                   <i class="fas fa-bell"></i>
+                   <span class="notification-badge" id="notification-count">3</span>
+                </a>
+            
+                <div class="user-profile" id="user-profile">
+                    <div class="user-avatar">AS</div>
+                    <div class="user-name">Anjali S.</div>
+                    <i class="fas fa-chevron-down"></i>
+                    
+                    <div class="user-dropdown" id="user-dropdown">
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="prefrences_settings.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar Toggle Button -->
+    <!-- This will only appear when the screen is squeezed (below 1100px) -->
+    <div class="mobile-sidebar-toggle" id="sidebar-toggle">
+        <i class="fas fa-chevron-right"></i>
+    </div>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Mobile Sidebar -->
+    <aside class="mobile-sidebar" id="mobile-sidebar">
+        <button class="close-sidebar" id="close-sidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">Quick Links</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-road"></i> My Roadmap
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="upcoming_deadline.html" class="sidebar-link">
+                    <i class="fas fa-calendar-alt"></i> Upcoming Deadlines
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="recommendation.html" class="sidebar-link">
+                    <i class="fas fa-lightbulb"></i> Recommendations
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-book-open"></i> Resource Library
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar (Desktop) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title">Student Dashboard</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item"><a href="dashboard.html" class="sidebar-link"><i class="fas fa-home"></i> Overview</a></li>
+                <li class="sidebar-item"><a href="academic_profile.html" class="sidebar-link active"><i class="fas fa-graduation-cap"></i> Academic Profile</a></li>
+                <li class="sidebar-item"><a href="recommendation.html" class="sidebar-link"><i class="fas fa-lightbulb"></i> Recommendations</a></li>
+                <li class="sidebar-item"><a href="upcoming_deadline.html" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Upcoming Deadlines</a></li>
+                <li class="sidebar-item"><a href="saved_items.html" class="sidebar-link"><i class="fas fa-bookmark"></i> Saved Items</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Academic Profile</h1>
+                <p class="page-subtitle">Update your academic details to unlock personalized college & scholarship recommendations.</p>
+            </div>
+
+            <!-- Academic Profile Form -->
+            <form class="profile-form" id="academic-profile-form">
+                <!-- School Information Section -->
+                <div class="form-section fade-in">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <h3 class="section-title">School Information</h3>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                School Name
+                                <span class="info-tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltip-text">Helps identify school-specific opportunities and partnerships</span>
+                                </span>
+                            </label>
+                            <input type="text" class="form-input" id="school-name" placeholder="Enter your school name" list="school-suggestions">
+                            <datalist id="school-suggestions">
+                                <option value="Delhi Public School">
+                                <option value="St. Xavier's School">
+                                <option value="Modern School">
+                                <option value="Kendriya Vidyalaya">
+                                <option value="DAV Public School">
+                            </datalist>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                School Board
+                                <span class="info-tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltip-text">Affects curriculum-specific recommendations</span>
+                                </span>
+                            </label>
+                            <select class="form-select" id="school-board">
+                                <option value="">Select School Board</option>
+                                <option value="cbse">CBSE</option>
+                                <option value="icse">ICSE</option>
+                                <option value="ib">IB</option>
+                                <option value="state">State Board</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-input" id="school-city" placeholder="City">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">State</label>
+                            <input type="text" class="form-input" id="school-state" placeholder="State">
+                        </div>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="school-partnered" class="checkbox-input">
+                        <label for="school-partnered" class="checkbox-label">My school has partnered with a college/university</label>
+                    </div>
+                    
+                    <div class="partner-college" id="partner-college" style="display: none;">
+                        <p><strong>Special Partnership Detected!</strong> Your school has a tie-up with XYZ University. You may get priority admission benefits.</p>
+                        <select class="form-select" id="partner-university">
+                            <option value="">Select Partner University</option>
+                            <option value="xyz">XYZ University</option>
+                            <option value="abc">ABC Institute of Technology</option>
+                            <option value="pqr">PQR College of Sciences</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Academic Overview Section -->
+                <div class="form-section fade-in">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="section-title">Academic Overview</h3>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Current Grade/Class</label>
+                            <select class="form-select" id="current-grade">
+                                <option value="">Select Grade/Class</option>
+                                <option value="9">9th Grade</option>
+                                <option value="10">10th Grade</option>
+                                <option value="11">11th Grade</option>
+                                <option value="12">12th Grade</option>
+                                <option value="ug">Undergraduate</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Stream</label>
+                            <select class="form-select" id="academic-stream">
+                                <option value="">Select Stream</option>
+                                <option value="science">Science</option>
+                                <option value="commerce">Commerce</option>
+                                <option value="arts">Arts</option>
+                                <option value="vocational">Vocational</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                GPA/Percentage
+                                <span class="info-tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltip-text">Critical for scholarship eligibility and college admissions</span>
+                                </span>
+                            </label>
+                            <input type="number" class="form-input" id="gpa" min="0" max="100" step="0.01" placeholder="Enter GPA or Percentage">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Rank in Class/Batch (Optional)</label>
+                            <input type="number" class="form-input" id="class-rank" min="1" placeholder="e.g., 5">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Academic Achievements Section -->
+                <div class="form-section fade-in">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="section-title">Academic Achievements</h3>
+                    </div>
+                    
+                    <div class="dynamic-list" id="achievements-list">
+                        <!-- Achievement items will be added here dynamically -->
+                    </div>
+                    
+                    <button type="button" class="add-item-btn" id="add-achievement">
+                        <i class="fas fa-plus"></i> Add Achievement
+                    </button>
+                </div>
+                
+                <!-- Olympiads & Competitions Section -->
+                <div class="form-section fade-in">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <h3 class="section-title">Olympiads & Competitions</h3>
+                    </div>
+                    
+                    <div class="dynamic-list" id="olympiads-list">
+                        <!-- Olympiad items will be added here dynamically -->
+                    </div>
+                    
+                    <button type="button" class="add-item-btn" id="add-olympiad">
+                        <i class="fas fa-plus"></i> Add Olympiad/Competition
+                    </button>
+                </div>
+                
+                <!-- Extra Details Section -->
+                <div class="form-section fade-in">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="section-title">Extra Details</h3>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Favorite Subjects</label>
+                        <div class="chips-container" id="favorite-subjects-chips">
+                            <!-- Chips will be added here dynamically -->
+                        </div>
+                        <div class="chip-input-container">
+                            <input type="text" class="form-input chip-input" id="favorite-subject-input" placeholder="Type a subject and press Enter">
+                            <button type="button" class="chip-add" id="add-favorite-subject">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Career Interests</label>
+                        <div class="chips-container" id="career-interests-chips">
+                            <!-- Chips will be added here dynamically -->
+                        </div>
+                        <div class="chip-input-container">
+                            <input type="text" class="form-input chip-input" id="career-interest-input" placeholder="Type an interest and press Enter">
+                            <button type="button" class="chip-add" id="add-career-interest">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Languages Known</label>
+                        <div class="chips-container" id="languages-chips">
+                            <!-- Chips will be added here dynamically -->
+                        </div>
+                        <div class="chip-input-container">
+                            <input type="text" class="form-input chip-input" id="language-input" placeholder="Type a language and press Enter">
+                            <button type="button" class="chip-add" id="add-language">+</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="export-profile">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                    <button type="button" class="btn btn-primary" id="save-profile">
+                        <i class="fas fa-save"></i> Save Profile
+                    </button>
+                </div>
+            </form>
+        </main>
+    </div>
+    
+    <!-- Save Confirmation Message -->
+    <div class="save-confirmation" id="save-confirmation">
+        <i class="fas fa-check-circle"></i>
+        <span>Profile saved successfully. Your roadmap & recommendations will be updated.</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <div class="footer-logo-text">NaviDisha</div>
+                </div>
+                <p class="footer-desc">Empowering students to make informed career decisions through personalized guidance and AI-powered recommendations.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#">About Us</a></li>
+                    <li class="footer-link"><a href="#">Our Services</a></li>
+                    <li class="footer-link"><a href="#">How It Works</a></li>
+                    <li class="footer-link"><a href="#">Testimonials</a></li>
+                    <li class="footer-link"><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4 class="footer-heading">Support</h4>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="support.html">FAQ</a></li>
+                    <li class="footer-link"><a href="#">Privacy Policy</a></li>
+                    <li class="footer-link"><a href="#">Terms of Service</a></li>
+                    <li class="footer-link"><a href="support.html">Contact Us</a></li>
+                    <li class="footer-link"><a href="support.html">Help Center</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4 class="footer-heading">Contact Info</h4>
+                <ul class="footer-links">
+                    <li class="footer-link"><i class="fas fa-map-marker-alt"></i>Jammu & Kashmir</li>
+                    <li class="footer-link"><i class="fas fa-phone"></i> +91 xxxxxxxxxx</li>
+                    <li class="footer-link"><i class="fas fa-envelope"></i> support@navidisha.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 NaviDisha. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const userProfile = document.getElementById('user-profile');
+        const userDropdown = document.getElementById('user-dropdown');
+        const saveProfileBtn = document.getElementById('save-profile');
+        const saveConfirmation = document.getElementById('save-confirmation');
+        const schoolPartnered = document.getElementById('school-partnered');
+        const partnerCollege = document.getElementById('partner-college');
+        
+        // Mobile sidebar elements
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const closeSidebar = document.getElementById('close-sidebar');
+        
+        // Mobile Menu Toggle
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // User Dropdown Toggle
+        userProfile.addEventListener('click', () => {
+            userDropdown.classList.toggle('active');
+        });
+        
+        // Partner College Toggle
+        schoolPartnered.addEventListener('change', () => {
+            if (schoolPartnered.checked) {
+                partnerCollege.style.display = 'block';
+            } else {
+                partnerCollege.style.display = 'none';
+            }
+        });
+        
+        // Save Profile Button
+        saveProfileBtn.addEventListener('click', () => {
+            // Show confirmation message
+            saveConfirmation.classList.add('show');
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                saveConfirmation.classList.remove('show');
+            }, 3000);
+        });
+        
+        // Dynamic Achievement Addition
+        const achievementsList = document.getElementById('achievements-list');
+        const addAchievementBtn = document.getElementById('add-achievement');
+        
+        addAchievementBtn.addEventListener('click', () => {
+            const achievementItem = document.createElement('div');
+            achievementItem.className = 'list-item';
+            achievementItem.innerHTML = `
+                <button type="button" class="remove-item"><i class="fas fa-times"></i></button>
+                <div class="form-group">
+                    <label class="form-label">Achievement Title</label>
+                    <input type="text" class="form-input" placeholder="e.g., Science Fair Winner">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Describe your achievement"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Year</label>
+                    <select class="form-select">
+                        <option value="">Select Year</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                    </select>
+                </div>
+            `;
+            
+            achievementsList.appendChild(achievementItem);
+            
+            // Add event listener to remove button
+            const removeBtn = achievementItem.querySelector('.remove-item');
+            removeBtn.addEventListener('click', () => {
+                achievementsList.removeChild(achievementItem);
+            });
+        });
+        
+        // Dynamic Olympiad Addition
+        const olympiadsList = document.getElementById('olympiads-list');
+        const addOlympiadBtn = document.getElementById('add-olympiad');
+        
+        addOlympiadBtn.addEventListener('click', () => {
+            const olympiadItem = document.createElement('div');
+            olympiadItem.className = 'list-item';
+            olympiadItem.innerHTML = `
+                <button type="button" class="remove-item"><i class="fas fa-times"></i></button>
+                <div class="form-group">
+                    <label class="form-label">Olympiad/Competition Name</label>
+                    <input type="text" class="form-input" placeholder="e.g., National Science Olympiad">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Level</label>
+                    <select class="form-select">
+                        <option value="">Select Level</option>
+                        <option value="school">School Level</option>
+                        <option value="district">District Level</option>
+                        <option value="state">State Level</option>
+                        <option value="national">National Level</option>
+                        <option value="international">International Level</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Rank/Position (if any)</label>
+                    <input type="text" class="form-input" placeholder="e.g., 1st Rank">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Year</label>
+                    <select class="form-select">
+                        <option value="">Select Year</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                    </select>
+                </div>
+            `;
+            
+            olympiadsList.appendChild(olympiadItem);
+            
+            // Add event listener to remove button
+            const removeBtn = olympiadItem.querySelector('.remove-item');
+            removeBtn.addEventListener('click', () => {
+                olympiadsList.removeChild(olympiadItem);
+            });
+        });
+        
+        // Chip functionality for favorite subjects
+        const favoriteSubjectsChips = document.getElementById('favorite-subjects-chips');
+        const favoriteSubjectInput = document.getElementById('favorite-subject-input');
+        const addFavoriteSubjectBtn = document.getElementById('add-favorite-subject');
+        
+        function addFavoriteSubject() {
+            const subject = favoriteSubjectInput.value.trim();
+            if (subject) {
+                const chip = document.createElement('div');
+                chip.className = 'chip';
+                chip.innerHTML = `
+                    ${subject}
+                    <span class="chip-remove"><i class="fas fa-times"></i></span>
+                `;
+                
+                favoriteSubjectsChips.appendChild(chip);
+                favoriteSubjectInput.value = '';
+                
+                // Add event listener to remove button
+                const removeBtn = chip.querySelector('.chip-remove');
+                removeBtn.addEventListener('click', () => {
+                    favoriteSubjectsChips.removeChild(chip);
+                });
+            }
+        }
+        
+        addFavoriteSubjectBtn.addEventListener('click', addFavoriteSubject);
+        favoriteSubjectInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addFavoriteSubject();
+            }
+        });
+        
+        // Chip functionality for career interests
+        const careerInterestsChips = document.getElementById('career-interests-chips');
+        const careerInterestInput = document.getElementById('career-interest-input');
+        const addCareerInterestBtn = document.getElementById('add-career-interest');
+        
+        function addCareerInterest() {
+            const interest = careerInterestInput.value.trim();
+            if (interest) {
+                const chip = document.createElement('div');
+                chip.className = 'chip';
+                chip.innerHTML = `
+                    ${interest}
+                    <span class="chip-remove"><i class="fas fa-times"></i></span>
+                `;
+                
+                careerInterestsChips.appendChild(chip);
+                careerInterestInput.value = '';
+                
+                // Add event listener to remove button
+                const removeBtn = chip.querySelector('.chip-remove');
+                removeBtn.addEventListener('click', () => {
+                    careerInterestsChips.removeChild(chip);
+                });
+            }
+        }
+        
+        addCareerInterestBtn.addEventListener('click', addCareerInterest);
+        careerInterestInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addCareerInterest();
+            }
+        });
+        
+        // Chip functionality for languages
+        const languagesChips = document.getElementById('languages-chips');
+        const languageInput = document.getElementById('language-input');
+        const addLanguageBtn = document.getElementById('add-language');
+        
+        function addLanguage() {
+            const language = languageInput.value.trim();
+            if (language) {
+                const chip = document.createElement('div');
+                chip.className = 'chip';
+                chip.innerHTML = `
+                    ${language}
+                    <span class="chip-remove"><i class="fas fa-times"></i></span>
+                `;
+                
+                languagesChips.appendChild(chip);
+                languageInput.value = '';
+                
+                // Add event listener to remove button
+                const removeBtn = chip.querySelector('.chip-remove');
+                removeBtn.addEventListener('click', () => {
+                    languagesChips.removeChild(chip);
+                });
+            }
+        }
+        
+        addLanguageBtn.addEventListener('click', addLanguage);
+        languageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addLanguage();
+            }
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile sidebar functionality
+        function toggleSidebar() {
+            mobileSidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileSidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Event listeners for mobile sidebar
+        sidebarToggle.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        // Close dropdown when clicking elsewhere
+        document.addEventListener('click', function(event) {
+            if (!userProfile.contains(event.target)) {
+                userDropdown.classList.remove('active');
+            }
+        });
+
+        // Check screen width and update sidebar visibility
+        function checkScreenWidth() {
+            const screenWidth = window.innerWidth;
+            
+            // If screen is wider than 1100px, ensure mobile sidebar is closed
+            if (screenWidth > 1100) {
+                mobileSidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Listen for window resize events
+        window.addEventListener('resize', checkScreenWidth);
+        
+        // Initial check
+        checkScreenWidth();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaviDisha - Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --primary-light: #3b5998;
+            --secondary: #059669;
+            --accent: #F59E0B;
+            --background: #F9FAFB;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --white: #FFFFFF;
+            --error: #EF4444;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        /* Header Styles */
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-left: 10px;
+        }
+
+        .logo-accent {
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .notification-icon:hover {
+            color: var(--primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--error);
+            color: var(--white);
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow-hover);
+            width: 200px;
+            z-index: 100;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .user-dropdown.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-item {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--background);
+        }
+
+        .dropdown-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 3px auto;
+            background-color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        /* Mobile Sidebar */
+        .mobile-sidebar-toggle {
+            display: none;
+            position: fixed;
+            left: 10px;
+            top: 80px;
+            z-index: 999;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--card-shadow-hover);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* Show the toggle only when the screen is squeezed */
+        @media (max-width: 1100px) {
+            .mobile-sidebar-toggle {
+                display: flex;
+            }
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow-hover);
+            z-index: 1002;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            padding: 70px 20px 30px;
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(300px);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Main Layout */
+        .dashboard-container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            height: fit-content;
+            transition: var(--transition);
+        }
+
+        /* Hide desktop sidebar when screen is squeezed */
+        @media (max-width: 1100px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
+        .sidebar-header {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: var(--background);
+            color: var(--primary);
+        }
+
+        .sidebar-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 10s infinite linear;
+        }
+
+        .welcome-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-text {
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .card-action {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .card-action:hover {
+            text-decoration: underline;
+        }
+
+        /* Roadmap Styles */
+        .roadmap-container {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .roadmap-line {
+            position: absolute;
+            top: 40px;
+            left: 15px;
+            bottom: 40px;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            z-index: 1;
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .roadmap-marker {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .roadmap-marker.completed {
+            background-color: var(--success);
+            border-color: var(--success);
+            color: var(--white);
+        }
+
+        .roadmap-marker.current {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .roadmap-content {
+            flex: 1;
+            background-color: var(--background);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .roadmap-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .roadmap-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .roadmap-date {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+        }
+
+        .roadmap-date i {
+            margin-right: 5px;
+        }
+
+        /* Deadlines Styles */
+        .deadline-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .deadline-item:last-child {
+            border-bottom: none;
+        }
+
+        .deadline-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .deadline-content {
+            flex: 1;
+        }
+
+        .deadline-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .deadline-date {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+        }
+
+        .deadline-date i {
+            margin-right: 5px;
+        }
+
+        .deadline-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .deadline-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background);
+            color: var(--text-dark);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .deadline-btn:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Recommendations Styles */
+        .recommendation-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .recommendation-item:last-child {
+            border-bottom: none;
+        }
+
+        .recommendation-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .recommendation-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #10B981 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .recommendation-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .recommendation-type {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            background-color: var(--background);
+            padding: 3px 8px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .recommendation-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .recommendation-reason {
+            background-color: var(--background);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .recommendation-reason-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .recommendation-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(30, 58, 138, 0.1);
+        }
+
+        /* Progress Tracker Styles */
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-title {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .progress-percent {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #E5E7EB;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .progress-stat {
+            background-color: var(--background);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .progress-stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .progress-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .download-report {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        /* Activity Styles */
+        .activity-item {
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+        }
+
+        .activity-time i {
+            margin-right: 5px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background-color: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--card-shadow);
+                padding: 20px 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                margin: 15px 0;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-container {
+                padding: 0 15px;
+            }
+            
+            .user-name {
+                display: none;
+            }
+            
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+            
+            .progress-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .mobile-sidebar-toggle {
+                top: 70px;
+            }
+            
+            /* Fixed mobile sidebar */
+            .mobile-sidebar {
+                width: 100%;
+                left: -100%;
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .mobile-sidebar.active {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-text">Navi<span class="logo-accent">Disha</span></div>
+            </a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#" class="nav-link active">Dashboard</a></li>
+                <li class="nav-item"><a href="roadmaps.html" class="nav-link">Roadmaps</a></li>
+                <li class="nav-item"><a href="recommendation.html" class="nav-link">Recommendations</a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link">Support</a></li>
+            </ul>
+            
+            <div class="header-right">
+                <a href="notification_center.html" class="notification-icon">
+                   <i class="fas fa-bell"></i>
+                   <span class="notification-badge" id="notification-count">3</span>
+                </a>
+            
+                <div class="user-profile" id="user-profile">
+                    <div class="user-avatar">AS</div>
+                    <div class="user-name">Anjali S.</div>
+                    <i class="fas fa-chevron-down"></i>
+                    
+                    <div class="user-dropdown" id="user-dropdown">
+                        <a href="academic_profile.html" class="dropdown-item">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="prefrences_settings.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-sidebar-toggle" id="sidebar-toggle">
+        <i class="fas fa-chevron-right"></i>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <aside class="mobile-sidebar" id="mobile-sidebar">
+        <button class="close-sidebar" id="close-sidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">Student Dashboard</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link active">
+                    <i class="fas fa-road"></i> My Roadmap
+                </a>
+            </li>
+            <li class="sidebar-item"><a href="academic_profile.html" class="sidebar-link"><i class="fas fa-graduation-cap"></i> Academic Profile</a></li>
+            <li class="sidebar-item">
+                <a href="upcoming_deadline.html" class="sidebar-link">
+                    <i class="fas fa-calendar-alt"></i> Upcoming Deadlines
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="recommendation.html" class="sidebar-link">
+                    <i class="fas fa-lightbulb"></i> Recommendations
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="saved_items.html" class="sidebar-link">
+                    <i class="fas fa-bookmark"></i> Saved Items
+                </a>
+            </li>
+            
+        </ul>
+    </aside>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title">Student Dashboard</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link active">
+                        <i class="fas fa-road"></i> My Roadmap
+                    </a>
+                </li>
+                <li class="sidebar-item"><a href="academic_profile.html" class="sidebar-link"><i class="fas fa-graduation-cap"></i> Academic Profile</a></li>
+                <li class="sidebar-item">
+                    <a href="upcoming_deadline.html" class="sidebar-link">
+                        <i class="fas fa-calendar-alt"></i> Upcoming Deadlines
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="recommendation.html" class="sidebar-link">
+                        <i class="fas fa-lightbulb"></i> Recommendations
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="saved_items.html" class="sidebar-link">
+                        <i class="fas fa-bookmark"></i> Saved Items
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="welcome-banner fade-in">
+                <h2 class="welcome-title">Welcome back, Anjali!</h2>
+                <p class="welcome-text">You're making great progress on your career journey. Here's what's happening today.</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card slide-in delay-1">
+                    <div class="card-header">
+                        <h3 class="card-title">My Career Roadmap</h3>
+                        <a href="#" class="card-action">View All</a>
+                    </div>
+                    <div class="roadmap-container">
+                        <div class="roadmap-line"></div>
+                        <div class="roadmap-item">
+                            <div class="roadmap-marker completed">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="roadmap-content">
+                                <h4 class="roadmap-title">Board Exam Preparation</h4>
+                                <p class="roadmap-desc">Create study schedule and gather resources</p>
+                                <div class="roadmap-date">
+                                    <i class="far fa-calendar-alt"></i> Completed on Oct 15, 2023
+                                </div>
+                            </div>
+                        </div>
+                        <div class="roadmap-item">
+                            <div class="roadmap-marker current">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="roadmap-content">
+                                <h4 class="roadmap-title">Subject Selection for +2</h4>
+                                <p class="roadmap-desc">Research streams and career options</p>
+                                <div class="roadmap-date">
+                                    <i class="far fa-calendar-alt"></i> Due by Dec 15, 2023
+                                </div>
+                            </div>
+                        </div>
+                        <div class="roadmap-item">
+                            <div class="roadmap-marker">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="roadmap-content">
+                                <h4 class="roadmap-title">College Entrance Exam Prep</h4>
+                                <p class="roadmap-desc">Start preparing for JEE/NEET/CUET foundation</p>
+                                <div class="roadmap-date">
+                                    <i class="far fa-calendar-alt"></i> Starts Jan 15, 2024
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card slide-in delay-2">
+                    <div class="card-header">
+                        <h3 class="card-title">Upcoming Deadlines</h3>
+                        <a href="upcoming_deadline.html" class="card-action">View All</a>
+                    </div>
+                    <div class="deadline-list">
+                        <div class="deadline-item">
+                            <div class="deadline-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="deadline-content">
+                                <h4 class="deadline-title">Science Project Submission</h4>
+                                <div class="deadline-date">
+                                    <i class="far fa-calendar-alt"></i> Due in 5 days
+                                </div>
+                            </div>
+                            <div class="deadline-actions">
+                                <button class="deadline-btn">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="deadline-btn">
+                                    <i class="fas fa-bell"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="deadline-item">
+                            <div class="deadline-icon">
+                                <i class="fas fa-pencil-alt"></i>
+                            </div>
+                            <div class="deadline-content">
+                                <h4 class="deadline-title">Pre-Board Exams</h4>
+                                <div class="deadline-date">
+                                    <i class="far fa-calendar-alt"></i> Due in 14 days
+                                </div>
+                            </div>
+                            <div class="deadline-actions">
+                                <button class="deadline-btn">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="deadline-btn">
+                                    <i class="fas fa-bell"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="deadline-item">
+                            <div class="deadline-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="deadline-content">
+                                <h4 class="deadline-title">Stream Selection Form</h4>
+                                <div class="deadline-date">
+                                    <i class="far fa-calendar-alt"></i> Due in 30 days
+                                </div>
+                            </div>
+                            <div class="deadline-actions">
+                                <button class="deadline-btn">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="deadline-btn">
+                                    <i class="fas fa-bell"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card slide-in delay-3">
+                    <div class="card-header">
+                        <h3 class="card-title">Progress Tracker</h3>
+                        <a href="#" class="card-action">Details</a>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-header">
+                            <span class="progress-title">Overall Career Plan Completion</span>
+                            <span class="progress-percent" id="progress-percent">42%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill" style="width: 42%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-stats">
+                        <div class="progress-stat">
+                            <div class="progress-stat-number">5</div>
+                            <div class="progress-stat-label">Completed Tasks</div>
+                        </div>
+                        <div class="progress-stat">
+                            <div class="progress-stat-number">7</div>
+                            <div class="progress-stat-label">In Progress</div>
+                        </div>
+                        <div class="progress-stat">
+                            <div class="progress-stat-number">3</div>
+                            <div class="progress-stat-label">Upcoming</div>
+                        </div>
+                        <div class="progress-stat">
+                            <div class="progress-stat-number">2</div>
+                            <div class="progress-stat-label">Overdue</div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn download-report">
+                        <i class="fas fa-download"></i> Download Progress Report
+                    </a>
+                </div>
+
+                <div class="dashboard-card slide-in delay-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Recommended for You</h3>
+                        <a href="recommendation.html" class="card-action">View All</a>
+                    </div>
+                    <div class="recommendation-list">
+                        <div class="recommendation-item">
+                            <div class="recommendation-header">
+                                <div class="recommendation-icon">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <div>
+                                    <h4 class="recommendation-title">Focus on Science Fundamentals</h4>
+                                    <span class="recommendation-type">Study Strategy</span>
+                                </div>
+                            </div>
+                            <p class="recommendation-desc">Based on your performance in recent tests</p>
+                            <div class="recommendation-reason">
+                                <div class="recommendation-reason-title">Why this is recommended:</div>
+                                <p>Strong fundamentals in Science will help with Board exams and future streams.</p>
+                            </div>
+                            <div class="recommendation-actions">
+                                <a href="#" class="btn btn-primary">Study Resources</a>
+                                <a href="#" class="btn btn-secondary">Save for Later</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card slide-in delay-5">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Activity</h3>
+                        <a href="#" class="card-action">View All</a>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4 class="activity-title">Completed Math practice test</h4>
+                                <div class="activity-time">
+                                    <i class="far fa-clock"></i> 2 hours ago
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4 class="activity-title">Reviewed Chemistry notes</h4>
+                                <div class="activity-time">
+                                    <i class="far fa-clock"></i> Yesterday
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4 class="activity-title">Explored career options in Science stream</h4>
+                                <div class="activity-time">
+                                    <i class="far fa-clock"></i> 2 days ago
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add this card to the dashboard-grid section, after the existing cards -->
+                <div class="dashboard-card slide-in delay-5">
+                    <div class="card-header">
+                        <h3 class="card-title">Psychometric Tests</h3>
+                        <a href="quiz.html" class="card-action">Take Test</a>
+                    </div>
+                    <div class="quiz-promo">
+                        <div class="quiz-icon" style="text-align: center; margin: 15px 0; font-size: 3rem; color: var(--primary);">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <p style="text-align: center; margin-bottom: 20px;">Discover your strengths and career aptitudes with our comprehensive psychometric assessments.</p>
+                        <a href="quiz.html" class="btn btn-primary" style="display: block; text-align: center; margin: 0 auto; width: 80%;">
+                            <i class="fas fa-play-circle"></i> Start Assessment
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile sidebar functionality
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const closeSidebar = document.getElementById('close-sidebar');
+
+        // Toggle sidebar
+        function toggleSidebar() {
+            mobileSidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileSidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Event listeners
+        sidebarToggle.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        // User dropdown functionality
+        const userProfile = document.getElementById('user-profile');
+        const userDropdown = document.getElementById('user-dropdown');
+
+        userProfile.addEventListener('click', function() {
+            userDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking elsewhere
+        document.addEventListener('click', function(event) {
+            if (!userProfile.contains(event.target)) {
+                userDropdown.classList.remove('active');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Check screen width and update sidebar visibility
+        function checkScreenWidth() {
+            const screenWidth = window.innerWidth;
+            
+            // If screen is wider than 1100px, ensure mobile sidebar is closed
+            if (screenWidth > 1100) {
+                mobileSidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Listen for window resize events
+        window.addEventListener('resize', checkScreenWidth);
+        
+        // Initial check
+        checkScreenWidth();
+    </script>
+</body>
+</html>

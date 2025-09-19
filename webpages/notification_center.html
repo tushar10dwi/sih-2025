@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerAdvisor - Notifications Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --primary-light: #3b5998;
+            --secondary: #059669;
+            --accent: #F59E0B;
+            --background: #F9FAFB;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --white: #FFFFFF;
+            --error: #EF4444;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        /* Header Styles */
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-left: 10px;
+        }
+
+        .logo-accent {
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .notification-icon:hover {
+            color: var(--primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--error);
+            color: var(--white);
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow-hover);
+            width: 200px;
+            z-index: 100;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .user-dropdown.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-item {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--background);
+        }
+
+        .dropdown-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 3px auto;
+            background-color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        /* Mobile Sidebar Toggle */
+        .mobile-sidebar-toggle {
+            display: none;
+            position: fixed;
+            left: 10px;
+            top: 80px;
+            z-index: 999;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--card-shadow-hover);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* Show the toggle only when the screen is squeezed */
+        @media (max-width: 1100px) {
+            .mobile-sidebar-toggle {
+                display: flex;
+            }
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow-hover);
+            z-index: 1002;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            padding: 70px 20px 30px;
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(300px);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            height: fit-content;
+            transition: var(--transition);
+        }
+
+        /* Hide desktop sidebar when screen is squeezed */
+        @media (max-width: 1100px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
+        .sidebar-header {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: var(--background);
+            color: var(--primary);
+        }
+
+        .sidebar-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Filters Section */
+        .filters-section {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 45px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--background);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .filters-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 14px;
+            background-color: var(--background);
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            margin-bottom: 25px;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background-color: rgba(30, 58, 138, 0.05);
+        }
+
+        .tab:hover:not(.active) {
+            background-color: var(--background);
+        }
+
+        .tab-icon {
+            margin-right: 8px;
+            font-size: 0.9em;
+        }
+
+        /* Bulk Actions */
+        .bulk-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .select-all {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bulk-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Notifications List */
+        .notifications-list {
+            margin-bottom: 40px;
+        }
+
+        .notification-item {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 20px 20px 20px 50px; /* Adjusted padding for checkbox */
+            margin-bottom: 15px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid var(--primary);
+        }
+
+        .notification-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .notification-item.unread {
+            background-color: rgba(30, 58, 138, 0.03);
+            border-left-color: var(--accent);
+        }
+
+        .notification-item.unread::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 8px;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .notification-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        /* Notification Checkbox Styles */
+        .notification-checkbox {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .notification-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            color: var(--white);
+        }
+
+        .notification-icon.exam {
+            background-color: var(--primary);
+        }
+
+        .notification-icon.application {
+            background-color: var(--secondary);
+        }
+
+        .notification-icon.recommendation {
+            background-color: var(--accent);
+        }
+
+        .notification-icon.general {
+            background-color: var(--text-light);
+        }
+
+        .notification-time {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .notification-content {
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Preferences Section */
+        .preferences-section {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .preferences-header {
+            margin-bottom: 20px;
+        }
+
+        .preferences-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .preferences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .preference-item {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 15px;
+            background-color: var(--background);
+            border-radius: 8px;
+        }
+
+        .preference-label {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .preference-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .option-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Archived Notifications */
+        .archived-section {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .archived-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .archived-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .archived-content {
+            display: none;
+        }
+
+        .archived-content.expanded {
+            display: block;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .empty-desc {
+            color: var(--text-light);
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+
+        /* Skeleton Loading */
+        .skeleton-item {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .skeleton-line {
+            height: 12px;
+            background-color: #E5E7EB;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .skeleton-line.short {
+            width: 60%;
+        }
+
+        .skeleton-line.medium {
+            width: 80%;
+        }
+
+        .skeleton-line.long {
+            width: 100%;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(30, 58, 138, 0.1);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--white);
+            margin-left: 10px;
+        }
+
+        .footer-desc {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .footer-heading {
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 12px;
+        }
+
+        .footer-link a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link a:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background-color: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--card-shadow);
+                padding: 20px 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                margin: 15px 0;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+            
+            .preferences-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 15px;
+            }
+            
+            .filters-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                flex: 1 0 50%;
+                padding: 12px;
+            }
+            
+            .bulk-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .bulk-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .user-name {
+                display: none;
+            }
+            
+            .mobile-sidebar-toggle {
+                top: 70px;
+            }
+            
+            /* Fixed mobile sidebar */
+            .mobile-sidebar {
+                width: 100%;
+                left: -100%;
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .mobile-sidebar.active {
+                transform: translateX(100%);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .notification-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .notification-actions {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        /* NEW CSS for Archive Buttons */
+        .archive-btn, .unarchive-btn {
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-text">Navi<span class="logo-accent">Disha</span></div>
+            </a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="roadmaps.html" class="nav-link">Roadmaps</a></li>
+                <li class="nav-item"><a href="recommendation.html" class="nav-link">Recommendations</a></li>
+                <li class="nav-item"><a href="#" class="nav-link active">Notifications</a></li>
+                <li class="nav-item"><a href="progress.html" class="nav-link">Progress</a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link">Support</a></li>
+            </ul>
+            
+            <div class="header-right">
+                <div class="user-profile" id="user-profile">
+                    <div class="user-avatar">AS</div>
+                    <div class="user-name">Anjali S.</div>
+                    <i class="fas fa-chevron-down"></i>
+                    
+                    <div class="user-dropdown" id="user-dropdown">
+                        <a href="academic_profile.html" class="dropdown-item">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="prefrences_settings.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-sidebar-toggle" id="sidebar-toggle">
+        <i class="fas fa-chevron-right"></i>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <aside class="mobile-sidebar" id="mobile-sidebar">
+        <button class="close-sidebar" id="close-sidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">Quick Links</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-road"></i> My Roadmap
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="upcoming_deadline.html" class="sidebar-link">
+                    <i class="fas fa-calendar-alt"></i> Upcoming Deadlines
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="recommendation.html" class="sidebar-link">
+                    <i class="fas fa-lightbulb"></i> Recommendations
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                    <i class="fas fa-book-open"></i> Resource Library
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title">Student Dashboard</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item"><a href="dashboard.html" class="sidebar-link"><i class="fas fa-home"></i> Overview</a></li>
+                <li class="sidebar-item"><a href="academic_profile.html" class="sidebar-link"><i class="fas fa-graduation-cap"></i> Academic Profile</a></li>
+                <li class="sidebar-item"><a href="recommendation.html" class="sidebar-link"><i class="fas fa-lightbulb"></i> Recommendations</a></li>
+                <li class="sidebar-item"><a href="saved_items.html" class="sidebar-link"><i class="fas fa-bookmark"></i> Saved Items</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Notifications Center</h1>
+                <p class="page-subtitle">Stay on top of important deadlines, updates, and recommendations.</p>
+            </div>
+
+            <section class="filters-section">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search notifications..." id="search-input">
+                </div>
+                
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label class="filter-label">Category</label>
+                        <div class="select-wrapper">
+                            <select class="filter-select" id="category-filter">
+                                <option value="all">All Categories</option>
+                                <option value="exam">Exams</option>
+                                <option value="application">Applications</option>
+                                <option value="recommendation">Recommendations</option>
+                                <option value="general">General Updates</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">Status</label>
+                        <div class="select-wrapper">
+                            <select class="filter-select" id="status-filter">
+                                <option value="all">All Status</option>
+                                <option value="unread">Unread</option>
+                                <option value="read">Read</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">Time Period</label>
+                        <div class="select-wrapper">
+                            <select class="filter-select" id="time-filter">
+                                <option value="all">Any Time</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="tabs-container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="all">
+                        <i class="fas fa-star tab-icon"></i> All Notifications
+                    </div>
+                    <div class="tab" data-tab="exam">
+                        <i class="fas fa-file-alt tab-icon"></i> Exams
+                    </div>
+                    <div class="tab" data-tab="application">
+                        <i class="fas fa-briefcase tab-icon"></i> Applications
+                    </div>
+                    <div class="tab" data-tab="recommendation">
+                        <i class="fas fa-lightbulb tab-icon"></i> Recommendations
+                    </div>
+                    <div class="tab" data-tab="general">
+                        <i class="fas fa-info-circle tab-icon"></i> General Updates
+                    </div>
+                </div>
+            </div>
+
+            <div class="bulk-actions" id="bulk-actions" style="display: none;">
+                <div class="select-all">
+                    <input type="checkbox" id="select-all">
+                    <label for="select-all">Select all</label>
+                </div>
+                <div class="bulk-buttons">
+                    <button class="btn btn-secondary btn-sm btn-icon" id="mark-read-bulk">
+                        <i class="fas fa-check-circle"></i> Mark as read
+                    </button>
+                    <button class="btn btn-secondary btn-sm btn-icon" id="archive-bulk">
+                        <i class="fas fa-archive"></i> Archive
+                    </button>
+                    <button class="btn btn-secondary btn-sm btn-icon" id="delete-bulk">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </div>
+
+            <section class="notifications-list">
+                <div class="notification-item unread" data-category="exam">
+                    <div class="notification-header">
+                        <div class="notification-title">
+                            <div class="notification-icon exam">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            JEE Main Registration Deadline Approaching
+                        </div>
+                        <div class="notification-time">2 hours ago</div>
+                    </div>
+                    <div class="notification-content">
+                        The registration deadline for JEE Main January session is in 5 days. Make sure to complete your registration on the NTA website.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-primary btn-sm">Register Now</button>
+                        <button class="btn btn-secondary btn-sm mark-read">Mark as read</button>
+                        <button class="btn btn-secondary btn-sm archive-btn">
+                            <i class="fas fa-archive"></i> Archive
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="notification-item unread" data-category="recommendation">
+                    <div class="notification-header">
+                        <div class="notification-title">
+                            <div class="notification-icon recommendation">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            New Engineering Branch Recommended
+                        </div>
+                        <div class="notification-time">Yesterday</div>
+                    </div>
+                    <div class="notification-content">
+                        Based on your skills and interests, we'vefound that Computer Science Engineering might be a good fit for you.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-primary btn-sm">View Details</button>
+                        <button class="btn btn-secondary btn-sm mark-read">Mark as read</button>
+                        <button class="btn btn-secondary btn-sm archive-btn">
+                            <i class="fas fa-archive"></i> Archive
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="notification-item" data-category="application">
+                    <div class="notification-header">
+                        <div class="notification-title">
+                            <div class="notification-icon application">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            IIT Application Status Updated
+                        </div>
+                        <div class="notification-time">2 days ago</div>
+                    </div>
+                    <div class="notification-content">
+                        Your application for IIT Delhi has been reviewed. Check the JoSAA portal for the latest update on counseling.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-primary btn-sm">Check Status</button>
+                        <button class="btn btn-secondary btn-sm mark-read">Mark as read</button>
+                        <button class="btn btn-secondary btn-sm archive-btn">
+                            <i class="fas fa-archive"></i> Archive
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="notification-item" data-category="general">
+                    <div class="notification-header">
+                        <div class="notification-title">
+                            <div class="notification-icon general">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            BITSAT 2025 Notification
+                        </div>
+                        <div class="notification-time">3 days ago</div>
+                    </div>
+                    <div class="notification-content">
+                        BITS Pilani has announced the exam dates for BITSAT 2025. The exam will be conducted in May 2025.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-secondary btn-sm mark-read">Mark as read</button>
+                        <button class="btn btn-secondary btn-sm archive-btn">
+                            <i class="fas fa-archive"></i> Archive
+                        </button>
+                    </div>
+                </div>
+
+                <div class="notification-item" data-category="exam">
+                    <div class="notification-header">
+                        <div class="notification-title">
+                            <div class="notification-icon exam">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            KVPY Fellowship 2025 Application Open
+                        </div>
+                        <div class="notification-time">4 days ago</div>
+                    </div>
+                    <div class="notification-content">
+                        The Kishore Vaigyanik Protsahan Yojana (KVPY) aptitude test applications are now open. Secure your chance for a prestigious scholarship.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-primary btn-sm">Learn More</button>
+                        <button class="btn btn-secondary btn-sm mark-read">Mark as read</button>
+                        <button class="btn btn-secondary btn-sm archive-btn">
+                            <i class="fas fa-archive"></i> Archive
+                        </button>
+                    </div>
+                </div>
+
+                <div class="notification-item unread" data-category="application">
+                    <div class="notification-header">
+                        <div class="notification-title">
+                            <div class="notification-icon application">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            Reminder: PMSSS J&K Registration
+                        </div>
+                        <div class="notification-time">6 days ago</div>
+                    </div>
+                    <div class="notification-content">
+                        The deadline for the Prime Minister's Special Scholarship Scheme (PMSSS) for J&K and Ladakh students is approaching. Complete your application soon.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-primary btn-sm">Apply Now</button>
+                        <button class="btn btn-secondary btn-sm mark-read">Mark as read</button>
+                        <button class="btn btn-secondary btn-sm archive-btn">
+                            <i class="fas fa-archive"></i> Archive
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="notification-item" data-category="exam">
+                    <div class="notification-header">
+                        <div class="notification-title">
+                            <div class="notification-icon exam">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            GATE 2025 Preparation Tips
+                        </div>
+                        <div class="notification-time">1 week ago</div>
+                    </div>
+                    <div class="notification-content">
+                        Your personalized GATE preparation plan is ready. Focus on Engineering Mathematics and Core Subject concepts.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn btn-primary btn-sm">View Plan</button>
+                        <button class="btn btn-secondary btn-sm mark-read">Mark as read</button>
+                        <button class="btn btn-secondary btn-sm archive-btn">
+                            <i class="fas fa-archive"></i> Archive
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="preferences-section">
+                <div class="preferences-header">
+                    <h2 class="preferences-title">Notification Preferences</h2>
+                    <p>Customize how and when you receive notifications</p>
+                </div>
+                
+                <div class="preferences-grid">
+                    <div class="preference-item">
+                        <label class="preference-label">Email Notifications</label>
+                        <div class="preference-options">
+                            <label class="option-toggle">
+                                <input type="checkbox" checked>
+                                <span>Enable email notifications</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <label class="preference-label">Exam Alerts</label>
+                        <div class="preference-options">
+                            <label class="option-toggle">
+                                <input type="checkbox" checked>
+                                <span>Registration deadlines</span>
+                            </label>
+                            <label class="option-toggle">
+                                <input type="checkbox" checked>
+                                <span>Test day reminders</span>
+                            </label>
+                            <label class="option-toggle">
+                                <input type="checkbox">
+                                <span>Score release alerts</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <label class="preference-label">Application Updates</label>
+                        <div class="preference-options">
+                            <label class="option-toggle">
+                                <input type="checkbox" checked>
+                                <span>Deadline reminders</span>
+                            </label>
+                            <label class="option-toggle">
+                                <input type="checkbox" checked>
+                                <span>Status changes</span>
+                            </label>
+                            <label class="option-toggle">
+                                <input type="checkbox">
+                                <span>Recommendation requests</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <label class="preference-label">Recommendations</label>
+                        <div class="preference-options">
+                            <label class="option-toggle">
+                                <input type="checkbox" checked>
+                                <span>New career paths</span>
+                            </label>
+                            <label class="option-toggle">
+                                <input type="checkbox">
+                                <span>Course suggestions</span>
+                            </label>
+                            <label class="option-toggle">
+                                <input type="checkbox" checked>
+                                <span>Scholarship opportunities</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="archived-section">
+                <div class="archived-header" id="archived-toggle">
+                    <h2 class="archived-title">Archived Notifications</h2>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                
+                <div class="archived-content" id="archived-content">
+                    <div class="notification-item" data-category="general">
+                        <div class="notification-header">
+                            <div class="notification-title">
+                                <div class="notification-icon general">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                Welcome to NaviDisha!
+                            </div>
+                            <div class="notification-time">1 month ago</div>
+                        </div>
+                        <div class="notification-content">
+                            Thank you for joining NaviDisha! We're excited to help you navigate your engineering career path.
+                        </div>
+                        <div class="notification-actions">
+                            <button class="btn btn-secondary btn-sm unarchive-btn">
+                                <i class="fas fa-inbox"></i> Unarchive
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="notification-item" data-category="recommendation">
+                        <div class="notification-header">
+                            <div class="notification-title">
+                                <div class="notification-icon recommendation">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                NIT Scholarship Opportunity
+                            </div>
+                            <div class="notification-time">2 months ago</div>
+                        </div>
+                        <div class="notification-content">
+                            A new scholarship for engineering students at NITs is available. Application deadline is in 3 weeks.
+                        </div>
+                        <div class="notification-actions">
+                            <button class="btn btn-secondary btn-sm unarchive-btn">
+                                <i class="fas fa-inbox"></i> Unarchive
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <div class="footer-logo-text">Navi<span class="logo-accent">Disha</span></div>
+                </div>
+                <p class="footer-desc">
+                    Empowering students to make informed career decisions through personalized guidance and AI-powered recommendations.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-heading">Quick Links</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#">Home</a></li>
+                    <li class="footer-link"><a href="#">About Us</a></li>
+                    <li class="footer-link"><a href="#">Services</a></li>
+                    <li class="footer-link"><a href="#">How It Works</a></li>
+                    <li class="footer-link"><a href="#">Testimonials</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-heading">Resources</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#">Blog</a></li>
+                    <li class="footer-link"><a href="#">Career Guides</a></li>
+                    <li class="footer-link"><a href="#">Webinars</a></li>
+                    <li class="footer-link"><a href="support.html">FAQ</a></li>
+                    <li class="footer-link"><a href="support.html">Support Center</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-heading">Contact Us</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#"><i class="fas fa-map-marker-alt"></i> Jammu & Kashmir, India</a></li>
+                    <li class="footer-link"><a href="#"><i class="fas fa-phone"></i> +91 xxxxxxxxxx</a></li>
+                    <li class="footer-link"><a href="#"><i class="fas fa-envelope"></i> support@navidisha.com</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 NaviDisha. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- DOM REFERENCES ---
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const userProfile = document.getElementById('user-profile');
+        const userDropdown = document.getElementById('user-dropdown');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const archivedToggle = document.getElementById('archived-toggle');
+        const archivedContent = document.getElementById('archived-content');
+        const tabs = document.querySelectorAll('.tab');
+        const bulkActions = document.getElementById('bulk-actions');
+        const selectAll = document.getElementById('select-all');
+        const markReadBulk = document.getElementById('mark-read-bulk');
+        const deleteBulk = document.getElementById('delete-bulk');
+        const archiveBulk = document.getElementById('archive-bulk'); // New
+        const searchInput = document.getElementById('search-input');
+        const categoryFilter = document.getElementById('category-filter');
+        const statusFilter = document.getElementById('status-filter');
+        const timeFilter = document.getElementById('time-filter');
+        const notificationsList = document.querySelector('.notifications-list'); // New
+        
+        // --- EVENT LISTENERS & FUNCTIONS ---
+
+        // Toggle mobile navigation
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Toggle user dropdown
+        userProfile.addEventListener('click', () => {
+            userDropdown.classList.toggle('active');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!userProfile.contains(e.target)) {
+                userDropdown.classList.remove('active');
+            }
+        });
+        
+        // Toggle mobile sidebar
+        sidebarToggle.addEventListener('click', () => {
+            mobileSidebar.classList.add('active');
+            sidebarOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Close mobile sidebar
+        function closeMobileSidebar() {
+            mobileSidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        closeSidebar.addEventListener('click', closeMobileSidebar);
+        sidebarOverlay.addEventListener('click', closeMobileSidebar);
+        
+        // Toggle archived notifications
+        archivedToggle.addEventListener('click', () => {
+            archivedContent.classList.toggle('expanded');
+            const icon = archivedToggle.querySelector('i');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        });
+        
+        // Tab switching
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                categoryFilter.value = tab.getAttribute('data-tab');
+                filterNotifications();
+            });
+        });
+
+        // Sync tabs with category filter dropdown
+        categoryFilter.addEventListener('change', () => {
+            const selectedCategory = categoryFilter.value;
+            tabs.forEach(tab => {
+                tab.classList.toggle('active', tab.getAttribute('data-tab') === selectedCategory);
+            });
+            filterNotifications();
+        });
+        
+        // Filter notifications based on search and filters
+        function filterNotifications() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const category = categoryFilter.value;
+            const status = statusFilter.value;
+            const timePeriod = timeFilter.value;
+            
+            document.querySelectorAll('.notifications-list .notification-item').forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                const isUnread = item.classList.contains('unread');
+                const title = item.querySelector('.notification-title').textContent.toLowerCase();
+                const content = item.querySelector('.notification-content').textContent.toLowerCase();
+                const timeText = item.querySelector('.notification-time').textContent.toLowerCase();
+                
+                const matchesSearch = title.includes(searchTerm) || content.includes(searchTerm);
+                const matchesCategory = category === 'all' || itemCategory === category;
+                const matchesStatus = status === 'all' || 
+                                    (status === 'unread' && isUnread) || 
+                                    (status === 'read' && !isUnread);
+                const matchesTime = timePeriod === 'all' || matchesTimePeriod(timeText, timePeriod);
+                
+                item.style.display = (matchesSearch && matchesCategory && matchesStatus && matchesTime) ? 'block' : 'none';
+            });
+            updateBulkActionsVisibility();
+        }
+        
+        function matchesTimePeriod(timeText, period) {
+            if (period === 'today') return timeText.includes('hour');
+            if (period === 'week') return timeText.includes('hour') || timeText.includes('day') || (timeText.includes('week') && timeText.startsWith('1'));
+            if (period === 'month') return timeText.includes('hour') || timeText.includes('day') || timeText.includes('week');
+            return true;
+        }
+        
+        searchInput.addEventListener('input', filterNotifications);
+        statusFilter.addEventListener('change', filterNotifications);
+        timeFilter.addEventListener('change', filterNotifications);
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // --- DYNAMIC NOTIFICATION ACTIONS (Archive/Unarchive) ---
+
+        function archiveNotification(notification) {
+            // Remove archive button, add unarchive button
+            const clonedNotification = notification.cloneNode(true);
+            clonedNotification.querySelector('.archive-btn').remove();
+            
+            const unarchiveBtn = document.createElement('button');
+            unarchiveBtn.className = 'btn btn-secondary btn-sm unarchive-btn';
+            unarchiveBtn.innerHTML = '<i class="fas fa-inbox"></i> Unarchive';
+            clonedNotification.querySelector('.notification-actions').appendChild(unarchiveBtn);
+            
+            // Add to archived section and remove from main list
+            archivedContent.appendChild(clonedNotification);
+            animateRemove(notification);
+            
+            // Expand archived section if needed
+            if (!archivedContent.classList.contains('expanded')) {
+                archivedToggle.click();
+            }
+        }
+
+        function unarchiveNotification(notification) {
+            // Remove unarchive button, add archive button
+            const clonedNotification = notification.cloneNode(true);
+            clonedNotification.querySelector('.unarchive-btn').remove();
+
+            const archiveBtn = document.createElement('button');
+            archiveBtn.className = 'btn btn-secondary btn-sm archive-btn';
+            archiveBtn.innerHTML = '<i class="fas fa-archive"></i> Archive';
+            clonedNotification.querySelector('.notification-actions').appendChild(archiveBtn);
+
+            // Add back to main list and remove from archived
+            notificationsList.appendChild(clonedNotification);
+            animateRemove(notification);
+            filterNotifications(); // Re-apply filters
+        }
+        
+        function animateRemove(element) {
+            element.style.transition = 'opacity 0.3s ease, height 0.3s ease, margin 0.3s ease, padding 0.3s ease';
+            element.style.opacity = '0';
+            element.style.height = '0px';
+            element.style.margin = '0';
+            element.style.padding = '0';
+            setTimeout(() => element.remove(), 300);
+        }
+
+        // Delegated event listener for dynamic buttons
+        document.addEventListener('click', function(e) {
+            // Mark as Read
+            const markReadBtn = e.target.closest('.mark-read');
+            if (markReadBtn) {
+                markReadBtn.closest('.notification-item').classList.remove('unread');
+            }
+            // Archive
+            const archiveBtn = e.target.closest('.archive-btn');
+            if(archiveBtn) {
+                archiveNotification(archiveBtn.closest('.notification-item'));
+            }
+            // Unarchive
+            const unarchiveBtn = e.target.closest('.unarchive-btn');
+            if(unarchiveBtn) {
+                unarchiveNotification(unarchiveBtn.closest('.notification-item'));
+            }
+        });
+
+        // --- BULK ACTIONS ---
+        
+        // Add checkbox to each initial notification item
+        document.querySelectorAll('.notification-item').forEach(item => {
+            const checkboxContainer = document.createElement('div');
+            checkboxContainer.className = 'notification-checkbox';
+            checkboxContainer.innerHTML = '<input type="checkbox" class="notification-select">';
+            item.prepend(checkboxContainer);
+        });
+        
+        // Select all visible functionality
+        selectAll.addEventListener('change', function() {
+            document.querySelectorAll('.notification-item[style*="display: block"] .notification-select').forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+            updateBulkActionsVisibility();
+        });
+        
+        // Bulk mark as read
+        markReadBulk.addEventListener('click', function() {
+            document.querySelectorAll('.notification-select:checked').forEach(checkbox => {
+                checkbox.closest('.notification-item').classList.remove('unread');
+                checkbox.checked = false;
+            });
+            selectAll.checked = false;
+            updateBulkActionsVisibility();
+        });
+
+        // Bulk archive
+        archiveBulk.addEventListener('click', function() {
+            document.querySelectorAll('.notification-select:checked').forEach(checkbox => {
+                archiveNotification(checkbox.closest('.notification-item'));
+            });
+            selectAll.checked = false;
+            updateBulkActionsVisibility();
+        });
+        
+        // Bulk delete
+        deleteBulk.addEventListener('click', function() {
+            const selectedCheckboxes = document.querySelectorAll('.notification-select:checked');
+            if (selectedCheckboxes.length > 0 && confirm(`Delete ${selectedCheckboxes.length} notification(s)?`)) {
+                selectedCheckboxes.forEach(checkbox => animateRemove(checkbox.closest('.notification-item')));
+                selectAll.checked = false;
+                updateBulkActionsVisibility();
+            }
+        });
+        
+        // Show/hide bulk actions based on selection
+        function updateBulkActionsVisibility() {
+            const selectedCount = document.querySelectorAll('.notification-select:checked').length;
+            bulkActions.style.display = selectedCount > 0 ? 'flex' : 'none';
+
+            // Update select-all checkbox state
+            const totalVisible = document.querySelectorAll('.notification-item[style*="display: block"]').length;
+            const selectedVisible = document.querySelectorAll('.notification-item[style*="display: block"] .notification-select:checked').length;
+            selectAll.checked = totalVisible > 0 && selectedVisible === totalVisible;
+        }
+
+        // Add change listener to the document to catch checkbox changes
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('notification-select')) {
+                updateBulkActionsVisibility();
+            }
+        });
+
+        // Initial call to set up the view correctly
+        filterNotifications();
+    </script>
+</body>
+</html>

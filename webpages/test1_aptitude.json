@@ -1,0 +1,228 @@
+{
+  "id": "aptitude",
+  "name": "Aptitude",
+  "instructions": "This test has four sections designed to understand your abilities, personality, interests, and values. Please answer all questions honestly. For some sections, there are right or wrong answers, while for others, there are no wrong choices.",
+  "modules": [
+    {
+      "id": "numerical_verbal_reasoning",
+      "name": "Numerical & Verbal Reasoning",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "mcq",
+          [cite_start]"text": "A shopkeeper in Chandni Chowk offers a 20% discount on a saree but still makes a 12% profit. What is the cost price of the saree if the marked price is ₹2,240? [cite: 7, 8]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "₹1,600 [cite: 9]" },
+            [cite_start]{ "id": "b", "text": "₹1,792 [cite: 10]" },
+            [cite_start]{ "id": "c", "text": "₹2,000 [cite: 11]" },
+            [cite_start]{ "id": "d", "text": "₹1,500 [cite: 12]" }
+          ]
+        },
+        {
+          "id": "q2",
+          "type": "mcq",
+          [cite_start]"text": "Select the word that is most nearly opposite in meaning to 'Ephemeral.' [cite: 13]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Transient [cite: 14]" },
+            [cite_start]{ "id": "b", "text": "Eternal [cite: 15]" },
+            [cite_start]{ "id": "c", "text": "Weak [cite: 16]" },
+            [cite_start]{ "id": "d", "text": "Mundane [cite: 17]" }
+          ]
+        },
+        {
+          "id": "q3",
+          "type": "mcq",
+          "text": "A train traveling at 60 km/h crosses a platform in 30 seconds. [cite_start]If the length of the train is 200 meters, what is the length of the platform? [cite: 18, 19]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "250 meters [cite: 20]" },
+            [cite_start]{ "id": "b", "text": "300 meters [cite: 21]" },
+            [cite_start]{ "id": "c", "text": "400 meters [cite: 22]" },
+            [cite_start]{ "id": "d", "text": "500 meters [cite: 23]" }
+          ]
+        },
+        {
+          "id": "q4",
+          "type": "mcq",
+          [cite_start]"text": "Complete the analogy: India is to Rupee as Japan is to __ [cite: 24]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Yuan [cite: 25]" },
+            [cite_start]{ "id": "b", "text": "Dollar [cite: 26]" },
+            [cite_start]{ "id": "c", "text": "Yen [cite: 27]" },
+            [cite_start]{ "id": "d", "text": "Ruble [cite: 28]" }
+          ]
+        },
+        {
+          "id": "q5",
+          "type": "mcq",
+          "text": "The average age of a cricket team of 11 players is 22 years. When the coach's age is included, the average age increases by 1 year. [cite_start]What is the coach's age? [cite: 29, 30]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "23 years [cite: 31]" },
+            [cite_start]{ "id": "b", "text": "34 years [cite: 32]" },
+            [cite_start]{ "id": "c", "text": "33 years [cite: 33]" },
+            [cite_start]{ "id": "d", "text": "44 years [cite: 34]" }
+          ]
+        },
+        {
+          "id": "q6",
+          "type": "mcq",
+          [cite_start]"text": "Choose the word that best fits the sentence: The lawyer presented a ___ argument, leaving the opposition with no room to rebut. [cite: 35, 36, 41]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "cogent [cite: 37]" },
+            [cite_start]{ "id": "b", "text": "flimsy [cite: 38]" },
+            [cite_start]{ "id": "c", "text": "ambiguous [cite: 39]" },
+            [cite_start]{ "id": "d", "text": "volatile [cite: 40]" }
+          ]
+        },
+        {
+          "id": "q7",
+          "type": "mcq",
+          [cite_start]"text": "If 5 builders can construct a wall in 12 days, how many days will it take for 3 builders to construct the same wall? [cite: 42, 43]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "15 days [cite: 44]" },
+            [cite_start]{ "id": "b", "text": "18 days [cite: 45]" },
+            [cite_start]{ "id": "c", "text": "20 days [cite: 46]" },
+            [cite_start]{ "id": "d", "text": "7.2 days [cite: 47]" }
+          ]
+        },
+        {
+          "id": "q8",
+          "type": "mcq",
+          [cite_start]"text": "Identify the grammatical error in the sentence: 'Each of the students have submitted their assignment.' [cite: 48, 49]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "have submitted [cite: 50]" },
+            [cite_start]{ "id": "b", "text": "Each of the students [cite: 51]" },
+            [cite_start]{ "id": "c", "text": "their assignment [cite: 52]" },
+            [cite_start]{ "id": "d", "text": "No error [cite: 53]" }
+          ]
+        },
+        {
+          "id": "q9",
+          "type": "mcq",
+          [cite_start]"text": "Find the next number in the series: 3, 7, 16, 35, __ [cite: 54]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "70 [cite: 55]" },
+            [cite_start]{ "id": "b", "text": "74 [cite: 56]" },
+            [cite_start]{ "id": "c", "text": "78 [cite: 57]" },
+            [cite_start]{ "id": "d", "text": "82 [cite: 58]" }
+          ]
+        },
+        {
+          "id": "q10",
+          "type": "mcq",
+          [cite_start]"text": "The word 'Garrulous' is closest in meaning to: [cite: 59]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Concise [cite: 60]" },
+            [cite_start]{ "id": "b", "text": "Talkative [cite: 61]" },
+            [cite_start]{ "id": "c", "text": "Sad [cite: 62]" },
+            [cite_start]{ "id": "d", "text": "Arrogant [cite: 63]" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "logical_abstract_reasoning",
+      "name": "Logical & Abstract Reasoning",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "mcq",
+          "text": "In a certain code, 'DELHI' is written as 'CDKGH'. [cite_start]How is 'MUMBAI' written in that code? [cite: 65]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "LTLAZH [cite: 66]" },
+            [cite_start]{ "id": "b", "text": "LVNCBJ [cite: 67]" },
+            [cite_start]{ "id": "c", "text": "LTLAZG [cite: 68]" },
+            [cite_start]{ "id": "d", "text": "KTLZH [cite: 69]" }
+          ]
+        },
+        {
+          "id": "q2",
+          "type": "mcq",
+          "text": "Statement: All engineers are innovative. Rahul is an engineer. [cite_start]Conclusion: [cite: 70, 71]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Rahul is innovative. [cite: 72]" },
+            [cite_start]{ "id": "b", "text": "Rahul is not innovative. [cite: 73]" },
+            [cite_start]{ "id": "c", "text": "Some engineers are not innovative. [cite: 74]" },
+            [cite_start]{ "id": "d", "text": "Cannot be determined. [cite: 75]" }
+          ]
+        },
+        {
+          "id": "q3",
+          "type": "mcq",
+          [cite_start]"text": "Find the odd one out: Sitar, Guitar, Violin, Flute. [cite: 76]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Sitar [cite: 77]" },
+            [cite_start]{ "id": "b", "text": "Guitar [cite: 78]" },
+            [cite_start]{ "id": "c", "text": "Violin [cite: 79]" },
+            [cite_start]{ "id": "d", "text": "Flute [cite: 80]" }
+          ]
+        },
+        {
+          "id": "q4",
+          "type": "mcq",
+          [cite_start]"text": "Which shape comes next in the sequence of: Square, Triangle, Pentagon, Hexagon? [cite: 81]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Circle [cite: 82]" },
+            [cite_start]{ "id": "b", "text": "Heptagon [cite: 83]" },
+            [cite_start]{ "id": "c", "text": "Octagon [cite: 84]" },
+            [cite_start]{ "id": "d", "text": "Line [cite: 85]" }
+          ]
+        },
+        {
+          "id": "q5",
+          "type": "mcq",
+          "text": "Pointing to a photograph, a man said, 'I have no brother or sister, but that man's father is my father's son.' [cite_start]Whose photograph was it? [cite: 86, 87]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "His own [cite: 88]" },
+            [cite_start]{ "id": "b", "text": "His son's [cite: 89]" },
+            [cite_start]{ "id": "c", "text": "His father's [cite: 90]" },
+            [cite_start]{ "id": "d", "text": "His nephew's [cite: 91]" }
+          ]
+        },
+        {
+          "id": "q6",
+          "type": "mcq",
+          [cite_start]"text": "If 'A' is the brother of 'B', 'C' is the father of 'A', and 'D' is the brother of 'E', and 'E' is the daughter of 'B', then who is the uncle of 'D'? [cite: 92, 93]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "A [cite: 94]" },
+            [cite_start]{ "id": "b", "text": "B [cite: 95]" },
+            [cite_start]{ "id": "c", "text": "C [cite: 96]" },
+            [cite_start]{ "id": "d", "text": "E [cite: 97]" }
+          ]
+        },
+        {
+          "id": "q7",
+          "type": "mcq",
+          "text": "A cube is painted blue on all its faces. It is then cut into 64 smaller cubes of equal size. [cite_start]How many smaller cubes have no faces painted? [cite: 98, 99, 100]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "0 [cite: 101]" },
+            [cite_start]{ "id": "b", "text": "4 [cite: 102]" },
+            [cite_start]{ "id": "c", "text": "8 [cite: 103]" },
+            [cite_start]{ "id": "d", "text": "16 [cite: 104]" }
+          ]
+        },
+        {
+          "id": "q8",
+          "type": "mcq",
+          "text": "Statement: The government has decided to increase the price of petrol and diesel to reduce its fiscal deficit. Assumption I: People will still buy petrol and diesel. [cite_start]Assumption II: This is the only way for the government to reduce the fiscal deficit. [cite: 105, 106, 107]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Only I is implicit [cite: 108]" },
+            [cite_start]{ "id": "b", "text": "Only II is implicit [cite: 109]" },
+            [cite_start]{ "id": "c", "text": "Both I and II are implicit [cite: 110]" },
+            [cite_start]{ "id": "d", "text": "Neither I nor II is implicit [cite: 111]" }
+          ]
+        },
+        {
+          "id": "q9",
+          "type": "mcq",
+          "text": "Find the missing element in the matrix: |5|6|31| |7|4|29| [cite_start]|8|3|?| [cite: 112, 113, 116, 117]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "24 [cite: 118]" },
+            [cite_start]{ "id": "b", "text": "25 [cite: 119]" },
+            [cite_start]{ "id": "c", "text": "27 [cite: 120]" },
+            [cite_start]{ "id": "d", "text": "32 [cite: 121]" }
+          ]
+        }
+      ]
+    }
+  ]
+}

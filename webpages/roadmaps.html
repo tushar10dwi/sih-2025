@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaviDisha - Career Roadmap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PDF Generation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" xintegrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" xintegrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --primary-light: #3b5998;
+            --secondary: #059669;
+            --accent: #F59E0B;
+            --background: #F9FAFB;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --white: #FFFFFF;
+            --error: #EF4444;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --govt-color: #2563EB;
+            --private-color: #059669;
+            --higher-studies-color: #7C3AED;
+            --certification-color: #EA580C;
+            --research-color: #0891B2;
+            --international-color: #DC2626;
+            --entrepreneurship-color: #DB2777;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        /* Header Styles */
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-left: 10px;
+        }
+
+        .logo-accent {
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .notification-icon:hover {
+            color: var(--primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--error);
+            color: var(--white);
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow-hover);
+            width: 200px;
+            z-index: 100;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .user-dropdown.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-item {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--background);
+        }
+
+        .dropdown-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 3px auto;
+            background-color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        /* Mobile Sidebar */
+        .mobile-sidebar-toggle {
+            display: none;
+            position: fixed;
+            left: 10px;
+            top: 80px;
+            z-index: 999;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--card-shadow-hover);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* Show the toggle only when the screen is squeezed */
+        @media (max-width: 1100px) {
+            .mobile-sidebar-toggle {
+                display: flex;
+            }
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow-hover);
+            z-index: 1002;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            padding: 70px 20px 30px;
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(300px);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Main Layout */
+        .dashboard-container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            height: fit-content;
+            transition: var(--transition);
+        }
+
+        /* Hide desktop sidebar when screen is squeezed */
+        @media (max-width: 1100px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
+        .sidebar-header {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: var(--background);
+            color: var(--primary);
+        }
+
+        .sidebar-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            min-width: 0; /* Prevents flexbox overflow */
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Search and Filter */
+        .search-filter-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .filter-dropdown {
+            position: relative;
+            min-width: 200px;
+        }
+
+        .filter-button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--white);
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-button:hover {
+            border-color: var(--primary);
+        }
+
+        .filter-button i {
+            margin-left: 10px;
+            transition: var(--transition);
+        }
+
+        .filter-button.active i {
+            transform: rotate(180deg);
+        }
+
+        .filter-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow-hover);
+            margin-top: 5px;
+            z-index: 100;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .filter-menu.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .filter-option {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-option span {
+            margin-left: 10px;
+        }
+
+        .filter-option:hover {
+            background-color: var(--background);
+        }
+
+        .filter-option input {
+            margin-right: 10px;
+        }
+
+        .clear-filters-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Stream Accordions */
+        .stream-accordion {
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            background-color: var(--white);
+        }
+
+        .stream-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--white);
+            transition: var(--transition);
+        }
+
+        .stream-header:hover {
+            background-color: var(--background);
+        }
+
+        .stream-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .stream-title i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .stream-arrow {
+            transition: var(--transition);
+        }
+
+        .stream-accordion.active .stream-arrow {
+            transform: rotate(180deg);
+        }
+
+        .stream-content {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .stream-accordion.active .stream-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Category Sections */
+        .category-section {
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid;
+        }
+        
+        .category-header-icon {
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--white);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .category-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Career Cards Grid */
+        .career-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .career-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            transition: var(--transition);
+            cursor: pointer;
+            border-left: 4px solid;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .career-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--white);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .card-title-container {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .card-details {
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .card-detail {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .card-detail i {
+            margin-right: 8px;
+            margin-top: 3px;
+            flex-shrink: 0;
+            width: 16px;
+            text-align: center;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: auto; /* Pushes tags to the bottom */
+        }
+
+        .card-tag {
+            padding: 5px 10px;
+            background-color: var(--background);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal {
+            background-color: var(--white);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: var(--card-shadow-hover);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal.fade-in-scale {
+            animation: fadeInScale 0.4s ease forwards;
+        }
+
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #E5E7EB;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--white);
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-title i {
+            margin-right: 15px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 25px;
+            overflow-y: auto;
+        }
+        
+        .modal-description {
+            font-style: italic;
+            color: var(--text-dark);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .modal-section {
+            margin-bottom: 25px;
+        }
+        
+        .modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-section-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 8px;
+        }
+
+        .modal-section-title i {
+            margin-right: 10px;
+        }
+        
+        .modal-section p, .modal-section ul {
+            color: var(--text-light);
+            padding-left: 5px;
+        }
+        
+        .modal-section ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .modal-section li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .modal-section li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+
+        .modal-footer {
+            padding: 20px 25px;
+            border-top: 1px solid #E5E7EB;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background-color: var(--background);
+            flex-shrink: 0;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: var(--primary-light);
+            box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover:not(:disabled) {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-success {
+             background-color: var(--success);
+             color: var(--white);
+             border: 2px solid var(--success);
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background-color: #059669;
+        }
+
+        /* Exam Summary Section */
+        .exam-summary {
+            margin-top: 50px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+        }
+
+        .exam-summary-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .exam-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .exam-category {
+            background-color: var(--background);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .exam-category-title {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .exam-category-title i {
+            margin-right: 10px;
+        }
+
+        .exam-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .exam-pill {
+            padding: 8px 15px;
+            background-color: var(--white);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid #E5E7EB;
+            text-decoration: none;
+        }
+
+        .exam-pill:hover {
+            background-color: var(--primary);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        /* No Results Message */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+            background-color: var(--white);
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #E5E7EB;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            border-radius: 8px;
+            background-color: var(--text-dark);
+            color: var(--white);
+            box-shadow: var(--card-shadow-hover);
+            z-index: 3000;
+            transition: bottom 0.5s ease;
+            font-weight: 500;
+        }
+
+        #toast.show {
+            bottom: 30px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px; /* Adjusted for scrolled header */
+                flex-direction: column;
+                background-color: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--card-shadow);
+                padding: 20px 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                margin: 15px 0;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 15px;
+            }
+            
+            .user-name {
+                display: none;
+            }
+            
+            .search-filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-dropdown {
+                width: 100%;
+            }
+            
+            .career-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mobile-sidebar-toggle {
+                top: 70px;
+            }
+            
+            .mobile-sidebar {
+                width: 280px;
+                left: -280px;
+            }
+
+            .mobile-sidebar.active {
+                transform: translateX(280px);
+            }
+            
+            .modal {
+                max-height: 95vh;
+            }
+            
+            .exam-categories {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { translateY(0); opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease forwards;
+        }
+        
+        .career-card {
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        .highlight {
+            background-color: #FEF3C7;
+            padding: 0 2px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header id="header">
+        <div class="header-container">
+            <a href="dashboard.html" class="logo">
+                <div class="logo-text">Navi<span class="logo-accent">Disha</span></div>
+            </a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="roadmaps.html" class="nav-link active">Roadmaps</a></li>
+                <li class="nav-item"><a href="recommendation.html" class="nav-link">Recommendations</a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link">Support</a></li>
+            </ul>
+            
+            <div class="header-right">
+                <a href="notification_center.html" class="notification-icon">
+                   <i class="fas fa-bell"></i>
+                   <span class="notification-badge" id="notification-count">3</span>
+                </a>
+            
+                <div class="user-profile" id="user-profile">
+                    <div class="user-avatar">AS</div>
+                    <div class="user-name">Anjali S.</div>
+                    <i class="fas fa-chevron-down"></i>
+                    
+                    <div class="user-dropdown" id="user-dropdown">
+                        <a href="academic_profile.html" class="dropdown-item">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="prefrences_settings.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE SIDEBAR -->
+    <div class="mobile-sidebar-toggle" id="sidebar-toggle">
+        <i class="fas fa-chevron-right"></i>
+    </div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <aside class="mobile-sidebar" id="mobile-sidebar">
+        <button class="close-sidebar" id="close-sidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">Student Dashboard</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="dashboard.html" class="sidebar-link"><i class="fas fa-road"></i> My Roadmap</a></li>
+            <li class="sidebar-item"><a href="academic_profile.html" class="sidebar-link"><i class="fas fa-graduation-cap"></i> Academic Profile</a></li>
+            <li class="sidebar-item"><a href="upcoming_deadline.html" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Upcoming Deadlines</a></li>
+            <li class="sidebar-item"><a href="recommendation.html" class="sidebar-link"><i class="fas fa-lightbulb"></i> Recommendations</a></li>
+            <li class="sidebar-item"><a href="saved_items.html" class="sidebar-link"><i class="fas fa-bookmark"></i> Saved Items</a></li>
+        </ul>
+    </aside>
+
+    <div class="dashboard-container">
+        <!-- DESKTOP SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title">Student Dashboard</h3>
+            </div>
+            <ul class="sidebar-menu">
+                 <li class="sidebar-item"><a href="dashboard.html" class="sidebar-link"><i class="fas fa-road"></i> My Roadmap</a></li>
+                 <li class="sidebar-item"><a href="academic_profile.html" class="sidebar-link"><i class="fas fa-graduation-cap"></i> Academic Profile</a></li>
+                 <li class="sidebar-item"><a href="upcoming_deadline.html" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Upcoming Deadlines</a></li>
+                 <li class="sidebar-item"><a href="recommendation.html" class="sidebar-link"><i class="fas fa-lightbulb"></i> Recommendations</a></li>
+                 <li class="sidebar-item"><a href="saved_items.html" class="sidebar-link"><i class="fas fa-bookmark"></i> Saved Items</a></li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <div class="page-header fade-in">
+                <h1 class="page-title">Career Roadmap Explorer</h1>
+                <p class="page-subtitle">Discover structured career paths across all major educational streams.</p>
+            </div>
+
+            <div class="search-filter-container slide-in">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="search-input" placeholder="Search careers (e.g., Data Scientist, UPSC, Doctor)">
+                </div>
+                <div class="filter-dropdown">
+                    <button class="filter-button" id="filter-button">
+                        <span id="filter-text">All Categories</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="filter-menu" id="filter-menu">
+                        <label class="filter-option"><input type="checkbox" name="category" value="all" checked> <span class="category-header-icon">🌐</span> <span>All Categories</span></label>
+                        <label class="filter-option"><input type="checkbox" name="category" value="government"> <span class="category-header-icon">🏛️</span> <span>Government</span></label>
+                        <label class="filter-option"><input type="checkbox" name="category" value="private"> <span class="category-header-icon">💼</span> <span>Private Sector</span></label>
+                        <label class="filter-option"><input type="checkbox" name="category" value="higher-studies"> <span class="category-header-icon">🎓</span> <span>Higher Studies</span></label>
+                        <label class="filter-option"><input type="checkbox" name="category" value="certification"> <span class="category-header-icon">📜</span> <span>Certifications</span></label>
+                        <label class="filter-option"><input type="checkbox" name="category" value="research"> <span class="category-header-icon">🔬</span> <span>Research</span></label>
+                        <label class="filter-option"><input type="checkbox" name="category" value="international"> <span class="category-header-icon">🌍</span> <span>International</span></label>
+                        <label class="filter-option"><input type="checkbox" name="category" value="entrepreneurship"> <span class="category-header-icon">🚀</span> <span>Entrepreneurship</span></label>
+                    </div>
+                </div>
+                <button class="clear-filters-btn hidden" id="clear-filters-btn"><i class="fas fa-times"></i> Clear</button>
+            </div>
+
+            <div class="roadmap-content" id="roadmap-content">
+                <!-- Data will be loaded here dynamically by JavaScript -->
+            </div>
+            
+             <!-- No Results Message (Hidden by default) -->
+            <div class="no-results hidden" id="no-results">
+                <i class="fas fa-search"></i>
+                <h3>No Matching Career Paths Found</h3>
+                <p>Try adjusting your search or filter criteria.</p>
+            </div>
+
+
+            <!-- Exam Summary Section -->
+            <div class="exam-summary slide-in">
+                <h2 class="exam-summary-title">Key Entrance Exams & Certifications</h2>
+                <div class="exam-categories">
+                    <div class="exam-category">
+                        <h3 class="exam-category-title"><i class="fas fa-landmark"></i> Government & Public Sector</h3>
+                        <div class="exam-pills">
+                            <a href="https://upsc.gov.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">UPSC-CSE</a>
+                            <a href="https://upsc.gov.in/examinations/state-public-service-commissions" target="_blank" rel="noopener noreferrer" class="exam-pill">State PSC</a>
+                            <a href="https://ssc.nic.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">SSC CGL</a>
+                            <a href="https://www.ibps.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">IBPS PO</a>
+                            <a href="https://www.rbi.org.in/Scripts/bs_viewcontent.aspx?Id=2042" target="_blank" rel="noopener noreferrer" class="exam-pill">RBI Grade B</a>
+                            <a href="https://upsc.gov.in/examinations/engineering-services-examination" target="_blank" rel="noopener noreferrer" class="exam-pill">IES/ESE</a>
+                            <a href="https://gate.iisc.ac.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">GATE</a>
+                        </div>
+                    </div>
+                    <div class="exam-category">
+                        <h3 class="exam-category-title"><i class="fas fa-chart-line"></i> Management (MBA)</h3>
+                        <div class="exam-pills">
+                            <a href="https://iimcat.ac.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">CAT</a>
+                            <a href="https://xatonline.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">XAT</a>
+                            <a href="https://www.mba.com/gmat" target="_blank" rel="noopener noreferrer" class="exam-pill">GMAT</a>
+                            <a href="https://www.snaptest.org/" target="_blank" rel="noopener noreferrer" class="exam-pill">SNAP</a>
+                            <a href="https://www.mba.com/nmat" target="_blank" rel="noopener noreferrer" class="exam-pill">NMAT</a>
+                        </div>
+                    </div>
+                    <div class="exam-category">
+                        <h3 class="exam-category-title"><i class="fas fa-stethoscope"></i> Medical & Health</h3>
+                        <div class="exam-pills">
+                            <a href="https://exams.nta.ac.in/NEET/" target="_blank" rel="noopener noreferrer" class="exam-pill">NEET-UG</a>
+                            <a href="https://nbe.edu.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">NEET-PG</a>
+                            <a href="https://nbe.edu.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">NEET-SS</a>
+                            <a href="https://www.aiimsexams.ac.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">AIIMS PG</a>
+                            <a href="https://icar.org.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">ICAR</a>
+                        </div>
+                    </div>
+                    <div class="exam-category">
+                        <h3 class="exam-category-title"><i class="fas fa-balance-scale"></i> Law & Humanities</h3>
+                        <div class="exam-pills">
+                            <a href="https://consortiumofnlus.ac.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">CLAT</a>
+                            <a href="https://nationallawuniversitydelhi.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">AILET</a>
+                            <a href="https://www.lsatindia.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">LSAT</a>
+                            <a href="https://ugcnet.nta.nic.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">UGC-NET</a>
+                            <a href="https://cuet.samarth.ac.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">CUET</a>
+                        </div>
+                    </div>
+                     <div class="exam-category">
+                        <h3 class="exam-category-title"><i class="fas fa-palette"></i> Design & Arts</h3>
+                        <div class="exam-pills">
+                            <a href="https://admissions.nid.edu/" target="_blank" rel="noopener noreferrer" class="exam-pill">NID</a>
+                            <a href="https://www.nift.ac.in/admissions" target="_blank" rel="noopener noreferrer" class="exam-pill">NIFT</a>
+                            <a href="http://www.uceed.iitb.ac.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">UCEED</a>
+                            <a href="http://www.ceed.iitb.ac.in/" target="_blank" rel="noopener noreferrer" class="exam-pill">CEED</a>
+                        </div>
+                    </div>
+                    <div class="exam-category">
+                        <h3 class="exam-category-title"><i class="fas fa-globe"></i> Global Study Exams</h3>
+                        <div class="exam-pills">
+                            <a href="https://www.ets.org/gre" target="_blank" rel="noopener noreferrer" class="exam-pill">GRE</a>
+                            <a href="https://www.ets.org/toefl" target="_blank" rel="noopener noreferrer" class="exam-pill">TOEFL</a>
+                            <a href="https://www.ielts.org/" target="_blank" rel="noopener noreferrer" class="exam-pill">IELTS</a>
+                            <a href="https://www.mba.com/gmat" target="_blank" rel="noopener noreferrer" class="exam-pill">GMAT</a>
+                            <a href="https://www.usmle.org/" target="_blank" rel="noopener noreferrer" class="exam-pill">USMLE</a>
+                            <a href="https://www.gmc-uk.org/registration-and-licensing/join-the-register/plab" target="_blank" rel="noopener noreferrer" class="exam-pill">PLAB</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title"></h3>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Modal content will be dynamically inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="save-roadmap-btn">
+                    <i class="far fa-star"></i> Save to My Roadmap
+                </button>
+                <button class="btn btn-primary" id="download-pdf-btn">
+                    <i class="fas fa-download"></i> Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"></div>
+
+    <script>
+    (function() {
+        // CAREER DATA OBJECT
+        const CAREER_DATA = {
+            "B.Tech": {
+                icon: "fas fa-laptop-code",
+                title: "B.Tech Graduates",
+                categories: {
+                    "government": {
+                        title: "Government Careers",
+                        icon: "🏛️",
+                        color: "var(--govt-color)",
+                        paths: [
+                            { title: "Public Sector (PSUs)", description: "Work in government-owned corporations, offering stability and strong career growth in core engineering sectors. Recruitment is highly competitive, primarily through the GATE exam.", eligibility: "B.Tech/B.E. in relevant discipline", exams: "GATE", careers: "Engineer, Manager (ONGC, NTPC, BHEL)", recruiters: "ONGC, NTPC, BHEL, GAIL, IOCL", tags: "PSU, GATE" },
+                            { title: "Indian Engineering Services (IES)", description: "A prestigious central government service that recruits engineers for technical and managerial functions. IES officers work in departments like Railways, PWD, and Telecom.", eligibility: "B.Tech/B.E., Age 21–30", exams: "UPSC ESE/IES", careers: "Civil, Mechanical, Electrical, Electronics roles", recruiters: "Railways, PWD, CPWD", tags: "UPSC" },
+                            { title: "Scientific Organizations", description: "Join India's premier R&D organizations to work on cutting-edge projects in space, defense, and nuclear technology. A path for those passionate about innovation and research.", eligibility: "First-class B.E./B.Tech", exams: "GATE or written test + interview", careers: "Scientist 'B'/'C' roles", recruiters: "ISRO, DRDO, CSIR, BARC", tags: "research, scientist" },
+                            { title: "Armed Forces (Technical)", description: "Serve the nation by joining the technical branches of the Indian Army, Navy, or Air Force. This path combines engineering skills with a disciplined and adventurous lifestyle.", eligibility: "B.Tech/B.E.", exams: "SSB Interview (TGC/SSC Tech), AFCAT", careers: "Technical Officer in Army, Navy, Air Force", recruiters: "Indian Army, Navy, Air Force", tags: "defence" }
+                        ]
+                    },
+                    "private": {
+                        title: "Private Sector Careers",
+                        icon: "💼",
+                        color: "var(--private-color)",
+                        paths: [
+                            { title: "Software/IT Engineer", description: "Design, develop, and maintain software applications and systems. A dynamic field with specializations in AI, data science, cybersecurity, and web development.", eligibility: "B.Tech in CS/IT/ECE", exams: "Company coding tests, technical interviews", careers: "Software Developer, Data Scientist, AI/ML Engineer", recruiters: "Google, Microsoft, Amazon, TCS", tags: "coding, developer" },
+                            { title: "Mechanical Engineer", description: "Apply principles of physics and materials science for the design, analysis, and manufacturing of mechanical systems. Roles span across automotive, aerospace, and manufacturing industries.", eligibility: "B.Tech Mechanical", exams: "Company-specific tests", careers: "Design Engineer, Manufacturing Engineer, R&D", recruiters: "Tata Motors, L&T, Siemens, Mahindra", tags: "core, manufacturing" },
+                            { title: "Civil Engineer", description: "Plan, design, and oversee construction and maintenance of building structures and infrastructure, such as roads, bridges, and dams. A foundational engineering discipline.", eligibility: "B.Tech Civil", exams: "Company-specific tests", careers: "Site Engineer, Structural Engineer, Project Manager", recruiters: "L&T, Shapoorji Pallonji, DLF", tags: "construction, infrastructure" },
+                            { title: "Electronics (ECE) Engineer", description: "Work with electronic circuits, devices, and systems. This field includes sub-domains like VLSI (chip design), embedded systems, and telecommunications.", eligibility: "B.Tech ECE/EEE", exams: "Company-specific tests", careers: "VLSI Engineer, Embedded Systems, Telecom", recruiters: "Intel, Qualcomm, Samsung, Airtel", tags: "hardware, telecom" },
+                            { title: "Electrical Engineer", description: "Focus on the generation, transmission, and distribution of electricity, as well as electrical equipment. A growing area includes renewable energy and smart grids.", eligibility: "B.Tech Electrical", exams: "Company-specific tests", careers: "Power Engineer, Renewable Energy Engineer", recruiters: "Tata Power, Adani, Siemens", tags: "power, energy" },
+                            { title: "Chemical Engineer", description: "Convert raw materials into useful products by applying principles of chemistry, physics, and engineering. Work in industries like petrochemicals, pharmaceuticals, and FMCG.", eligibility: "B.Tech Chemical", exams: "Company-specific tests", careers: "Process Engineer, Quality Control, Petrochemical", recruiters: "Reliance Industries, Shell, BASF, Sun Pharma", tags: "chemical, process" },
+                            { title: "Biotechnology Engineer", description: "Combine engineering with biological sciences to develop new products for healthcare, agriculture, and other fields. A research-intensive and innovative domain.", eligibility: "B.Tech Biotechnology", exams: "Company-specific tests", careers: "Research Scientist, Bioprocess Engineer", recruiters: "Biocon, Serum Institute, Bharat Biotech", tags: "biotech, pharma" }
+                        ]
+                    },
+                    "higher-studies": {
+                        title: "Higher Studies & Research",
+                        icon: "🎓",
+                        color: "var(--higher-studies-color)",
+                        paths: [
+                            { title: "M.Tech / M.S. (India)", description: "Deepen your technical knowledge in a specialized area of engineering. An M.Tech is essential for high-end R&D and academic positions in India.", eligibility: "B.Tech", exams: "GATE", careers: "Leads to advanced R&D, specialized roles", recruiters: "IITs, NITs, IISc", tags: "masters, research, gate" },
+                            { title: "MBA (India)", description: "Transition from a technical role to a management position. An MBA opens doors to careers in product management, consulting, finance, and leadership.", eligibility: "B.Tech", exams: "CAT, GMAT", careers: "Product Manager, Tech Consultant, Leadership roles", recruiters: "IIMs, ISB, Top B-Schools", tags: "management, cat" },
+                            { title: "Ph.D.", description: "Pursue a doctorate to become an expert in a specific field, contributing to new knowledge through original research. The highest academic degree, required for university professorships.", eligibility: "M.Tech/M.S.", exams: "University entrance exams", careers: "Professor, Research Scientist", recruiters: "IITs, IISc, Research Labs", tags: "doctorate, academia" }
+                        ]
+                    },
+                     "international": {
+                        title: "Global Opportunities",
+                        icon: "🌍",
+                        color: "var(--international-color)",
+                        paths: [
+                            { title: "M.S. Abroad", description: "Pursue a Master of Science degree from a top international university to gain global exposure and access to cutting-edge research and job markets, particularly in the US and Europe.", eligibility: "B.Tech/B.E.", exams: "GRE, TOEFL/IELTS", careers: "Software Engineer, R&D Scientist, Data Scientist", recruiters: "FAANG, Tech startups in Silicon Valley, Europe", tags: "ms, usa, europe, gre" },
+                            { title: "Global MBA", description: "An MBA from a top-tier international business school can fast-track your career into global leadership roles in consulting, finance, and technology.", eligibility: "B.Tech + Work Experience", exams: "GMAT, GRE", careers: "Product Manager, Management Consultant", recruiters: "Top Global B-Schools (Harvard, Stanford, INSEAD)", tags: "gmat, mba, international" }
+                        ]
+                    }
+                }
+            },
+            "B.Sc": {
+                icon: "fas fa-flask",
+                title: "B.Sc. Graduates",
+                categories: {
+                    "government": {
+                        title: "Government Careers",
+                        icon: "🏛️",
+                        color: "var(--govt-color)",
+                        paths: [
+                            { title: "Civil Services (B.Sc)", description: "Join the prestigious administrative backbone of the country through competitive exams like UPSC, taking on roles like IAS, IPS, or IFS to shape public policy and governance.", eligibility: "B.Sc. (any discipline), age 21–32", exams: "UPSC CSE, State PSC", careers: "IAS, IPS, IFS", recruiters: "Central and State Governments", tags: "UPSC, admin" },
+                            { title: "Banking & Insurance (B.Sc)", description: "Secure a stable career in the financial sector by joining public sector banks or insurance companies. Roles range from customer-facing officers to risk analysis.", eligibility: "B.Sc. degree, age <30", exams: "IBPS PO, SBI PO, RBI Grade B, LIC AAO", careers: "Probationary Officer, Risk Analyst", recruiters: "Public Sector Banks, RBI, LIC", tags: "bank, finance" },
+                            { title: "Defence Services (B.Sc)", description: "Serve the nation with a commission in the Indian Army, Navy, or Air Force. B.Sc. graduates can enter through various graduate entry schemes.", eligibility: "B.Sc. degree, physical fitness", exams: "CDS, AFCAT, INET", careers: "Officer in Army, Navy, Air Force", recruiters: "Indian Armed Forces", tags: "military" },
+                            { title: "Scientific Organizations (B.Sc)", description: "Utilize your scientific knowledge by working as a research officer or scientist in premier government R&D institutions, contributing to national projects.", eligibility: "B.Sc. (Physics, Chem, Bio, etc.)", exams: "ISRO/DRDO tests, BARC OCES", careers: "Scientist, Research Officer", recruiters: "ISRO, DRDO, BARC, ICMR", tags: "research" }
+                        ]
+                    },
+                    "private": {
+                        title: "Private Sector Careers",
+                        icon: "💼",
+                        color: "var(--private-color)",
+                        paths: [
+                            { title: "IT & Data Analyst", description: "Leverage analytical skills gained during your B.Sc. to work in the fast-growing tech industry. Roles include software development, data analysis, and cybersecurity.", eligibility: "B.Sc. (CS, IT, Stats, Maths)", exams: "Company tests, certifications", careers: "Software Developer, Data Analyst, Cybersecurity", recruiters: "TCS, Infosys, Wipro, IBM, Deloitte", tags: "tech, data" },
+                            { title: "Life Sciences & Pharma", description: "Work in the healthcare and pharmaceutical sectors in roles like laboratory research, clinical trial management, and quality control for pharmaceutical products.", eligibility: "B.Sc. (Biotech, Microbio, Biochem)", exams: "Company tests", careers: "Lab Scientist, Clinical Research, Pharma QA/QC", recruiters: "Biocon, Cipla, Serum Institute, Dr. Reddy's", tags: "biotech, healthcare" },
+                            { title: "Environmental Science", description: "Work as a consultant or analyst focused on environmental protection, sustainability, and impact assessment for corporations and NGOs.", eligibility: "B.Sc. (Env Science, Agri, Forestry)", exams: "N/A", careers: "Environmental Consultant, Sustainability Analyst", recruiters: "Tata Power, NGOs, Consulting firms", tags: "green, sustainability" },
+                            { title: "Forensic Scientist", description: "Apply scientific principles to criminal investigations by analyzing evidence from crime scenes. A career that combines science with law and order.", eligibility: "B.Sc. Forensic Science/Biology/Chem", exams: "University/Govt. tests", careers: "Crime Lab Analyst, Forensic Expert", recruiters: "Forensic Labs, Law Enforcement Agencies", tags: "forensic, crime" }
+                        ]
+                    },
+                    "higher-studies": {
+                        title: "Higher Studies & Professional Courses",
+                        icon: "🎓",
+                        color: "var(--higher-studies-color)",
+                        paths: [
+                            { title: "M.Sc.", description: "Pursue a Master of Science to specialize in your chosen subject, which is often a prerequisite for research, teaching, and senior scientific roles.", eligibility: "Relevant B.Sc.", exams: "JAM, JEST, University Entrances", careers: "Specialized roles, Research, Teaching", recruiters: "IITs, IISERs, Central Universities", tags: "masters, science" },
+                            { title: "MBA (after B.Sc)", description: "Combine your scientific background with business acumen. An MBA can lead to management roles in pharma, healthcare, or tech industries.", eligibility: "B.Sc. degree", exams: "CAT, XAT, GMAT", careers: "Business, Consulting, Finance roles", recruiters: "IIMs, ISB, Top B-Schools", tags: "management" },
+                            { title: "MCA", description: "For B.Sc. graduates with a mathematics background, a Master of Computer Applications (MCA) is an excellent pathway to advanced careers in software development.", eligibility: "B.Sc. with Maths", exams: "NIMCET, CUET", careers: "Advanced Software Development roles", recruiters: "IT companies", tags: "tech, software" },
+                             { title: "Teacher / Professor (B.Ed.)", description: "Shape the next generation of minds by becoming a teacher. A B.Ed. is necessary for school-level teaching, while an M.Sc. and Ph.D. are required for university positions.", eligibility: "B.Sc. + B.Ed.", exams: "CTET, State TET", careers: "School Teacher, Professor (after M.Sc./Ph.D.)", recruiters: "Schools, Colleges, Universities", tags: "teaching, education" }
+                        ]
+                    },
+                    "international": {
+                        title: "Global Opportunities",
+                        icon: "🌍",
+                        color: "var(--international-color)",
+                        paths: [
+                            { title: "Research & Academia Abroad", description: "Pursue a Ph.D. or postdoctoral fellowship at a leading global university to engage in cutting-edge research and potentially secure a faculty position.", eligibility: "B.Sc. degree", exams: "GRE, TOEFL/IELTS", careers: "Research Scientist, Post-doc Fellow, Professor", recruiters: "International Universities, Research Institutes", tags: "research, phd, gre" },
+                            { title: "Global Public Health / Policy", description: "Use your science background to work with international organizations on global challenges like public health, climate change, and sustainability.", eligibility: "B.Sc. Life Sciences/Env. Science", exams: "GRE, TOEFL/IELTS for Masters (MPH)", careers: "Public Health Officer, Environmental Analyst", recruiters: "WHO, UN, UNDP, World Bank", tags: "public health, policy, un" }
+                        ]
+                    }
+                }
+            },
+            "Commerce": {
+                icon: "fas fa-chart-pie",
+                title: "Commerce Graduates",
+                categories: {
+                    "certification": {
+                        title: "Professional Certifications",
+                        icon: "📜",
+                        color: "var(--certification-color)",
+                        paths: [
+                            { title: "Chartered Accountant (CA)", description: "A highly respected profession involving auditing financial records, offering tax advice, and managing corporate finance to ensure compliance and financial health.", eligibility: "After 10+2", exams: "CA Foundation, Intermediate, Final (ICAI)", careers: "Auditor, Tax Consultant, CFO", recruiters: "Big 4 (Deloitte, PwC, EY, KPMG)", tags: "finance, audit" },
+                            { title: "Company Secretary (CS)", description: "Act as a conscience keeper of the company, ensuring it complies with all legal and statutory regulations. A key role in corporate governance.", eligibility: "After 10+2", exams: "CSEET, Executive, Professional (ICSI)", careers: "Legal Advisor, Compliance Officer", recruiters: "Corporate firms, Law firms", tags: "law, corporate governance" },
+                            { title: "Cost & Management Accountant (CMA)", description: "Specialize in managing a company's finances by focusing on cost control, performance management, and asset management to improve profitability.", eligibility: "After 10+2", exams: "CMA Foundation, Inter, Final (ICMAI)", careers: "Cost Auditor, Financial Analyst", recruiters: "Manufacturing, Consulting firms", tags: "finance, cost" },
+                            { title: "Chartered Financial Analyst (CFA)", description: "A globally recognized gold standard in the field of investment analysis. CFAs are experts in portfolio management, investment banking, and equity research.", eligibility: "Final year of graduation", exams: "CFA Level I, II, III", careers: "Investment Banker, Portfolio Manager", recruiters: "JP Morgan, Goldman Sachs", tags: "investment, finance" },
+                            { title: "Actuary", description: "Use mathematical and statistical models to assess risk in the insurance and finance industries. A highly specialized and lucrative career path.", eligibility: "10+2 with Mathematics", exams: "Institute of Actuaries of India (IAI) exams", careers: "Actuarial Analyst, Risk Manager", recruiters: "Insurance companies, Consulting firms", tags: "insurance, risk" }
+                        ]
+                    },
+                    "private": {
+                        title: "Private Sector Careers",
+                        icon: "💼",
+                        color: "var(--private-color)",
+                        paths: [
+                            { title: "Finance & Accounting", description: "The backbone of any business, this includes roles like financial planning, auditing, and tax preparation in corporate settings or consulting firms.", eligibility: "B.Com/BBA", exams: "Company tests", careers: "Financial Analyst, Auditor, Tax Consultant", recruiters: "Big 4, JP Morgan, Goldman Sachs", tags: "finance" },
+                            { title: "Marketing & Sales", description: "Drive business growth by creating and executing marketing strategies, managing brands, and leading sales teams in various industries like FMCG, tech, and e-commerce.", eligibility: "B.Com/BBA", exams: "Company tests", careers: "Brand Manager, Digital Marketer", recruiters: "HUL, Nestlé, Flipkart, Amazon", tags: "marketing" },
+                            { title: "Human Resources (HR)", description: "Manage an organization's most valuable asset: its people. Responsibilities include talent acquisition, payroll, employee relations, and organizational development.", eligibility: "B.Com/BBA", exams: "Company tests", careers: "HR Manager, Talent Acquisition", recruiters: "Infosys, TCS, Accenture, Reliance", tags: "HR" }
+                        ]
+                    },
+                    "government": {
+                        title: "Government Careers",
+                        icon: "🏛️",
+                        color: "var(--govt-color)",
+                        paths: [
+                            { title: "Banking Sector", description: "Join public sector banks as a Probationary Officer or specialist officer. A stable career with good benefits and opportunities for growth within the banking industry.", eligibility: "B.Com/BBA", exams: "IBPS PO, SBI PO, RBI Grade B", careers: "Probationary Officer, Manager", recruiters: "PSU Banks, RBI", tags: "bank" },
+                            { title: "Civil Services (Commerce)", description: "Commerce graduates are well-suited for services like the Indian Revenue Service (IRS) and Indian Audit and Accounts Service (IAAS) through the UPSC Civil Services Exam.", eligibility: "Any graduation", exams: "UPSC CSE (IRS specialization)", careers: "IAS, IPS, IRS", recruiters: "Government of India", tags: "UPSC" }
+                        ]
+                    },
+                    "international": {
+                        title: "Global Opportunities",
+                        icon: "🌍",
+                        color: "var(--international-color)",
+                        paths: [
+                            { title: "Global Finance & Accounting", description: "Pursue international certifications like CPA (US) or ACCA (UK) to work in finance and accounting roles for multinational corporations across the globe.", eligibility: "B.Com + Professional Certifications", exams: "CPA (US), ACCA (UK), CIMA", careers: "Accountant, Auditor, Financial Analyst in global markets", recruiters: "Big 4 Global Offices, MNCs, Investment Banks", tags: "cpa, acca, finance" },
+                            { title: "International MBA", description: "An MBA from a top global business school is a pathway to high-level careers in international consulting, investment banking, and corporate leadership.", eligibility: "B.Com/BBA + Work Experience", exams: "GMAT", careers: "Consulting, Investment Banking, Global Leadership", recruiters: "Global B-Schools, McKinsey, BCG, Goldman Sachs", tags: "mba, gmat, consulting" }
+                        ]
+                    },
+                    "entrepreneurship": {
+                        title: "Entrepreneurship",
+                        icon: "🚀",
+                        color: "var(--entrepreneurship-color)",
+                        paths: [
+                            { title: "Startup Founder", description: "Use your business acumen to launch your own venture. Commerce provides a strong foundation for managing finances, operations, and business strategy.", eligibility: "B.Com/BBA", exams: "N/A", careers: "Founder of a tech, e-commerce, or service startup", recruiters: "Self-employed, Venture Capitalists", tags: "startup, founder" }
+                        ]
+                    }
+                }
+            },
+            "Humanities": {
+                icon: "fas fa-landmark",
+                title: "Humanities/Arts Graduates",
+                categories: {
+                    "government": {
+                        title: "Government & Public Service",
+                        icon: "🏛️",
+                        color: "var(--govt-color)",
+                        paths: [
+                            { title: "Civil Services (Humanities)", description: "The Humanities stream provides a strong foundation for the UPSC Civil Services Exam, leading to careers as administrators, diplomats, and police officers.", eligibility: "Any graduation", exams: "UPSC CSE, State PSC", careers: "IAS, IPS, IFS, Diplomat", recruiters: "Central and State Governments", tags: "UPSC, admin" },
+                            { title: "Defence Services (Humanities)", description: "Join the officer cadre of the Indian Armed Forces. A career that demands leadership, strategic thinking, and a commitment to serving the nation.", eligibility: "Any graduation, physical fitness", exams: "CDS, AFCAT", careers: "Officer in Army, Navy, Air Force", recruiters: "Indian Armed Forces", tags: "military" },
+                            { title: "Judiciary", description: "After obtaining a law degree, you can appear for judicial services examinations to become a judge in the district and higher courts.", eligibility: "BA LLB / LLB", exams: "Judiciary Exams", careers: "Judge, Magistrate", recruiters: "High Courts, District Courts", tags: "law, judge" }
+                        ]
+                    },
+                    "private": {
+                        title: "Creative & Corporate Careers",
+                        icon: "💼",
+                        color: "var(--private-color)",
+                        paths: [
+                            { title: "Journalism & Media", description: "Investigate and report on current events, trends, and issues for print, broadcast, or digital media. Includes roles in reporting, editing, and public relations.", eligibility: "B.A. (Journalism/Mass Comm)", exams: "University entrances", careers: "Journalist, Editor, PR Officer", recruiters: "Media houses, PR agencies", tags: "media" },
+                            { title: "Lawyer", description: "Specialize in areas like corporate law, litigation, or intellectual property after completing a 5-year integrated or 3-year post-graduate law degree.", eligibility: "BA LLB / LLB", exams: "CLAT, AILET, LSAT", careers: "Corporate Lawyer, Legal Advisor", recruiters: "Law firms, Corporate legal teams", tags: "law" },
+                            { title: "Psychologist/Counsellor", description: "Help people cope with mental health issues and life challenges. Requires a Master's degree and often an M.Phil for clinical practice.", eligibility: "B.A. Psychology + M.A.", exams: "RCI approved exams", careers: "Clinical Psychologist, Counsellor, HR", recruiters: "Hospitals, Schools, Corporates", tags: "psychology" },
+                             { title: "Content & Digital Marketing", description: "Create compelling content for websites, social media, and marketing campaigns. This field combines creativity with analytical skills to drive online engagement.", eligibility: "B.A. English/Comm.", exams: "N/A", careers: "Content Writer, SEO Specialist, Digital Marketer", recruiters: "Marketing Agencies, Startups, Corporates", tags: "writing, marketing" },
+                             { title: "Event Manager", description: "Plan and execute events of all sizes, from corporate conferences to weddings. This role requires excellent organizational and interpersonal skills.", eligibility: "B.A./BBA", exams: "N/A", careers: "Event Planner, Wedding Planner, Corporate Events", recruiters: "Event Management Companies", tags: "events" }
+                        ]
+                    },
+                    "higher-studies": {
+                        title: "Academia & Higher Studies",
+                        icon: "🎓",
+                        color: "var(--higher-studies-color)",
+                        paths: [
+                            { title: "M.A. & Ph.D. (India)", description: "For those inclined towards academics and research, a Master's followed by a Ph.D. is the path to becoming a professor or a researcher in a chosen field.", eligibility: "Relevant B.A.", exams: "UGC-NET, University entrances", careers: "Professor, Researcher, Policy Analyst", recruiters: "Universities, Think Tanks", tags: "research, teaching, net" },
+                            { title: "MBA (after Humanities)", description: "An MBA after a Humanities degree can open up unique opportunities in corporate sectors like HR, marketing, and communications.", eligibility: "Any graduation", exams: "CAT, XAT, GMAT", careers: "Corporate roles in HR, Marketing, etc.", recruiters: "IIMs, Top B-Schools", tags: "management" },
+                            { title: "Master of Social Work (MSW)", description: "A professional degree for those who want to work in the social sector, focusing on community development, CSR, and working with NGOs.", eligibility: "B.A. Sociology/BSW", exams: "University entrances", careers: "Social Worker, NGO Manager, CSR Head", recruiters: "NGOs, Corporates (CSR)", tags: "social work" },
+                            { title: "Foreign Language Expert", description: "Mastering a foreign language opens up careers in translation, interpretation, and corporate roles in multinational companies.", eligibility: "B.A. in a foreign language", exams: "JNU, DU, EFLU entrances", careers: "Translator, Interpreter, Language Trainer", recruiters: "MNCs, Embassies, EdTech", tags: "language" }
+                        ]
+                    },
+                     "international": {
+                        title: "Global Opportunities",
+                        icon: "🌍",
+                        color: "var(--international-color)",
+                        paths: [
+                            { title: "Masters Abroad (Policy, IR)", description: "Pursue a Master's in fields like International Relations or Public Policy from a global university to work with international organizations like the UN or World Bank.", eligibility: "B.A. (Pol Sci, Econ, etc.)", exams: "GRE, TOEFL/IELTS", careers: "Diplomat, Policy Analyst, Think Tank Researcher", recruiters: "UN, World Bank, Foreign Embassies, Global Think Tanks", tags: "masters, policy, diplomacy" },
+                            { title: "Global Academia (Ph.D.)", description: "A Ph.D. from a renowned international university can lead to a career as a professor or researcher anywhere in the world.", eligibility: "M.A. in relevant field", exams: "GRE, University applications", careers: "Professor, Researcher at international universities", recruiters: "Universities worldwide", tags: "phd, research, professor" }
+                        ]
+                    }
+                }
+            },
+            "Design": {
+                icon: "fas fa-palette",
+                title: "Design Students",
+                categories: {
+                    "private": {
+                        title: "Core Design Careers",
+                        icon: "💼",
+                        color: "var(--private-color)",
+                        paths: [
+                            { title: "UI/UX Designer", description: "Focuses on creating intuitive and enjoyable user experiences for digital products like websites and apps, blending visual design with user psychology.", eligibility: "B.Des/M.Des", exams: "NID DAT, UCEED", careers: "UX Designer, Interaction Designer, Product Designer", recruiters: "Tech Companies, Startups, Design Studios", tags: "ui, ux, product" },
+                            { title: "Graphic/Visual Designer", description: "Communicate ideas visually through branding, advertisements, and digital media. This role is crucial for a company's brand identity.", eligibility: "B.Des/BFA", exams: "NID DAT", careers: "Graphic Designer, Brand Designer, Creative Director", recruiters: "Ad Agencies, Corporates", tags: "branding, graphics" },
+                            { title: "Fashion Designer", description: "Conceptualize and create clothing and accessories. This creative field involves trend forecasting, sketching, and material selection.", eligibility: "B.Des/BFA Fashion", exams: "NIFT Entrance", careers: "Fashion Designer, Stylist, Illustrator", recruiters: "Fashion Brands, Export Houses", tags: "fashion, apparel" },
+                            { title: "Industrial/Product Designer", description: "Design everyday products, from cars to furniture, focusing on functionality, aesthetics, and manufacturability.", eligibility: "B.Des Product/Industrial", exams: "NID DAT, UCEED", careers: "Product Designer, Automotive Designer, Furniture Designer", recruiters: "Manufacturing companies, Design consultancies", tags: "product, industrial" },
+                            { title: "Animator / VFX Artist", description: "Bring stories and characters to life through animation or create stunning visual effects for films, games, and advertisements.", eligibility: "B.Sc. Animation/VFX", exams: "College entrances", careers: "Animator, VFX Artist, Motion Graphics Designer", recruiters: "Animation Studios, Film Production Houses", tags: "animation, vfx" },
+                            { title: "Interior Designer", description: "Plan and design interior spaces for residential, commercial, or public buildings, focusing on aesthetics, functionality, and safety.", eligibility: "B.Des Interior", exams: "NID DAT, UCEED", careers: "Interior Designer, Space Planner, Exhibition Designer", recruiters: "Architectural Firms, Design Studios", tags: "interior, space" }
+                        ]
+                    },
+                    "higher-studies": {
+                        title: "Higher Studies & Management",
+                        icon: "🎓",
+                        color: "var(--higher-studies-color)",
+                        paths: [
+                            { title: "Master of Design (M.Des)", description: "Specialize in a niche area of design and prepare for leadership roles like Design Manager or academic positions.", eligibility: "B.Des/BFA", exams: "CEED, NID CEED", careers: "Design Manager, Academic Faculty, UI/UX Lead", recruiters: "IITs, NIDs", tags: "masters" },
+                            { title: "MBA in Design Management", description: "Bridge the gap between design and business. Learn to manage design processes, innovation, and strategy within a corporate framework.", eligibility: "Any graduation", exams: "CAT, College entrances", careers: "Design Strategist, Innovation Manager, Product Lead", recruiters: "Corporates, Consulting firms", tags: "management, strategy" },
+                            { title: "Ph.D. in Design", description: "Contribute to the field of design through research and academia. A Ph.D. is for those who want to become design educators or researchers.", eligibility: "M.Des/MFA", exams: "University tests, NET", careers: "Researcher, Design Educator, Professor", recruiters: "IITs, NIDs, Universities", tags: "research, academia" }
+                        ]
+                    },
+                    "international": {
+                        title: "Global Opportunities",
+                        icon: "🌍",
+                        color: "var(--international-color)",
+                        paths: [
+                           { title: "Work in Global Design Hubs", description: "A strong portfolio can open doors to work in global design capitals like Milan for fashion, or Silicon Valley for UI/UX design.", eligibility: "B.Des/M.Des, Strong Portfolio", exams: "N/A (Portfolio-based)", careers: "UI/UX Designer, Fashion Designer, Industrial Designer", recruiters: "Global Tech Companies, Fashion Houses (Milan, Paris)", tags: "portfolio, silicon valley, milan" },
+                           { title: "Masters in Design Abroad", description: "Study at world-renowned design schools to gain a global perspective and access a wider network of opportunities.", eligibility: "B.Des/BFA, Portfolio", exams: "GRE (sometimes), TOEFL/IELTS", careers: "Advanced design roles, Specializations", recruiters: "Top Design Schools (Parsons, RCA, Aalto)", tags: "masters, design school, international" }
+                        ]
+                    }
+                }
+            },
+            "Medical": {
+                icon: "fas fa-stethoscope",
+                title: "Medical Stream Students (PCB)",
+                categories: {
+                    "higher-studies": {
+                        title: "Core Medical & Surgical",
+                        icon: "🎓",
+                        color: "var(--higher-studies-color)",
+                        paths: [
+                            { title: "Doctor (MBBS)", description: "The foundational degree to become a medical doctor. After 5.5 years of rigorous training, you can practice as a general physician or pursue further specialization.", eligibility: "10+2 PCB, Age 17-25", exams: "NEET-UG", careers: "General Physician, further specialization", recruiters: "Hospitals, Clinics, Private Practice", tags: "doctor, physician" },
+                            { title: "Specialist Doctor (MD/MS)", description: "After completing MBBS, pursue a 3-year postgraduate degree to specialize in a specific medical field like pediatrics, cardiology, general surgery, or orthopedics.", eligibility: "MBBS", exams: "NEET-PG", careers: "Specialist (Pediatrics, Surgery, etc.)", recruiters: "Hospitals, Medical Colleges", tags: "specialist, surgeon" },
+                            { title: "Super Specialist (DM/MCh)", description: "The highest level of clinical specialization in medicine, requiring an MD/MS degree as a prerequisite. Fields include neurosurgery, cardiology, and oncology.", eligibility: "MD/MS", exams: "NEET-SS", careers: "Cardiologist, Neurologist, Neurosurgeon", recruiters: "Super-specialty Hospitals", tags: "super specialist" },
+                            { title: "Dentist (BDS & MDS)", description: "Diagnose and treat problems with teeth and gums. After BDS, one can pursue an MDS to specialize in areas like orthodontics or oral surgery.", eligibility: "10+2 PCB", exams: "NEET-UG (BDS), NEET-MDS (MDS)", careers: "Dentist, Orthodontist, Oral Surgeon", recruiters: "Dental Clinics, Hospitals", tags: "dental" },
+                            { title: "AYUSH Doctor", description: "Practice alternative medicine systems like Ayurveda (BAMS), Homeopathy (BHMS), or Unani (BUMS). A path for those interested in holistic and traditional healing.", eligibility: "10+2 PCB", exams: "NEET-UG", careers: "BAMS, BHMS, BUMS doctor", recruiters: "AYUSH Hospitals, Wellness Centers", tags: "ayurveda, homeopathy" }
+                        ]
+                    },
+                    "private": {
+                        title: "Allied Health & Pharma",
+                        icon: "💼",
+                        color: "var(--private-color)",
+                        paths: [
+                            { title: "Pharmacist", description: "Dispense medications and advise patients on their use. Pharmacists can also work in research, development, and marketing for pharmaceutical companies.", eligibility: "B.Pharm", exams: "State CET, CUET", careers: "Pharmacist, R&D Scientist, Clinical Trials", recruiters: "Pharma companies, Hospitals", tags: "pharmacy" },
+                            { title: "Nursing", description: "A vital role in the healthcare system, providing patient care, administering treatments, and offering emotional support. A highly respected and in-demand profession.", eligibility: "B.Sc. Nursing", exams: "NEET, AIIMS Nursing, JIPMER", careers: "Staff Nurse, Nurse Educator", recruiters: "Hospitals, Healthcare institutions", tags: "nurse" },
+                            { title: "Physiotherapist", description: "Help patients recover from injury, illness, and disability through movement and exercise. A key role in rehabilitation and sports medicine.", eligibility: "BPT", exams: "State CET / NEET (some)", careers: "Physiotherapist, Sports Therapist", recruiters: "Hospitals, Sports Clubs, Clinics", tags: "physiotherapy" },
+                            { title: "Biotechnologist", description: "Use biological systems to develop products and technologies that improve our lives, from new medicines to sustainable fuels. A field at the forefront of scientific innovation.", eligibility: "B.Sc. Biotech", exams: "CUET, University entrances", careers: "Biotechnologist, Clinical Research, Genetic Engineer", recruiters: "Biocon, Serum Institute", tags: "biotech" }
+                        ]
+                    },
+                    "international": {
+                        title: "Alternative & Global Careers",
+                        icon: "🌍",
+                        color: "var(--international-color)",
+                        paths: [
+                             { title: "Practice in USA", description: "To practice medicine in the United States, foreign medical graduates must pass the multi-step USMLE exam and complete a residency program.", eligibility: "MBBS", exams: "USMLE (Steps 1, 2, 3)", careers: "Residency, Specialist Doctor", recruiters: "US Hospitals and Healthcare Systems", tags: "usmle, usa" },
+                             { title: "Practice in UK", description: "The PLAB test is the main route for international medical graduates to demonstrate they have the necessary skills and knowledge to practice medicine in the UK.", eligibility: "MBBS", exams: "PLAB", careers: "Specialist Doctor, Surgeon", recruiters: "NHS Hospitals in the UK", tags: "plab, uk" },
+                             { title: "Hospital Administrator", description: "Combine your medical knowledge with an MBA to manage hospitals and healthcare organizations. A leadership role focused on efficiency and quality of care.", eligibility: "MBBS/BDS + MBA Healthcare", exams: "CAT, MAT", careers: "Hospital CEO, Healthcare Consultant", recruiters: "Corporate Hospitals, Consulting Firms", tags: "management, admin" },
+                             { title: "Medical Writer/Journalist", description: "Use your medical expertise to communicate complex health information to the public or professional audiences through articles, reports, and other media.", eligibility: "MBBS/BDS/B.Pharm", exams: "N/A", careers: "Health Journalist, Medical Communicator", recruiters: "Media Houses, Pharma Companies", tags: "writing, media" }
+                        ]
+                    }
+                }
+            }
+        };
+
+        // DOM Ready Event Listener
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- DOM Element References ---
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const userProfile = document.getElementById('user-profile');
+            const userDropdown = document.getElementById('user-dropdown');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const mobileSidebar = document.getElementById('mobile-sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            const closeSidebar = document.getElementById('close-sidebar');
+            
+            const searchInput = document.getElementById('search-input');
+            const filterButton = document.getElementById('filter-button');
+            const filterText = document.getElementById('filter-text');
+            const filterMenu = document.getElementById('filter-menu');
+            const filterCheckboxes = document.querySelectorAll('input[name="category"]');
+            const clearFiltersBtn = document.getElementById('clear-filters-btn');
+            
+            const roadmapContent = document.getElementById('roadmap-content');
+            const noResults = document.getElementById('no-results');
+            
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const closeModalBtn = document.getElementById('close-modal');
+            const saveRoadmapBtn = document.getElementById('save-roadmap-btn');
+            const downloadPdfBtn = document.getElementById('download-pdf-btn');
+            const toast = document.getElementById('toast');
+            
+            let currentModalRoadmapTitle = null;
+
+            // --- Initial Page Load ---
+            renderAllCareerPaths();
+            setupEventListeners();
+
+
+            // --- Core Functions ---
+            function renderAllCareerPaths() {
+                let contentHTML = '';
+                let cardAnimationDelay = 0;
+
+                for (const streamKey in CAREER_DATA) {
+                    const stream = CAREER_DATA[streamKey];
+                    let streamContentHTML = '';
+                    
+                    for (const categoryKey in stream.categories) {
+                        const category = stream.categories[categoryKey];
+                        let cardsHTML = '';
+                        
+                        category.paths.forEach(path => {
+                            if (cardAnimationDelay > 15) cardAnimationDelay = 1;
+                            cardsHTML += createCareerCardHTML(path, category, categoryKey, cardAnimationDelay++);
+                        });
+                        
+                        if (cardsHTML) {
+                           streamContentHTML += `
+                                <div class="category-section" data-category="${categoryKey}">
+                                    <div class="category-header" style="border-bottom-color: ${category.color};">
+                                        <div class="category-icon" style="background-color: ${category.color};">${category.icon}</div>
+                                        <h3 class="category-title" style="color: ${category.color};">${category.title}</h3>
+                                    </div>
+                                    <div class="career-cards-grid">${cardsHTML}</div>
+                                </div>`;
+                        }
+                    }
+
+                    contentHTML += `
+                        <div class="stream-accordion" data-stream="${streamKey.toLowerCase()}">
+                            <div class="stream-header">
+                                <h2 class="stream-title"><i class="${stream.icon}"></i> ${stream.title}</h2>
+                                <i class="fas fa-chevron-down stream-arrow"></i>
+                            </div>
+                            <div class="stream-content">${streamContentHTML}</div>
+                        </div>`;
+                }
+                roadmapContent.innerHTML = contentHTML;
+                
+                // Re-add event listeners to newly created elements
+                document.querySelectorAll('.stream-header').forEach(header => {
+                    header.addEventListener('click', () => {
+                        const accordion = header.parentElement;
+                        if (!searchInput.value.trim()) {
+                           accordion.classList.toggle('active');
+                        }
+                    });
+                });
+                document.querySelectorAll('.career-card').forEach(card => {
+                    card.addEventListener('click', () => openModal(card));
+                });
+            }
+
+            function createCareerCardHTML(path, category, categoryKey, delay) {
+                const details = {
+                    title: path.title, icon: category.icon, color: category.color,
+                    description: path.description, eligibility: path.eligibility,
+                    exams: path.exams, careers: path.careers, recruiters: path.recruiters
+                };
+                return `
+                    <div class="career-card" 
+                         data-categories="${categoryKey}" data-tags="${path.tags || ''}"
+                         data-title="${path.title}" data-details="${JSON.stringify(details).replace(/"/g, '&quot;')}"
+                         style="border-left-color: ${category.color}; animation-delay: ${delay * 0.05}s;">
+                        <div class="card-header">
+                            <div class="card-icon" style="background-color: ${category.color};">${category.icon}</div>
+                            <div class="card-title-container"><h4 class="card-title">${path.title}</h4></div>
+                        </div>
+                        <div class="card-details">
+                            <div class="card-detail"><i class="fas fa-user-graduate"></i><span>${path.eligibility}</span></div>
+                            <div class="card-detail"><i class="fas fa-file-alt"></i><span>${path.exams}</span></div>
+                            <div class="card-detail"><i class="fas fa-briefcase"></i><span>${path.careers}</span></div>
+                        </div>
+                        <div class="card-tags">
+                            ${(path.tags || '').split(',').map(tag => `<span class="card-tag">${tag.trim()}</span>`).join('')}
+                        </div>
+                    </div>`;
+            }
+
+            function setupEventListeners() {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+                userProfile.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    userDropdown.classList.toggle('active');
+                });
+                document.addEventListener('click', (e) => {
+                    if (!userProfile.contains(e.target)) userDropdown.classList.remove('active');
+                });
+                sidebarToggle.addEventListener('click', () => {
+                    mobileSidebar.classList.add('active');
+                    sidebarOverlay.classList.add('active');
+                });
+                [closeSidebar, sidebarOverlay].forEach(el => el.addEventListener('click', () => {
+                    mobileSidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                }));
+                 window.addEventListener('scroll', () => {
+                    document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+                });
+
+                // Search & Filter
+                searchInput.addEventListener('input', applyFiltersAndSearch);
+                filterCheckboxes.forEach(cb => cb.addEventListener('change', handleFilterChange));
+                clearFiltersBtn.addEventListener('click', () => {
+                    searchInput.value = '';
+                    document.querySelector('input[name="category"][value="all"]').checked = true;
+                    filterCheckboxes.forEach(cb => { if(cb.value !== 'all') cb.checked = false; });
+                    handleFilterChange();
+                });
+                filterButton.addEventListener('click', () => {
+                    filterMenu.classList.toggle('active');
+                    filterButton.classList.toggle('active');
+                });
+                document.addEventListener('click', (e) => {
+                    if (!filterButton.parentElement.contains(e.target)) {
+                        filterMenu.classList.remove('active');
+                        filterButton.classList.remove('active');
+                    }
+                });
+                
+                // Modal
+                closeModalBtn.addEventListener('click', closeModal);
+                modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+                saveRoadmapBtn.addEventListener('click', handleSaveRoadmap);
+                downloadPdfBtn.addEventListener('click', handleDownloadPdf);
+            }
+            
+            function handleFilterChange() {
+                 const allCheckbox = document.querySelector('input[name="category"][value="all"]');
+                 const otherCheckboxes = Array.from(filterCheckboxes).filter(cb => cb.value !== 'all');
+                 const isAllChecked = allCheckbox.checked;
+                 const anyOtherChecked = otherCheckboxes.some(cb => cb.checked);
+
+                 if (event.target === allCheckbox && isAllChecked) {
+                    otherCheckboxes.forEach(cb => cb.checked = false);
+                 } else if (event.target !== allCheckbox && event.target.checked) {
+                    allCheckbox.checked = false;
+                 }
+                 
+                 if (!anyOtherChecked && !allCheckbox.checked) {
+                    allCheckbox.checked = true;
+                 }
+                 
+                 updateFilterButtonText();
+                 applyFiltersAndSearch();
+            }
+
+            function updateFilterButtonText() {
+                const selected = Array.from(filterCheckboxes).filter(cb => cb.checked && cb.value !== 'all');
+                const isAllSelected = document.querySelector('input[name="category"][value="all"]').checked;
+
+                if (isAllSelected || selected.length === 0) {
+                    filterText.textContent = 'All Categories';
+                    clearFiltersBtn.classList.add('hidden');
+                } else if (selected.length === 1) {
+                    filterText.textContent = selected[0].parentElement.querySelector('span:last-child').textContent;
+                    clearFiltersBtn.classList.remove('hidden');
+                } else {
+                    filterText.textContent = `${selected.length} Categories`;
+                    clearFiltersBtn.classList.remove('hidden');
+                }
+            }
+
+            function applyFiltersAndSearch() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const selectedCategories = Array.from(filterCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+                let totalVisibleCards = 0;
+                
+                document.querySelectorAll('.stream-accordion').forEach(accordion => {
+                    let visibleCardsInAccordion = 0;
+                    accordion.querySelectorAll('.career-card').forEach(card => {
+                        const cardCategories = card.dataset.categories.split(' ');
+                        const cardTitle = card.dataset.title.toLowerCase();
+                        const cardTags = card.dataset.tags.toLowerCase();
+
+                        const categoryMatch = selectedCategories.includes('all') || selectedCategories.some(cat => cardCategories.includes(cat));
+                        const searchMatch = !searchTerm || cardTitle.includes(searchTerm) || cardTags.includes(searchTerm);
+                        
+                        if (categoryMatch && searchMatch) {
+                            card.classList.remove('hidden');
+                            highlightText(card, searchTerm);
+                            visibleCardsInAccordion++;
+                        } else {
+                            card.classList.add('hidden');
+                            removeHighlight(card);
+                        }
+                    });
+                    
+                    accordion.querySelectorAll('.category-section').forEach(section => {
+                        const visibleCardsInSection = section.querySelectorAll('.career-card:not(.hidden)').length;
+                        section.classList.toggle('hidden', visibleCardsInSection === 0);
+                    });
+                    
+                    if (searchTerm.length > 0) {
+                        accordion.classList.toggle('active', visibleCardsInAccordion > 0);
+                    } else {
+                         accordion.classList.remove('active');
+                    }
+                    
+                    accordion.classList.toggle('hidden', visibleCardsInAccordion === 0);
+                    totalVisibleCards += visibleCardsInAccordion;
+                });
+                
+                noResults.classList.toggle('hidden', totalVisibleCards > 0);
+                if (searchTerm) clearFiltersBtn.classList.remove('hidden');
+            }
+            
+            function highlightText(element, searchTerm) {
+                removeHighlight(element);
+                if (!searchTerm) return;
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+                while (node = walker.nextNode()) {
+                    if (node.parentElement.tagName !== 'SCRIPT' && node.parentElement.tagName !== 'STYLE') {
+                        const newHTML = node.textContent.replace(regex, '<span class="highlight">$1</span>');
+                        if (newHTML !== node.textContent) {
+                            const span = document.createElement('span');
+                            span.innerHTML = newHTML;
+                            node.parentNode.replaceChild(span, node);
+                        }
+                    }
+                }
+            }
+            
+            function removeHighlight(element) {
+                 const highlights = element.querySelectorAll('span.highlight');
+                 highlights.forEach(span => {
+                     span.outerHTML = span.innerHTML;
+                 });
+                 element.normalize();
+            }
+
+            // --- Modal, Save & PDF Functions ---
+            function openModal(card) {
+                const details = JSON.parse(card.dataset.details);
+                currentModalRoadmapTitle = details.title;
+                modalTitle.innerHTML = `<div class="card-icon" style="background-color: ${details.color}; margin-right: 15px;">${details.icon}</div> ${details.title}`;
+                modalBody.innerHTML = `
+                    <div class="modal-description"><p>${details.description}</p></div>
+                    <div class="modal-section"><h4 class="modal-section-title"><i class="fas fa-user-graduate"></i> Eligibility</h4><p>${details.eligibility}</p></div>
+                    <div class="modal-section"><h4 class="modal-section-title"><i class="fas fa-file-alt"></i> Key Exams & Certifications</h4><p>${details.exams}</p></div>
+                    <div class="modal-section"><h4 class="modal-section-title"><i class="fas fa-briefcase"></i> Career Opportunities</h4><p>${details.careers}</p></div>
+                    <div class="modal-section"><h4 class="modal-section-title"><i class="fas fa-building"></i> Top Recruiters / Institutions</h4><p>${details.recruiters}</p></div>`;
+                
+                updateSaveButtonState(isRoadmapSaved(currentModalRoadmapTitle));
+                modalOverlay.classList.add('active');
+                setTimeout(() => modal.classList.add('fade-in-scale'), 10);
+            }
+            
+            function closeModal() {
+                modal.classList.remove('fade-in-scale');
+                modalOverlay.classList.remove('active');
+                currentModalRoadmapTitle = null;
+            }
+            
+            function handleSaveRoadmap() {
+                if (!currentModalRoadmapTitle) return;
+                const isSaved = isRoadmapSaved(currentModalRoadmapTitle);
+                if (isSaved) {
+                    unsaveRoadmap(currentModalRoadmapTitle);
+                    showToast('Removed from your roadmap');
+                } else {
+                    saveRoadmap(currentModalRoadmapTitle);
+                    showToast('Saved to your roadmap!');
+                }
+                updateSaveButtonState(!isSaved);
+            }
+
+            function handleDownloadPdf() {
+                const { jsPDF } = window.jspdf;
+                const pdfTitle = currentModalRoadmapTitle || 'Career-Roadmap';
+                downloadPdfBtn.disabled = true;
+                downloadPdfBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+
+                html2canvas(modalBody, { scale: 2 }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'px',
+                        format: [canvas.width, canvas.height]
+                    });
+                    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+                    pdf.save(`NaviDisha-Roadmap-${pdfTitle}.pdf`);
+                    
+                    downloadPdfBtn.disabled = false;
+                    downloadPdfBtn.innerHTML = '<i class="fas fa-download"></i> Download PDF';
+                }).catch(err => {
+                    console.error("PDF generation failed:", err);
+                    showToast('PDF generation failed.', 'error');
+                    downloadPdfBtn.disabled = false;
+                    downloadPdfBtn.innerHTML = '<i class="fas fa-download"></i> Download PDF';
+                });
+            }
+
+            function updateSaveButtonState(isSaved) {
+                if (isSaved) {
+                    saveRoadmapBtn.classList.remove('btn-outline');
+                    saveRoadmapBtn.classList.add('btn-success');
+                    saveRoadmapBtn.innerHTML = '<i class="fas fa-check"></i> Saved to Roadmap';
+                } else {
+                    saveRoadmapBtn.classList.add('btn-outline');
+                    saveRoadmapBtn.classList.remove('btn-success');
+                    saveRoadmapBtn.innerHTML = '<i class="far fa-star"></i> Save to My Roadmap';
+                }
+            }
+
+            // --- Local Storage & Toast ---
+            function getSavedRoadmaps() {
+                return JSON.parse(localStorage.getItem('savedRoadmaps') || '[]');
+            }
+
+            function isRoadmapSaved(title) {
+                return getSavedRoadmaps().includes(title);
+            }
+
+            function saveRoadmap(title) {
+                const saved = getSavedRoadmaps();
+                if (!saved.includes(title)) {
+                    saved.push(title);
+                    localStorage.setItem('savedRoadmaps', JSON.stringify(saved));
+                }
+            }
+            
+            function unsaveRoadmap(title) {
+                let saved = getSavedRoadmaps();
+                saved = saved.filter(item => item !== title);
+                localStorage.setItem('savedRoadmaps', JSON.stringify(saved));
+            }
+
+            let toastTimeout;
+            function showToast(message, type = 'success') {
+                clearTimeout(toastTimeout);
+                toast.textContent = message;
+                toast.className = 'show';
+                if(type === 'error') toast.style.backgroundColor = 'var(--error)';
+                else toast.style.backgroundColor = 'var(--text-dark)';
+
+                toastTimeout = setTimeout(() => {
+                    toast.className = toast.className.replace('show', '');
+                }, 3000);
+            }
+
+        });
+    })();
+    </script>
+</body>
+</html>
+

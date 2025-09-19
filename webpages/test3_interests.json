@@ -1,0 +1,99 @@
+{
+  "id": "interests",
+  "name": "Interests",
+  "instructions": "Choose the activity or statement that you prefer. [cite_start]There are no right or wrong answers. [cite: 147, 148]",
+  "modules": [
+    {
+      "id": "ria",
+      "name": "Realistic, Investigative, Artistic (RIA)",
+      "questions": [
+        {
+          [cite_start]"id": "q1", "type": "paired_choice", "text": "Which would you prefer? [cite: 150]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Building a working model of a dam for a science fair. [cite: 151]" },
+            [cite_start]{ "id": "b", "text": "Researching the causes of water pollution in the Ganga river. [cite: 152]" }
+          ]
+        },
+        {
+          "id": "q2", "type": "paired_choice", "text": "Which would you prefer?",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Writing a computer program to solve a mathematical problem. [cite: 153]" },
+            { "id": "b", "text": "Designing the cover page for the school's annual magazine." }
+          ]
+        },
+        {
+          [cite_start]"id": "q3", "type": "paired_choice", "text": "Which would you prefer? [cite: 154]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Conducting a chemistry experiment in the lab. [cite: 155]" },
+            [cite_start]{ "id": "b", "text": "Composing a song for the annual day function. [cite: 156]" }
+          ]
+        },
+        {
+          [cite_start]"id": "q4", "type": "paired_choice", "text": "Which would you prefer? [cite: 157]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Fixing a broken mobile phone or a household appliance. [cite: 158]" },
+            [cite_start]{ "id": "b", "text": "Reading about the latest discoveries from ISRO. [cite: 159]" }
+          ]
+        },
+        {
+          [cite_start]"id": "q5", "type": "paired_choice", "text": "Which would you prefer? [cite: 160]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Sketching a portrait or painting a landscape. [cite: 161]" },
+            [cite_start]{ "id": "b", "text": "Analyzing data from a survey to find a pattern. [cite: 162]" }
+          ]
+        },
+        [cite_start]{ "id": "q6", "type": "yes_no", "text": "I prefer subjects that have clear, logical answers, like Physics or Maths. [cite: 163]" },
+        [cite_start]{ "id": "q7", "type": "yes_no", "text": "I enjoy hands-on activities, like gardening, cooking, or carpentry. [cite: 164]" },
+        [cite_start]{ "id": "q8", "type": "yes_no", "text": "I find myself lost in thought, trying to understand complex theories or ideas. [cite: 165]" },
+        [cite_start]{ "id": "q9", "type": "yes_no", "text": "Expressing myself through art, music, or writing is important to me. [cite: 166]" },
+        [cite_start]{ "id": "q10", "type": "yes_no", "text": "I would rather work with tools and machines than with people or ideas. [cite: 167]" }
+      ]
+    },
+    {
+      "id": "sec",
+      "name": "Social, Enterprising, Conventional (SEC)",
+      "questions": [
+        {
+          [cite_start]"id": "q1", "type": "paired_choice", "text": "Which would you prefer? [cite: 169]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Organizing a fundraising event for a social cause. [cite: 170]" },
+            [cite_start]{ "id": "b", "text": "Creating a detailed budget for the event. [cite: 171]" }
+          ]
+        },
+        {
+          [cite_start]"id": "q2", "type": "paired_choice", "text": "Which would you prefer? [cite: 172]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Leading the school's student council and making important decisions. [cite: 173]" },
+            [cite_start]{ "id": "b", "text": "Keeping a systematic record of all council meetings and activities. [cite: 174]" }
+          ]
+        },
+        {
+          [cite_start]"id": "q3", "type": "paired_choice", "text": "Which would you prefer? [cite: 175]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Teaching or mentoring junior students who are struggling with a subject. [cite: 176]" },
+            [cite_start]{ "id": "b", "text": "Managing the school library's database of books. [cite: 177]" }
+          ]
+        },
+        {
+          [cite_start]"id": "q4", "type": "paired_choice", "text": "Which would you prefer? [cite: 178]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Persuading people to join a new club you've started in school. [cite: 179]" },
+            [cite_start]{ "id": "b", "text": "Following a set of instructions carefully to assemble a piece of furniture. [cite: 180]" }
+          ]
+        },
+        {
+          [cite_start]"id": "q5", "type": "paired_choice", "text": "Which would you prefer? [cite: 181]",
+          "options": [
+            [cite_start]{ "id": "a", "text": "Helping a friend who is going through a tough time. [cite: 182]" },
+            [cite_start]{ "id": "b", "text": "Creating a timetable for your study group to follow. [cite: 183]" }
+          ]
+        },
+        [cite_start]{ "id": "q6", "type": "yes_no", "text": "I enjoy working with numbers and data and am very detail-oriented. [cite: 184, 185]" },
+        [cite_start]{ "id": "q7", "type": "yes_no", "text": "I like taking charge and motivating others to achieve a common goal. [cite: 186]" },
+        [cite_start]{ "id": "q8", "type": "yes_no", "text": "I find great satisfaction in helping others and contributing to society. [cite: 187]" },
+        [cite_start]{ "id": "q9", "type": "yes_no", "text": "I am good at convincing people and negotiating to get what I want. [cite: 188]" },
+        [cite_start]{ "id": "q10", "type": "yes_no", "text": "I am most comfortable when I have a clear, structured routine to follow. [cite: 188]" }
+      ]
+    }
+  ]
+}

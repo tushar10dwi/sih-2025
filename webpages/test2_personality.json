@@ -1,0 +1,40 @@
+{
+  "id": "personality",
+  "name": "Personality",
+  "instructions": "Choose the option that best describes you using the scale below. [cite_start]There are no right or wrong answers. [cite: 123]",
+  [cite_start]"scale": "1-Strongly Disagree, 2-Disagree, 3-Neutral, 4-Agree, 5-Strongly Agree [cite: 124]",
+  "modules": [
+    {
+      "id": "eac",
+      "name": "Extraversion, Agreeableness, Conscientiousness",
+      "questions": [
+        [cite_start]{ "id": "q1", "type": "likert", "text": "I am the life of the party at social gatherings like school functions. [cite: 125]" },
+        [cite_start]{ "id": "q2", "type": "likert", "text": "I prefer working in a team for a school project rather than working alone. [cite: 126]" },
+        [cite_start]{ "id": "q3", "type": "likert", "text": "I find it easy to help my classmates, even if it means putting my own work on hold. [cite: 127]" },
+        [cite_start]{ "id": "q4", "type": "likert", "text": "I believe in following rules and respecting authority figures like teachers and elders. [cite: 128]" },
+        [cite_start]{ "id": "q5", "type": "likert", "text": "I keep my study desk and room organized and tidy. [cite: 129]" },
+        [cite_start]{ "id": "q6", "type": "likert", "text": "I always complete my homework and assignments well before the deadline. [cite: 130]" },
+        [cite_start]{ "id": "q7", "type": "likert", "text": "I feel uncomfortable when there is a conflict or argument in my friend group. [cite: 131]" },
+        [cite_start]{ "id": "q8", "type": "likert", "text": "I enjoy striking up conversations with new students in my class or school bus. [cite: 132]" },
+        [cite_start]{ "id": "q9", "type": "likert", "text": "I make a detailed study schedule and stick to it, especially during exams. [cite: 133]" },
+        [cite_start]{ "id": "q10", "type": "likert", "text": "I am considerate of others' feelings and try not to hurt anyone. [cite: 134]" }
+      ]
+    },
+    {
+      "id": "eso",
+      "name": "Emotional Stability & Openness",
+      "questions": [
+        [cite_start]{ "id": "q1", "type": "likert", "text": "I often feel anxious or stressed about upcoming exams and results. [cite: 136]" },
+        [cite_start]{ "id": "q2", "type": "likert", "text": "I am curious about a wide range of subjects, from ancient Indian history to modern science. [cite: 137]" },
+        [cite_start]{ "id": "q3", "type": "likert", "text": "I get easily upset or irritated by small problems. [cite: 138]" },
+        [cite_start]{ "id": "q4", "type": "likert", "text": "I enjoy trying new types of food or visiting new places. [cite: 139]" },
+        [cite_start]{ "id": "q5", "type": "likert", "text": "I remain calm and composed even when facing a difficult situation, like a surprise test. [cite: 140]" },
+        [cite_start]{ "id": "q6", "type": "likert", "text": "I have a vivid imagination and enjoy creative activities like painting, writing, or drama. [cite: 141]" },
+        [cite_start]{ "id": "q7", "type": "likert", "text": "I rarely feel sad or down for long periods. [cite: 142]" },
+        [cite_start]{ "id": "q8", "type": "likert", "text": "I am open to new ideas and ways of thinking, even if they challenge my own beliefs. [cite: 143]" },
+        [cite_start]{ "id": "q9", "type": "likert", "text": "I handle criticism from teachers or parents constructively without feeling bad. [cite: 144]" },
+        [cite_start]{ "id": "q10", "type": "likert", "text": "I would rather watch an artistic or foreign film than a typical Bollywood blockbuster. [cite: 145]" }
+      ]
+    }
+  ]
+}

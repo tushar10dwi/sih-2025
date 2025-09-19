@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaviDisha - Recommendations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1E3A8A;
+            --primary-light: #3b5998;
+            --secondary: #059669;
+            --accent: #F59E0B;
+            --background: #F9FAFB;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --white: #FFFFFF;
+            --error: #EF4444;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--background);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        /* Header Styles */
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-left: 10px;
+        }
+
+        .logo-accent {
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .notification-icon:hover {
+            color: var(--primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--error);
+            color: var(--white);
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow-hover);
+            width: 200px;
+            z-index: 100;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .user-dropdown.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-item {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--background);
+        }
+
+        .dropdown-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 3px auto;
+            background-color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        /* Mobile Sidebar Toggle */
+        .mobile-sidebar-toggle {
+            display: none; /* Hidden by default */
+            position: fixed;
+            left: 10px;
+            top: 80px;
+            z-index: 999;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--card-shadow-hover);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* Show the toggle only when the screen is squeezed */
+        @media (max-width: 1100px) {
+            .mobile-sidebar-toggle {
+                display: flex;
+            }
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: var(--card-shadow-hover);
+            z-index: 1002;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            padding: 70px 20px 30px;
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(300px);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            height: fit-content;
+            transition: var(--transition);
+        }
+
+        /* Hide desktop sidebar when screen is squeezed */
+        @media (max-width: 1100px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
+        .sidebar-header {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: var(--background);
+            color: var(--primary);
+        }
+
+        .sidebar-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Filters Section */
+        .filters-section {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 45px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--background);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .filters-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 14px;
+            background-color: var(--background);
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            margin-bottom: 25px;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background-color: rgba(30, 58, 138, 0.05);
+        }
+
+        .tab:hover:not(.active) {
+            background-color: var(--background);
+        }
+
+        .tab-icon {
+            margin-right: 8px;
+            font-size: 0.9em;
+        }
+
+        /* Recommendations Grid */
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .recommendation-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            transition: var(--transition);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .card-type {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            background-color: var(--background);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .bookmark-btn:hover, .bookmark-btn.active {
+            color: var(--accent);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .card-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .meta-icon {
+            margin-right: 6px;
+            color: var(--primary);
+            width: 16px;
+            text-align: center;
+        }
+
+        .recommendation-reason {
+            background-color: var(--background);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            border-left: 3px solid var(--primary);
+        }
+
+        .reason-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(30, 58, 138, 0.1);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .empty-desc {
+            color: var(--text-light);
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            border-radius: 8px;
+            background-color: var(--white);
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .pagination-item:hover, .pagination-item.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--white);
+            margin-left: 10px;
+        }
+
+        .footer-desc {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .footer-heading {
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 12px;
+        }
+
+        .footer-link a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link a:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background-color: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--card-shadow);
+                padding: 20px 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                margin: 15px 0;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+            
+            .recommendations-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 15px;
+            }
+            
+            .user-name {
+                display: none;
+            }
+            
+            .filters-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                flex: 1 0 50%;
+                padding: 12px;
+            }
+            
+            .mobile-sidebar-toggle {
+                top: 70px;
+            }
+            
+            /* Fixed mobile sidebar */
+            .mobile-sidebar {
+                width: 100%;
+                left: -100%;
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .mobile-sidebar.active {
+                transform: translateX(100%);
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+    
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+            }
+    
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Swipe indicator */
+        .swipe-indicator {
+            position: fixed;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            width: 24px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 0.4; }
+            100% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header id="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-text">Navi<span class="logo-accent">Disha</span></div>
+            </a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="roadmaps.html" class="nav-link">Roadmaps</a></li>
+                <li class="nav-item"><a href="#" class="nav-link active">Recommendations</a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link">Support</a></li>
+            </ul>
+            
+            <div class="header-right">
+                <a href ="notification_center.html" class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+                
+                <div class="user-profile">
+                    <div class="user-avatar">AS</div>
+                    <div class="user-name">Anjali S.</div>
+                    <div class="user-dropdown">
+                        <a href="academic_profile.html" class="dropdown-item"><i class="fas fa-user"></i> Profile</a>
+                        <a href="prefrences_settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+                
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar Toggle Button -->
+    <!-- This will only appear when the screen is squeezed (below 1100px) -->
+    <div class="mobile-sidebar-toggle" id="sidebar-toggle">
+        <i class="fas fa-chevron-right"></i>
+    </div>
+    
+    <!-- Swipe Indicator (only visible on mobile) -->
+    <div class="swipe-indicator" id="swipe-indicator">
+        <i class="fas fa-chevron-right"></i>
+    </div>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Mobile Sidebar -->
+    <aside class="mobile-sidebar" id="mobile-sidebar">
+        <button class="close-sidebar" id="close-sidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">Student Dashboard</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="dashboard.html" class="sidebar-link"><i class="fas fa-home"></i> Overview</a></li>
+            <li class="sidebar-item"><a href="academic_profile.html" class="sidebar-link"><i class="fas fa-graduation-cap"></i> Academic Profile</a></li>
+            <li class="sidebar-item"><a href="recommendation.html" class="sidebar-link active"><i class="fas fa-lightbulb"></i> Recommendations</a></li>
+            <li class="sidebar-item"><a href="upcoming_deadline.html" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Upcoming Deadlines</a></li>
+            <li class="sidebar-item"><a href="saved_items.html" class="sidebar-link"><i class="fas fa-bookmark"></i> Saved Items</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar (Desktop) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title">Student Dashboard</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item"><a href="dashboard.html" class="sidebar-link"><i class="fas fa-home"></i> Overview</a></li>
+                <li class="sidebar-item"><a href="academic_profile.html" class="sidebar-link"><i class="fas fa-graduation-cap"></i> Academic Profile</a></li>
+                <li class="sidebar-item"><a href="recommendation.html" class="sidebar-link active"><i class="fas fa-lightbulb"></i> Recommendations</a></li>
+                <li class="sidebar-item"><a href="upcoming_deadline.html" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Upcoming Deadlines</a></li>
+                <li class="sidebar-item"><a href="saved_items.html" class="sidebar-link"><i class="fas fa-bookmark"></i> Saved Items</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Your Personalized Recommendations</h1>
+                <p class="page-subtitle">Curated just for you based on your profile, interests, and goals.</p>
+            </div>
+
+            <!-- Filters Section -->
+            <section class="filters-section">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search recommendations (college, course, exam, etc.)">
+                </div>
+                
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label class="filter-label">Type</label>
+                        <div class="select-wrapper">
+                            <select class="filter-select" id="type-filter">
+                                <option value="all">All Types</option>
+                                <option value="exam">Exams</option>
+                                <option value="college">Colleges</option>
+                                <option value="resource">Learning Resources</option>
+                                <option value="scholarship">Scholarships</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">Location</label>
+                        <div class="select-wrapper">
+                            <select class="filter-select" id="location-filter">
+                                <option value="all">Any Location</option>
+                                <option value="homestate">Home State (Odisha)</option>
+                                <option value="north">North India</option>
+                                <option value="south">South India</option>
+                                <option value="east">East India</option>
+                                <option value="west">West India</option>
+                                <option value="online">Online</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">Level/Grade</label>
+                        <div class="select-wrapper">
+                            <select class="filter-select" id="level-filter">
+                                <option value="all">Any Level</option>
+                                <option value="highschool">High School (12th)</option>
+                                <option value="undergrad">Undergraduate</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">Sort By</label>
+                        <div class="select-wrapper">
+                            <select class="filter-select" id="sort-filter">
+                                <option value="relevance">Relevance</option>
+                                <option value="deadline">Deadline</option>
+                                <option value="date">Date Added</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tabs -->
+            <div class="tabs-container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="all">
+                        <i class="fas fa-star tab-icon"></i> All Recommendations
+                    </div>
+                    <div class="tab" data-tab="exam">
+                        <i class="fas fa-file-alt tab-icon"></i> Exams
+                    </div>
+                    <div class="tab" data-tab="college">
+                        <i class="fas fa-university tab-icon"></i> Colleges
+                    </div>
+                    <div class="tab" data-tab="resource">
+                        <i class="fas fa-book tab-icon"></i> Resources
+                    </div>
+                    <div class="tab" data-tab="scholarship">
+                        <i class="fas fa-award tab-icon"></i> Scholarships
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendations Grid -->
+            <div class="recommendations-grid" id="recommendations-container">
+                <!-- Cards will be dynamically inserted here -->
+            </div>
+
+            <!-- Empty State (Initially Hidden) -->
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="empty-title">No recommendations found</h3>
+                <p class="empty-desc">We couldn't find any recommendations matching your current filters. Try adjusting your search or filters to see more suggestions.</p>
+                <button class="btn btn-primary" id="reset-filters">Reset All Filters</button>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="pagination-item"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="pagination-item active">1</a>
+                <a href="#" class="pagination-item">2</a>
+                <a href="#" class="pagination-item">3</a>
+                <a href="#" class="pagination-item"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <div class="footer-logo-text">NaviDisha</div>
+                </div>
+                <p class="footer-desc">Empowering students to make informed career decisions through personalized guidance and AI-powered recommendations.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="landing_page.html">Home</a></li>
+                    <li class="footer-link"><a href="landing_page.html">About Us</a></li>
+                    <li class="footer-link"><a href="#">Services</a></li>
+                    <li class="footer-link"><a href="#">How It Works</a></li>
+                    <li class="footer-link"><a href="support.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4 class="footer-heading">Resources</h4>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#">Blog</a></li>
+                    <li class="footer-link"><a href="#">Career Guides</a></li>
+                    <li class="footer-link"><a href="#">Success Stories</a></li>
+                    <li class="footer-link"><a href="#">Webinars</a></li>
+                    <li class="footer-link"><a href="support.html">FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4 class="footer-heading">Contact Us</h4>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#"><i class="fas fa-map-marker-alt"></i> Jammu and Kashmir</a></li>
+                    <li class="footer-link"><a href="#"><i class="fas fa-phone"></i> +91 xxxxxxxxxx</a></li>
+                    <li class="footer-link"><a href="#"><i class="fas fa-envelope"></i> support@navidisha.com</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 NaviDisha. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Updated sample data for Indian Computer Science students
+        const recommendations = [
+            {
+                id: 1,
+                type: 'exam',
+                title: 'JEE Main Examination',
+                description: 'National level engineering entrance exam for admission to NITs, IIITs and other engineering colleges.',
+                deadline: '2026-01-15',
+                location: 'India',
+                region: ['north', 'south', 'east', 'west'],
+                matchScore: 95,
+                reason: 'Essential for admission to top engineering colleges in India including NITs and IIITs',
+                saved: false
+            },
+            {
+                id: 2,
+                type: 'exam',
+                title: 'JEE Advanced',
+                description: 'Entrance examination for admission to Indian Institutes of Technology (IITs).',
+                deadline: '2026-05-20',
+                location: 'India',
+                region: ['north', 'south', 'east', 'west'],
+                matchScore: 90,
+                reason: 'Required for admission to prestigious IITs for Computer Science programs',
+                saved: false
+            },
+            {
+                id: 3,
+                type: 'college',
+                title: 'Indian Institute of Technology Delhi',
+                description: 'Premier institute offering B.Tech in Computer Science with excellent placement opportunities.',
+                deadline: '2026-06-30',
+                location: 'Delhi, India',
+                region: ['north'],
+                matchScore: 98,
+                reason: 'Top-ranked institute with strong Computer Science program matching your academic profile',
+                saved: true
+            },
+            {
+                id: 4,
+                type: 'college',
+                title: 'Delhi Technological University',
+                description: 'Well-regarded university offering Computer Engineering with good industry connections.',
+                deadline: '2026-05-15',
+                location: 'Delhi, India',
+                region: ['north'],
+                matchScore: 85,
+                reason: 'Good alternative to IITs/NITs with strong CS program and good placement record',
+                saved: false
+            },
+            {
+                id: 5,
+                type: 'exam',
+                title: 'BITSAT',
+                description: 'Entrance exam for Birla Institute of Technology and Science campuses.',
+                deadline: '2026-04-10',
+                location: 'India',
+                region: ['north', 'south', 'east', 'west'],
+                matchScore: 88,
+                reason: 'Alternative entrance exam for reputable private engineering institutes',
+                saved: false
+            },
+            {
+                id: 6,
+                type: 'resource',
+                title: 'NCERT Computer Science Class XII',
+                description: 'Fundamental textbook covering basics of Python programming, databases, and computer networks.',
+                deadline: null,
+                location: 'Online/Book',
+                region: ['online'],
+                matchScore: 92,
+                reason: 'Essential foundation for computer science concepts and board examination preparation',
+                saved: true
+            },
+            {
+                id: 7,
+                type: 'resource',
+                title: 'Coding Ninjas Python Foundation Course',
+                description: 'Beginner-friendly course to build programming fundamentals using Python.',
+                deadline: null,
+                location: 'Online',
+                region: ['online'],
+                matchScore: 89,
+                reason: 'Strong programming foundation is crucial for computer science studies',
+                saved: false
+            },
+            {
+                id: 8,
+                type: 'scholarship',
+                title: 'Kishore Vaigyanik Protsahan Yojana (KVPY)',
+                description: 'Fellowship program for students pursuing basic science courses including computer science.',
+                deadline: '2025-09-30',
+                location: 'India',
+                region: ['north', 'south', 'east', 'west'],
+                matchScore: 87,
+                reason: 'Prestigious scholarship for science students including those pursuing computer science',
+                saved: false
+            },
+            {
+                id: 9,
+                type: 'exam',
+                title: 'VITEEE',
+                description: 'Vellore Institute of Technology Engineering Entrance Examination.',
+                deadline: '2026-03-31',
+                location: 'India',
+                region: ['north', 'south', 'east', 'west'],
+                matchScore: 82,
+                reason: 'Entrance exam for reputable private university with strong CS program',
+                saved: false
+            },
+            {
+                id: 10,
+                type: 'college',
+                title: 'National Institute of Technology Karnataka',
+                description: 'NIT Surathkal offers excellent B.Tech in Computer Science with strong industry placements.',
+                deadline: '2026-06-15',
+                location: 'Karnataka, India',
+                region: ['south'],
+                matchScore: 93,
+                reason: 'Top NIT with excellent computer science program and placement opportunities',
+                saved: true
+            },
+            {
+                id: 11,
+                type: 'resource',
+                title: 'Unacademy JEE Computer Science',
+                description: 'Comprehensive preparation platform for JEE and computer science concepts.',
+                deadline: null,
+                location: 'Online',
+                region: ['online'],
+                matchScore: 84,
+                reason: 'Specialized preparation for engineering entrance exams with CS focus',
+                saved: false
+            },
+            {
+                id: 12,
+                type: 'scholarship',
+                title: 'Aditya Birla Scholarship',
+                description: 'Merit-based scholarship for students pursuing professional courses in India.',
+                deadline: '2026-07-15',
+                location: 'India',
+                region: ['north', 'south', 'east', 'west'],
+                matchScore: 80,
+                reason: 'Financial support for meritorious students pursuing engineering degrees',
+                saved: false
+            }
+        ];
+
+        // DOM Elements
+        const recommendationsContainer = document.getElementById('recommendations-container');
+        const emptyState = document.getElementById('empty-state');
+        const resetFiltersBtn = document.getElementById('reset-filters');
+        const searchInput = document.querySelector('.search-input');
+        const typeFilter = document.getElementById('type-filter');
+        const locationFilter = document.getElementById('location-filter');
+        const levelFilter = document.getElementById('level-filter');
+        const sortFilter = document.getElementById('sort-filter');
+        const tabs = document.querySelectorAll('.tab');
+        
+        // Mobile sidebar elements
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const userDropdown = document.querySelector('.user-dropdown');
+        const userProfile = document.querySelector('.user-profile');
+        const swipeIndicator = document.getElementById('swipe-indicator');
+
+        // Format date function
+        function formatDate(dateString) {
+            if (!dateString) return 'Ongoing';
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // Render recommendations based on filters
+        function renderRecommendations() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const typeValue = typeFilter.value;
+            const locationValue = locationFilter.value;
+            const levelValue = levelFilter.value;
+            
+            // Filter recommendations
+            let filteredRecommendations = recommendations.filter(rec => {
+                const matchesSearch = rec.title.toLowerCase().includes(searchTerm) || 
+                                    rec.description.toLowerCase().includes(searchTerm);
+                const matchesType = typeValue === 'all' || rec.type === typeValue;
+                
+                const homeStateRegion = 'east'; // Odisha is in East India
+                let matchesLocation;
+                if (locationValue === 'all') {
+                    matchesLocation = true;
+                } else if (locationValue === 'homestate') {
+                    matchesLocation = rec.region && rec.region.includes(homeStateRegion);
+                } else {
+                    matchesLocation = rec.region && rec.region.includes(locationValue);
+                }
+
+                const matchesLevel = levelValue === 'all'; // Simplified for demo
+                
+                return matchesSearch && matchesType && matchesLocation && matchesLevel;
+            });
+            
+            // Sort recommendations
+            const sortValue = sortFilter.value;
+            if (sortValue === 'deadline') {
+                filteredRecommendations.sort((a, b) => {
+                    if (!a.deadline) return 1;
+                    if (!b.deadline) return -1;
+                    return new Date(a.deadline) - new Date(b.deadline);
+                });
+            } else if (sortValue === 'date') {
+                // Sorting by ID to simulate "Date Added"
+                filteredRecommendations.sort((a, b) => b.id - a.id);
+            } else {
+                // Relevance (default) - sorting by matchScore
+                filteredRecommendations.sort((a, b) => b.matchScore - a.matchScore);
+            }
+            
+            // Clear container
+            recommendationsContainer.innerHTML = '';
+            
+            // Show empty state if no results
+            if (filteredRecommendations.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            // Hide empty state
+            emptyState.style.display = 'none';
+            
+            // Render cards
+            filteredRecommendations.forEach(rec => {
+                const card = document.createElement('div');
+                card.className = 'recommendation-card fade-in';
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="card-type">${rec.type.charAt(0).toUpperCase() + rec.type.slice(1)}</span>
+                        <button class="bookmark-btn ${rec.saved ? 'active' : ''}" data-id="${rec.id}">
+                            <i class="fas fa-bookmark"></i>
+                        </button>
+                    </div>
+                    <h3 class="card-title">${rec.title}</h3>
+                    <p class="card-desc">${rec.description}</p>
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt meta-icon"></i>
+                            ${rec.location}
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar meta-icon"></i>
+                            Deadline: ${formatDate(rec.deadline)}
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-percentage meta-icon"></i>
+                            ${rec.matchScore}% Match
+                        </div>
+                    </div>
+                    <div class="recommendation-reason">
+                        <div class="reason-title">Why it's a good fit:</div>
+                        ${rec.reason}
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">View Details</button>
+                        <button class="btn btn-secondary">Save for Later</button>
+                    </div>
+                `;
+                
+                recommendationsContainer.appendChild(card);
+            });
+            
+            // Add event listeners to bookmark buttons
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    const rec = recommendations.find(r => r.id === id);
+                    if (rec) {
+                        rec.saved = !rec.saved;
+                        this.classList.toggle('active');
+                    }
+                });
+            });
+        }
+
+        // Initialize the page
+        function init() {
+            // Render initial recommendations
+            renderRecommendations();
+            
+            // Add event listeners to filters
+            searchInput.addEventListener('input', renderRecommendations);
+            typeFilter.addEventListener('change', renderRecommendations);
+            locationFilter.addEventListener('change', renderRecommendations);
+            levelFilter.addEventListener('change', renderRecommendations);
+            sortFilter.addEventListener('change', renderRecommendations);
+            
+            // Reset filters button
+            resetFiltersBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                typeFilter.value = 'all';
+                locationFilter.value = 'all';
+                levelFilter.value = 'all';
+                sortFilter.value = 'relevance';
+                
+                // Reset tabs
+                tabs.forEach(tab => tab.classList.remove('active'));
+                document.querySelector('[data-tab="all"]').classList.add('active');
+                
+                renderRecommendations();
+            });
+            
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const tabValue = this.getAttribute('data-tab');
+                    typeFilter.value = tabValue === 'all' ? 'all' : tabValue;
+                    renderRecommendations();
+                });
+            });
+            
+            // Mobile sidebar toggle
+            sidebarToggle.addEventListener('click', function() {
+                mobileSidebar.classList.add('active');
+                sidebarOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Close sidebar
+            closeSidebar.addEventListener('click', closeMobileSidebar);
+            sidebarOverlay.addEventListener('click', closeMobileSidebar);
+            
+            // Mobile menu toggle
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            
+            // User dropdown
+            userProfile.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('active');
+            });
+            
+            // Close dropdown when clicking elsewhere
+            document.addEventListener('click', function() {
+                userDropdown.classList.remove('active');
+            });
+            
+            // Hide swipe indicator after 5 seconds
+            setTimeout(() => {
+                if(swipeIndicator) {
+                    swipeIndicator.style.opacity = '0';
+                    setTimeout(() => {
+                        swipeIndicator.style.display = 'none';
+                    }, 300);
+                }
+            }, 5000);
+            
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.getElementById('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // Close mobile sidebar function
+        function closeMobileSidebar() {
+            mobileSidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+
