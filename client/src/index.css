@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 #root {
-  padding: 0 !important;
+  padding: 0px !important;
 }
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
