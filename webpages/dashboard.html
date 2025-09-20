@@ -984,7 +984,7 @@
                         <a href="prefrences_settings.html" class="dropdown-item">
                             <i class="fas fa-cog"></i> Settings
                         </a>
-                        <a href="#" class="dropdown-item">
+                        <a href="#" class="dropdown-item" id="logout-btn">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
                     </div>
@@ -1432,6 +1432,26 @@
     
     // Initial check
     checkScreenWidth();
+
+    document.getElementById("logout-btn").addEventListener("click", async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+
+    try {
+        await fetch("http://localhost:3000/api/auth/logout", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+    } catch (err) {
+        console.error("Logout error:", err);
+    }
+
+    // Clear token on client and redirect to login
+    localStorage.removeItem("token");
+    window.location.href = "authentication.html";
+    });
     </script>
 </body>
 </html>

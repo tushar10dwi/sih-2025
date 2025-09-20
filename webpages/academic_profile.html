@@ -1623,6 +1623,55 @@
         
         // Initial check
         checkScreenWidth();
+
+                async function loadUser() {
+        const token = localStorage.getItem('token');
+        
+        // If no token, redirect to login
+        if (!token) {
+            window.location.href = "authentication.html";
+            return;
+        }
+
+        try {
+            const res = await fetch("http://localhost:3000/api/auth/me", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            if (!res.ok) {
+                // invalid/expired token
+                localStorage.removeItem('token');
+                window.location.href = "authentication.html";
+                return;
+            }
+
+            const user = await res.json();
+            console.log("Logged in user:", user);
+
+            // Update UI
+            const userNameEl = document.querySelector(".user-name");
+            const userAvatarEl = document.querySelector(".user-avatar");
+            const welcomeTitleEl = document.querySelector(".welcome-title");
+
+            const firstName = user.firstName || "User";
+            const initials = firstName[0].toUpperCase();
+
+            userNameEl.textContent = firstName;
+            userAvatarEl.textContent = initials;
+            welcomeTitleEl.textContent = `Welcome back, ${firstName}!`;
+        } catch (err) {
+            console.error(err);
+            localStorage.removeItem('token');
+            window.location.href = "authentication.html";
+        }
+    }
+
+    // Call it when page loads
+    document.addEventListener("DOMContentLoaded", loadUser);
+
     </script>
 </body>
 </html>
