@@ -1,0 +1,167 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  firstName  String
+  lastName   String
+  email      String   @unique
+  password   String?
+  otp        String?
+  createdAt  DateTime @default(now())
+  hasProfile Boolean  @default(false)
+  profile    Profile?
+}
+
+model Profile {
+  id     Int  @id @default(autoincrement())
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id])
+
+  age        Int?
+  sex        String? // or enum: MALE, FEMALE, OTHER
+  state      String? // location
+  district   String?
+  classLevel String? // 10th, 12th, UG, PG
+  category   String? // General, OBC, SC, ST
+
+  aptitudeTests AptitudeTest[] // <-- Add this line
+
+  // Relations
+  skills    SkillOnProfile[]
+  interests InterestOnProfile[]
+  passions  PassionOnProfile[]
+}
+
+model Skill {
+  id      Int              @id @default(autoincrement())
+  name    String           @unique
+  users   SkillOnProfile[]
+  careers SkillOnCareer[] // <-- add this line
+}
+
+model Interest {
+  id      Int                 @id @default(autoincrement())
+  name    String              @unique
+  users   InterestOnProfile[]
+  careers InterestOnCareer[]
+}
+
+model Passion {
+  id    Int                @id @default(autoincrement())
+  name  String             @unique
+  users PassionOnProfile[]
+}
+
+// Join Tables
+
+model SkillOnProfile {
+  profileId Int
+  skillId   Int
+  profile   Profile @relation(fields: [profileId], references: [id])
+  skill     Skill   @relation(fields: [skillId], references: [id])
+
+  @@id([profileId, skillId])
+}
+
+model InterestOnProfile {
+  profileId  Int
+  interestId Int
+  profile    Profile  @relation(fields: [profileId], references: [id])
+  interest   Interest @relation(fields: [interestId], references: [id])
+
+  @@id([profileId, interestId])
+}
+
+model PassionOnProfile {
+  profileId Int
+  passionId Int
+  profile   Profile @relation(fields: [profileId], references: [id])
+  passion   Passion @relation(fields: [passionId], references: [id])
+
+  @@id([profileId, passionId])
+}
+
+model AptitudeTest {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      Profile  @relation(fields: [userId], references: [id])
+  dateTaken DateTime @default(now())
+  scores    Json // {logical: 25, math: 30, verbal: 20}
+  total     Int
+}
+
+model College {
+  id       Int               @id @default(autoincrement())
+  name     String
+  location String
+  degrees  DegreeOnCollege[]
+}
+
+model Degree {
+  id       Int               @id @default(autoincrement())
+  name     String
+  field    String // Science, Commerce, Arts, Engineering
+  careers  CareerOnDegree[]
+  colleges DegreeOnCollege[]
+}
+
+model DegreeOnCollege {
+  collegeId Int
+  degreeId  Int
+  college   College @relation(fields: [collegeId], references: [id])
+  degree    Degree  @relation(fields: [degreeId], references: [id])
+
+  @@id([collegeId, degreeId])
+}
+
+model Career {
+  id               Int                @id @default(autoincrement())
+  userId           Int
+  title            String             @unique
+  description      String
+  skillsRequired   SkillOnCareer[]
+  interestRequired InterestOnCareer[]
+  degreesRequired  CareerOnDegree[]
+  salary           Int?
+}
+
+model InterestOnCareer {
+  careerId   Int
+  interestId Int
+  career     Career   @relation(fields: [careerId], references: [id])
+  interest   Interest @relation(fields: [interestId], references: [id])
+
+  @@id([careerId, interestId])
+}
+
+model SkillOnCareer {
+  careerId Int
+  skillId  Int
+  career   Career @relation(fields: [careerId], references: [id])
+  skill    Skill  @relation(fields: [skillId], references: [id])
+
+  @@id([careerId, skillId])
+}
+
+model CareerOnDegree {
+  careerId Int
+  degreeId Int
+  career   Career @relation(fields: [careerId], references: [id])
+  degree   Degree @relation(fields: [degreeId], references: [id])
+
+  @@id([careerId, degreeId])
+}
