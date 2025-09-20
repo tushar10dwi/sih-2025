@@ -1482,41 +1482,41 @@
         // Complete the profile
         async function completeProfile() {
             // In a real app, you would send the userData object to a server here
-            try {
-            // Construct payload
-            const payload = {
-                sex: userData.personalInfo.gender,
-                state: userData.personalInfo.state,
-                district: userData.personalInfo.district,
-                classLevel: userData.personalInfo.grade,
-            };
+        //     try {
+        //     // Construct payload
+        //     const payload = {
+        //         sex: userData.personalInfo.gender,
+        //         state: userData.personalInfo.state,
+        //         district: userData.personalInfo.district,
+        //         classLevel: userData.personalInfo.grade,
+        //     };
 
-            console.log("Sending payload:", payload);
+        //     console.log("Sending payload:", payload);
 
-            // Send to backend
-            const response = await fetch('http://localhost:3000/api/user/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // include auth header if needed:
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify(payload)
-            });
+        //     // Send to backend
+        //     const response = await fetch('http://localhost:3000/api/user/', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             // include auth header if needed:
+        //             'Authorization': `Bearer ${localStorage.getItem('token')}`
+        //         },
+        //         body: JSON.stringify(payload)
+        //     });
 
-            if (!response.ok) {
-                throw new Error(`Failed: ${response.status}`);
-            }
+        //     if (!response.ok) {
+        //         throw new Error(`Failed: ${response.status}`);
+        //     }
 
-            const result = await response.json();
-            console.log('Saved to DB:', result);
+        //     const result = await response.json();
+        //     console.log('Saved to DB:', result);
 
-            // Show success modal
-            successModal.classList.add('active');
-        } catch (err) {
-            console.error("Error saving profile:", err);
-            alert("Something went wrong while saving your profile. Try again.");
-        }
+        //     // Show success modal
+        //     successModal.classList.add('active');
+        // } catch (err) {
+        //     console.error("Error saving profile:", err);
+        //     alert("Something went wrong while saving your profile. Try again.");
+        // }
         console.log('User Profile Data:', userData);
     }
         
