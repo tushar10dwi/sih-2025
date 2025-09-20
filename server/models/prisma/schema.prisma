@@ -22,6 +22,7 @@ model User {
   password  String?
   otp       String?
   createdAt DateTime @default(now())
+  hasProfile Boolean @default(false)
   profile   Profile?
 }
 
@@ -32,12 +33,12 @@ model Profile {
   
   age          Int?
   sex          String?   // or enum: MALE, FEMALE, OTHER
-  location     String?   // city or pincode
+  state        String?   // location
+  district     String?  
   classLevel   String?   // 10th, 12th, UG, PG
   category     String?   // General, OBC, SC, ST
   
-  aptitudeTests  AptitudeTest[] 
-  careerGoals   String?
+  aptitudeTests  AptitudeTest[]  // <-- Add this line
   
   // Relations
   skills       SkillOnProfile[]
@@ -56,6 +57,7 @@ model Interest {
   id       Int    @id @default(autoincrement())
   name     String @unique
   users    InterestOnProfile[]
+  careers  InterestOnCareer[]
 }
 
 model Passion {
@@ -65,6 +67,7 @@ model Passion {
 }
 
 // Join Tables
+
 model SkillOnProfile {
   profileId Int
   skillId   Int
@@ -123,11 +126,22 @@ model DegreeOnCollege {
 
 model Career {
   id       Int    @id @default(autoincrement())
-  title    String
+  userId   Int
+  title    String  @unique
   description String
   skillsRequired   SkillOnCareer[]
+  interestRequired InterestOnCareer[]
   degreesRequired  CareerOnDegree[]
   salary  Int?
+
+}
+
+model InterestOnCareer {
+    careerId Int
+    interestId Int
+    career   Career @relation(fields: [careerId], references: [id])
+    interest Interest  @relation(fields: [interestId], references: [id])
+    @@id([careerId, interestId])
 }
 
 model SkillOnCareer {

@@ -17,18 +17,22 @@ const userRouter = Router();
  */
 userRouter.post("/", async (req, res) => {
   try {
-    const { age, sex, location, classLevel, category } = req.body;
+    const { sex, state, district, classLevel } = req.body;
 
     const profile = await prisma.profile.create({
       data: {
         userId: req.user.id,
-        age,
         sex,
-        location,
-        classLevel,
-        category,
+        state,
+        district,
+        classLevel
       },
       include: { user:true }
+    });
+
+    await prisma.user.update({
+      where: { id: req.user.id },
+      data: { hasProfile: true }
     });
 
     res.json(profile);

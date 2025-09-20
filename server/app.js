@@ -8,7 +8,7 @@ import authRoutes from "./routes/authRouter.js";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/userRoutes.js";
 import verifyToken from "./middlewares/authMiddleware.js";
-import quizRoutes from "./routes/quizRoutes.js";
+import pathRoutes from "./routes/pathRoutes.js";
 // import progressRoutes from "./routes/progress.js";
 verifyToken
 
@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", verifyToken, userRoutes);
-app.use("/api/quiz", verifyToken, quizRoutes);
+app.use("/api/path", verifyToken, pathRoutes);
 // app.use("/api/progress", progressRoutes);
 
 // Error handler

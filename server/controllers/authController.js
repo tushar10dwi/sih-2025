@@ -86,7 +86,7 @@ async function me(req, res) {
   const user = await prisma.user.findUnique({ where: { id: req.user.id } });
   if (!user) return res.status(404).json({ message: "User not found" });
 
-  res.json({ id: user.id, email: user.email, createdAt: user.createdAt });
+  res.json({ id: user.id, email: user.email, createdAt: user.createdAt, firstName: user.firstName, lastName: user.lastName });
 }
 
 const authController = {signup,login,logout,resetPassword,me}
