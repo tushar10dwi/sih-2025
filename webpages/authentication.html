@@ -884,14 +884,14 @@
                 <form class="auth-form active" id="login-form">
                     <div class="form-group">
                         <label for="login-email" class="form-label">Email Address</label>
-                        <input type="email" id="login-email" class="form-input" placeholder="Enter your email" required>
+                        <input type="email" id="login-email" class="form-input" placeholder="Enter your email" required autocomplete="email">
                         <div class="error-message" id="login-email-error">Please enter a valid email address</div>
                     </div>
                     
                     <div class="form-group">
                         <label for="login-password" class="form-label">Password</label>
                         <div class="password-input-container">
-                            <input type="password" id="login-password" class="form-input" placeholder="Enter your password" required>
+                            <input type="password" id="login-password" class="form-input" placeholder="Enter your password" required autocomplete="new-password">
                             <button type="button" class="password-toggle" id="login-password-toggle">
                                 <i class="far fa-eye"></i>
                             </button>
@@ -933,14 +933,14 @@
                     
                     <div class="form-group">
                         <label for="signup-email" class="form-label">Email Address</label>
-                        <input type="email" id="signup-email" class="form-input" placeholder="Enter your email" required>
+                        <input type="email" id="signup-email" class="form-input" placeholder="Enter your email" required autocomplete="new-password">
                         <div class="error-message" id="signup-email-error">Please enter a valid email address</div>
                     </div>
                     
                     <div class="form-group">
                         <label for="signup-password" class="form-label">Password</label>
                         <div class="password-input-container">
-                            <input type="password" id="signup-password" class="form-input" placeholder="Create a password" required>
+                            <input type="password" id="signup-password" class="form-input" placeholder="Create a password" required autocomplete="new-password">
                             <button type="button" class="password-toggle" id="signup-password-toggle">
                                 <i class="far fa-eye"></i>
                             </button>
@@ -951,7 +951,7 @@
                     <div class="form-group">
                         <label for="signup-confirm-password" class="form-label">Confirm Password</label>
                         <div class="password-input-container">
-                            <input type="password" id="signup-confirm-password" class="form-input" placeholder="Confirm your password" required>
+                            <input type="password" id="signup-confirm-password" class="form-input" placeholder="Confirm your password" required autocomplete="new-password">
                             <button type="button" class="password-toggle" id="signup-confirm-password-toggle">
                                 <i class="far fa-eye"></i>
                             </button>
@@ -1106,7 +1106,7 @@
         }
 
         // Login Form Validation
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             let isValid = true;
             
@@ -1136,15 +1136,45 @@
             }
             
             if (isValid) {
-                // Simulate API call
+                // Login API call
+                try {
+                    const res = await fetch('http://localhost:3000/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: email.value,
+                            password: password.value
+                        })
+                    });
+
+                    const data = await res.json();
+                    if (res.ok) {
+                        // Save JWT token in localStorage
+                        localStorage.setItem('token', data.token);
+
+                        alert('Login successful!');
+                        console.log('User logged in:', data);
+
+                        // Check if profile exists
+                        if (data.user && data.user.hasProfile === false) {
+                            window.location.href = "onboarding.html"; 
+                        } else {
+                            window.location.href = "dashboard.html";
+                        }
+                    } else {
+                        alert(data.message || 'Login failed');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('An error occurred while logging in');
+                }
+
                 console.log('Logging in with:', { email: email.value });
-                // Here you would typically make an API call
-                alert('Login successful! (This is a demo)');
             }
         });
 
         // Signup Form Validation
-        signupForm.addEventListener('submit', (e) => {
+        signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             let isValid = true;
             
@@ -1200,13 +1230,41 @@
             }
             
             if (isValid) {
-                // Simulate API call
+                // Signup API call
+                const parts = name.value.trim().split(" ");
+                const firstName = parts[0];
+                const lastName = parts.slice(1).join(" ") || ""; // empty string if no last name
+
+                try {
+                    const res = await fetch('http://localhost:3000/api/auth/signup', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            firstName,
+                            lastName,
+                            email: email.value,
+                            password: password.value
+                        })
+                    });
+
+                    const data = await res.json();
+                    if (res.ok) {
+                        alert('Account created successfully!');
+                        console.log('User signed up:', data);
+                        // optionally auto-login or redirect
+                        window.location.href = "onboarding.html"; 
+                    } else {
+                        alert(data.message || 'Signup failed');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('An error occurred while signing up');
+                }
+
                 console.log('Signing up with:', { 
                     name: name.value, 
                     email: email.value 
                 });
-                // Here you would typically make an API call
-                alert('Account created successfully! (This is a demo)');
             }
         });
 
@@ -1258,6 +1316,117 @@
             // Animate auth container
             document.querySelector('.auth-container').style.animation = 'slideInRight 0.8s ease forwards';
         });
+
+        // // Login Form Submission (with API call)
+        // loginForm.addEventListener('submit', async (e) => {
+        //     e.preventDefault();
+        //     let isValid = true;
+            
+        //     const email = document.getElementById('login-email');
+        //     const password = document.getElementById('login-password');
+        //     const emailError = document.getElementById('login-email-error');
+        //     const passwordError = document.getElementById('login-password-error');
+            
+        //     hideError(emailError);
+        //     hideError(passwordError);
+
+        //     if (!email.value.trim() || !validateEmail(email.value)) {
+        //         showError(email, emailError);
+        //         isValid = false;
+        //     }
+        //     if (!password.value.trim()) {
+        //         showError(password, passwordError);
+        //         isValid = false;
+        //     }
+
+        //     if (isValid) {
+        //         try {
+        //             const res = await fetch('http://localhost:3000/api/auth/login', {
+        //                 method: 'POST',
+        //                 headers: { 'Content-Type': 'application/json' },
+        //                 body: JSON.stringify({
+        //                     email: email.value,
+        //                     password: password.value
+        //                 })
+        //             });
+
+        //             const data = await res.json();
+        //             if (res.ok) {
+        //                 alert('Login successful!');
+        //                 console.log('User logged in:', data);
+        //                 // optionally store token: localStorage.setItem('token', data.token);
+        //                 window.location.href = "dashboard.html"; // redirect after login
+        //             } else {
+        //                 alert(data.message || 'Login failed');
+        //             }
+        //         } catch (err) {
+        //             console.error(err);
+        //             alert('An error occurred while logging in');
+        //         }
+        //     }
+        // });
+
+            //  Signup Form Submission (with API call)
+            signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                let isValid = true;
+
+                const name = document.getElementById('signup-name');
+                const email = document.getElementById('signup-email');
+                const password = document.getElementById('signup-password');
+                const confirmPassword = document.getElementById('signup-confirm-password');
+                const nameError = document.getElementById('signup-name-error');
+                const emailError = document.getElementById('signup-email-error');
+                const passwordError = document.getElementById('signup-password-error');
+                const confirmPasswordError = document.getElementById('signup-confirm-password-error');
+                
+                hideError(nameError);
+                hideError(emailError);
+                hideError(passwordError);
+                hideError(confirmPasswordError);
+
+                if (!name.value.trim()) { showError(name, nameError); isValid = false; }
+                if (!email.value.trim() || !validateEmail(email.value)) { showError(email, emailError); isValid = false; }
+                if (!password.value.trim() || password.value.length < 8) { showError(password, passwordError); isValid = false; }
+                if (password.value !== confirmPassword.value) { showError(confirmPassword, confirmPasswordError); isValid = false; }
+
+                
+                const firstName = name[0];
+                const lastName = name[1];
+
+                if (isValid) {
+
+                    const parts = name.value.trim().split(" ");
+                    const firstName = parts[0];
+                    const lastName = parts.slice(1).join(" ") || ""; // empty string if no last name
+
+                    try {
+                        const res = await fetch('http://localhost:3000/api/auth/signup', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                firstName,
+                                lastName,
+                                email: email.value,
+                                password: password.value
+                            })
+                        });
+
+                        const data = await res.json();
+                        if (res.ok) {
+                            alert('Account created successfully!');
+                            console.log('User signed up:', data);
+                            // optionally auto-login or redirect
+                            window.location.href = "onboarding.html"; 
+                        } else {
+                            alert(data.message || 'Signup failed');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        alert('An error occurred while signing up');
+                    }
+                }
+            });
     </script>
 </body>
 </html>
